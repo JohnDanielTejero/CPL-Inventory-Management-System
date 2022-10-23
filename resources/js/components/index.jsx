@@ -11,4 +11,5 @@ if (document.getElementById('app')) {
         </React.StrictMode>,
         document.getElementById('app')
     );
+
 }
