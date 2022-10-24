@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        @vite(['node_modules/bootstrap/dist/css/bootstrap.css'])
         <title>{{ config('app.name') }}</title>
         <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
     </head>
