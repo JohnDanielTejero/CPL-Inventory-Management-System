@@ -11,10 +11,10 @@ function App() {
        <Mainlayout>
         <div className="d-flex flex-column w-100 h-100">
             <Header sidemenu={sideMenu}/>
-            <div className="d-flex flex-row w-100 h-100">
-                <Sidebar  reference = {sideMenu} />
+            <div className="d-flex flex-row w-100 h-100 position-relative">
+                <Sidebar reference = {sideMenu} />
                 <main className= "bg-warning flex-fill h-100" style={{overflowY:'auto'}}>
-
+                    <div className="side-backdrop w-100 h-100"></div>
                 </main>
             </div>
         </div>
