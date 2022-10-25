@@ -13,7 +13,7 @@ function App() {
             <Header sidemenu={sideMenu}/>
             <div className="d-flex flex-row w-100 h-100 position-relative">
                 <Sidebar reference = {sideMenu} />
-                <main className= "bg-warning flex-fill h-100" style={{overflowY:'auto'}}>
+                <main className= "main-bg flex-fill h-100" style={{overflowY:'auto'}}>
                     <div className="side-backdrop w-100 h-100"></div>
                 </main>
             </div>

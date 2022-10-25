@@ -6,12 +6,12 @@ function Header({sidemenu}){
 
     return(
         <header style={{minHeight:'5rem', zIndex:'100'}}>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light h-100 justify-content-between px-3">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark h-100 px-3">
                 <div className="d-flex flex-row">
-                    <button className="btn btn-outline-light border border-dark me-2" onClick={toggleMenu} type='button'>
-                        <span className="navbar-toggler-icon"></span>
+                    <button className="btn btn-dark me-2" onClick={toggleMenu} type='button'>
+                        <span className="bi bi-list text-light"></span>
                     </button>
-                    <a className="navbar-brand" href="#">Navbar</a>
+                    <a className="navbar-brand" href="#">Jumpstart</a>
                 </div>
 
             </nav>
