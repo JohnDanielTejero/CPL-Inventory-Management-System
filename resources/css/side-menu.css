@@ -21,9 +21,10 @@
 }
 
 .side-menu + main .side-backdrop{
+    position: absolute;
     background-color: black;
     opacity: 30%;
-    z-index: 150;
+    z-index: 120;
     visibility: hidden;
 }
 
@@ -40,12 +41,12 @@
 }
 
 .side-menu div div button div .side-menu-collapsible{
-    display: none;
-    transition: all 300ms ease-in-out;
+    opacity: 0;
+    transition: all 100ms ease-in-out;
 }
 .side-menu.side-menu.active div div button div .side-menu-collapsible{
-    display: block;
-    transition: all 300ms ease-in-out;
+    opacity: 1;
+    transition: all 1.5s ease-in-out;
 }
 
 

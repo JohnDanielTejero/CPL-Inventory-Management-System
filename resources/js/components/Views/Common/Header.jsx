@@ -9,7 +9,7 @@ function Header({sidemenu}){
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark h-100 px-3">
                 <div className="d-flex flex-row">
                     <button className="btn btn-dark me-2" onClick={toggleMenu} type='button'>
-                        <span className="bi bi-list text-light"></span>
+                        <span className="bi bi-list text-light h4"></span>
                     </button>
                     <a className="navbar-brand" href="#">Jumpstart</a>
                 </div>

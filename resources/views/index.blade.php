@@ -7,7 +7,7 @@
         <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
     </head>
     <body class="antialiased">
-        <div id = "app">
+        <div id = "app" class = "main-bg">
         </div>
         @viteReactRefresh
         @vite('resources/js/react-entry-point.js')
