@@ -37,6 +37,16 @@ function ProductForm(){
                     <div className="col-12 form-floating">
                         <select
                             className="form-select bg-input text-light border border-dark"
+                            id = "category"
+                        >
+                            <option>Hello</option>
+
+                        </select>
+                        <label className =  "ms-2" htmlFor="category">Category</label>
+                    </div>
+                    <div className="col-12 form-floating">
+                        <select
+                            className="form-select bg-input text-light border border-dark"
                             id = "supplier"
                         >
                             <option>Hello</option>

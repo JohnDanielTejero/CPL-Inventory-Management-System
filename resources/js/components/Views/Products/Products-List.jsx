@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Products(){
     const navigate = useNavigate();
     const buttonNavigate = (e) => {
+        console.log(e);
         navigate(e.target.getAttribute('data-route-target'));
     }
     return(
@@ -27,6 +28,7 @@ function Products(){
                             <th>Payable</th>
                             <th>Paid</th>
                             <th>Price</th>
+                            <th>Category</th>
                             <th>Markup %</th>
                             <th>Action</th>
                         </tr>
@@ -36,8 +38,9 @@ function Products(){
                             <td className = "h-100" style={{width:"2rem"}}>1</td>
                             <td style={{width:"5rem"}}>Tite</td>
                             <td style={{width:"6rem"}}>20 pcs</td>
-                            <td style={{width:"6rem"}}>10 pcs</td>
                             <td style={{width:"5rem"}}>$2000000</td>
+                            <td style={{width:"6rem"}}>10 pcs</td>
+                            <td style={{width:"6rem"}}>BOTTLES</td>
                             <td style={{width:"5rem"}}>100%</td>
                             <td style={{width:"5rem"}} className="p-2">
                                 <div className="d-flex justify-content-center align-items-center">

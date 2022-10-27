@@ -14,6 +14,10 @@ import RegisterEmployee from "../../Views/Employee/AddEmployee";
 import Profile from "../../Views/Employee/EmployeeProfile";
 import SuppliersBase from "../../Views/Suppliers/SuppliersBase";
 import SuppliersList from "../../Views/Suppliers/SuppliersList";
+import SupplierForm from "../../Views/Suppliers/SupplierForm";
+import StoresBase from "../../Views/Stores/StoresBase";
+import StoresList from "../../Views/Stores/StoresList";
+import StoresForm from "../../Views/Stores/StoresForm";
 
 function Routing(){
     return(
@@ -69,6 +73,7 @@ function Routing(){
                 element = { <Profile/> }
                 path="profile"
             />
+
             {/* Suppliers */}
             <Route
                 element = { <SuppliersBase/> }
@@ -79,22 +84,98 @@ function Routing(){
                     element = { <SuppliersList/> }
                 />
 
-                {/*
+
                 <Route
-                    element = { <ProductForm/>}
+                    element = { <SupplierForm/>}
                     path = "add-supplier"
                 />
 
                 <Route
-                    element = { <ProductForm/> }
-                    path="edit-supplier/:id"
+                    element = { <SupplierForm/>}
+                    path = "edit-supplier/:id"
                 />
-                */}
-
 
             </Route>
 
+            {/* Stores */}
+            <Route
+                element = { <StoresBase/> }
+                path="stores"
+            >
+                <Route
+                    index
+                    element = { <StoresList/> }
+                />
+                <Route
+                    element = { <StoresForm/>}
+                    path = "add-store"
+                />
 
+                <Route
+                    element = { <StoresForm/>}
+                    path = "edit-store/:id"
+                />
+            </Route>
+
+            {/* Sales */}
+            <Route
+                element = { <StoresBase/> }
+                path="stores"
+            >
+                <Route
+                    index
+                    element = { <StoresList/> }
+                />
+                <Route
+                    element = { <StoresForm/>}
+                    path = "add-store"
+                />
+
+                <Route
+                    element = { <StoresForm/>}
+                    path = "edit-store/:id"
+                />
+            </Route>
+
+            {/* Stocks */}
+            <Route
+                element = { <StoresBase/> }
+                path="stores"
+            >
+                <Route
+                    index
+                    element = { <StoresList/> }
+                />
+                <Route
+                    element = { <StoresForm/>}
+                    path = "add-store"
+                />
+
+                <Route
+                    element = { <StoresForm/>}
+                    path = "edit-store/:id"
+                />
+            </Route>
+
+            {/* Category */}
+            <Route
+                element = { <StoresBase/> }
+                path="stores"
+            >
+                <Route
+                    index
+                    element = { <StoresList/> }
+                />
+                <Route
+                    element = { <StoresForm/>}
+                    path = "add-store"
+                />
+
+                <Route
+                    element = { <StoresForm/>}
+                    path = "edit-store/:id"
+                />
+            </Route>
         </Routes>
     );
 }

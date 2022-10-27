@@ -9,7 +9,7 @@ function SuppliersBase(){
                         Suppliers List
                     </button>
                 </Link>
-                <Link to ={'add-suppliers'}>
+                <Link to ={'add-supplier'}>
                     <button className="btn btn-dark jumpstart h-100 me-2">
                         Add Supplier
                     </button>

@@ -5,6 +5,9 @@
 .table-dark.jumpstart-table{
     --bs-table-bg: rgb(45, 48, 53) !important;
 }
+.iti__country-list{
+   background-color: rgb(44, 47, 51) !important;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

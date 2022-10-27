@@ -41,7 +41,7 @@ function SuppliersList(){
                                 <td style={{width:"5rem"}}>100%</td>
                                 <td style={{width:"5rem"}} className="p-2">
                                     <div className="d-flex justify-content-center align-items-center">
-                                        <button className="btn btn-outline-light bg-gradient" data-route-target = "edit-product/2" onClick={buttonNavigate}>
+                                        <button className="btn btn-outline-light bg-gradient" data-route-target = "edit-supplier/2" onClick={buttonNavigate}>
                                             <i className="bi bi-pen"></i>
                                             <span className = "ms-1">Edit</span>
                                         </button>

@@ -51,6 +51,15 @@ function Sidebar({reference, navigateTo}){
                         <span>Dashboard</span>
                     </button>
                 </div>
+
+                {/* Category */}
+                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "categories">
+                        <span className="bi bi-tags-fill me-2"></span>
+                        <span>Category</span>
+                    </button>
+                </div>
+
                 {/* Products */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
                     <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "products">
@@ -58,6 +67,7 @@ function Sidebar({reference, navigateTo}){
                         <span>Products</span>
                     </button>
                 </div>
+
                 {/* User */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
                     <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "employee">
@@ -65,6 +75,7 @@ function Sidebar({reference, navigateTo}){
                         <span>Employee</span>
                     </button>
                 </div>
+
                 {/* Suppliers */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
                     <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "suppliers">
@@ -79,6 +90,7 @@ function Sidebar({reference, navigateTo}){
                         <span>Sales</span>
                     </button>
                 </div>
+
                 {/* Stores */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
                     <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "stores">
@@ -86,6 +98,7 @@ function Sidebar({reference, navigateTo}){
                         <span>Stores</span>
                     </button>
                 </div>
+
                 {/* Stocks */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
                     <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "stocks">
