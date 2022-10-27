@@ -1,4 +1,4 @@
-function StoresForm(){
+function CategoryForm(){
     return(
         <div className="card bg-dark bg-opacity-75 text-light h-100">
             <div className="card-body">
@@ -6,7 +6,7 @@ function StoresForm(){
                     <div className="col-12">
                         <h1 className="text-center">
                             {
-                                location.pathname === "/stores/add-store" ?  "Add Store" : "Edit Store"
+                                location.pathname === "/category/add-category" ?  "Add Category" : "Edit Category"
                             }
                         </h1>
                     </div>
@@ -14,27 +14,28 @@ function StoresForm(){
                     <div className="col-12 form-floating">
                         <input
                             className="form-control bg-input text-light border border-dark"
-                            id = "store_name"
+                            id = "category"
                             placeholder="..."
                         />
-                        <label className = "ms-2" htmlFor="store_name">Store Name</label>
+                        <label className = "ms-2" htmlFor="category">Category Name</label>
                     </div>
                     <div className="col-12 form-floating">
-                        <input
+                        <textarea
                             className="form-control bg-input text-light border border-dark"
-                            id = "store_address"
+                            id = "category-description"
                             placeholder="..."
+                            style={{height:"20rem"}}
                         />
-                        <label className =  "ms-2" htmlFor="store_address">Store Address</label>
+                        <label className =  "ms-2" htmlFor="category-description">Category Description</label>
                     </div>
 
                     {
-                        location.pathname != "/stores/add-store" && <input type={"hidden"} value="" id = "store_id"/>
+                        location.pathname != "/category/add-category" && <input type={"hidden"} value="" id = "category_id"/>
                     }
                     <div className="col-12">
                         <button className="w-100 btn btn-dark jumpstart border border-dark">
                             {
-                                location.pathname === "/stores/add-store" ?  "Add Stores" : "Save Changes"
+                                location.pathname === "/category/add-category" ?  "Add Category" : "Edit Category"
                             }
                         </button>
                     </div>
@@ -44,4 +45,4 @@ function StoresForm(){
     );
 }
 
-export default StoresForm;
+export default CategoryForm;

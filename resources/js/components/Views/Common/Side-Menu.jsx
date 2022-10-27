@@ -54,7 +54,7 @@ function Sidebar({reference, navigateTo}){
 
                 {/* Category */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "categories">
+                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "category">
                         <span className="bi bi-tags-fill me-2"></span>
                         <span>Category</span>
                     </button>

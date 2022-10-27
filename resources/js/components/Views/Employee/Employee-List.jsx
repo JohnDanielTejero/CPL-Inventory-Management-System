@@ -1,10 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
 function EmployeeList(){
-    const navigate = useNavigate();
-    const buttonNavigate = (e) => {
-        navigate(e.target.getAttribute('data-route-target'));
-    }
     return(
         <>
             <section className="d-flex justify-content-end mb-2">

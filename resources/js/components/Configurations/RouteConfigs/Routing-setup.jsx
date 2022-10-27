@@ -18,6 +18,9 @@ import SupplierForm from "../../Views/Suppliers/SupplierForm";
 import StoresBase from "../../Views/Stores/StoresBase";
 import StoresList from "../../Views/Stores/StoresList";
 import StoresForm from "../../Views/Stores/StoresForm";
+import CategoriesBase from "../../Views/Categories/CategoriesBase";
+import Categories from "../../Views/Categories/CategoriesList";
+import CategoryForm from "../../Views/Categories/CategoriesForm";
 
 function Routing(){
     return(
@@ -159,21 +162,21 @@ function Routing(){
 
             {/* Category */}
             <Route
-                element = { <StoresBase/> }
-                path="stores"
+                element = { <CategoriesBase/> }
+                path="category"
             >
                 <Route
                     index
-                    element = { <StoresList/> }
+                    element = { <Categories/> }
                 />
                 <Route
-                    element = { <StoresForm/>}
-                    path = "add-store"
+                    element = { <CategoryForm/>}
+                    path = "add-category"
                 />
 
                 <Route
-                    element = { <StoresForm/>}
-                    path = "edit-store/:id"
+                    element = { <CategoryForm/>}
+                    path = "edit-category/:id"
                 />
             </Route>
         </Routes>
