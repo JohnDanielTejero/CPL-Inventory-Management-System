@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Header({sidemenu}){
 
     const toggleMenu = () => {
@@ -11,7 +13,7 @@ function Header({sidemenu}){
                     <button className="btn btn-dark me-2" onClick={toggleMenu} type='button'>
                         <span className="bi bi-list text-light h4"></span>
                     </button>
-                    <a className="navbar-brand" href="#">Jumpstart</a>
+                    <Link className="navbar-brand" to={'/'}>Jumpstart</Link>
                 </div>
 
             </nav>

@@ -1,6 +1,6 @@
 export const base = 'http://localhost:8000';
 
-export const request = (options:any, contentType:any) => {
+export const request = async (options:any, contentType?:string) => {
 
     const headers = new Headers({
         'Content-Type': 'application/json',
@@ -17,14 +17,14 @@ export const request = (options:any, contentType:any) => {
     const defaults = {headers: headers};
     options = Object.assign({}, defaults, options);
 
-    return fetch(options.url, options)
-    .then(response =>
-        response.json().then(json => {
-            if(!response.ok) {
-                return Promise.reject(json);
-            }
-            return json;
-        })
+    return await fetch(options.url, options)
+        .then(response =>
+            response.json().then(json => {
+                if(!response.ok) {
+                    return Promise.reject(json);
+                }
+                return json;
+            })
     );
 }
 

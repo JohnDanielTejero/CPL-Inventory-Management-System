@@ -3,36 +3,98 @@ import Anonymous from "./AnonymousRoute";
 import Authorization from "./AuthorizationRoute";
 import Authenticated from "./AuthenticatedRoute";
 import Dashboard from "../../Views/Home";
+import ProductsBase from "../../Views/Products/Products-Base";
+import Products from "../../Views/Products/Products-List";
+import AddProduct from "../../Views/Products/Products-Form";
+import ProductForm from "../../Views/Products/Products-Form";
+import ProductDetails from "../../Views/Products/Product-Information";
+import EmployeeBase from "../../Views/Employee/EmployeeBase";
+import EmployeeList from "../../Views/Employee/Employee-List";
+import RegisterEmployee from "../../Views/Employee/AddEmployee";
+import Profile from "../../Views/Employee/EmployeeProfile";
+import SuppliersBase from "../../Views/Suppliers/SuppliersBase";
+import SuppliersList from "../../Views/Suppliers/SuppliersList";
 
 function Routing(){
     return(
         <Routes>
-            <Route element = {
-                <Dashboard/>
-            }
-            index
+            {/* Dashboard */}
+            <Route
+                element = { <Dashboard/> }
+                index
             />
-            <Route element = {
-                 <Dashboard/>
-            }
-            path="/dashboard"
-            />
-            {/*
 
-            <Route element = {
+            {/* Products */}
+            <Route
+                element = { <ProductsBase/> }
+                path="/products"
+            >
+                <Route
+                    index
+                    element = { <Products/> }
+                />
+                <Route
+                    element = { <ProductForm/>}
+                    path = "add-product"
+                />
 
-                }
-                path=""
-            />
-            <Route element = {
+                <Route
+                    element = { <ProductForm/> }
+                    path="edit-product/:id"
+                />
 
-                } path=""
+                <Route
+                    element = { <ProductDetails/> }
+                    path="product-information/:id"
+                />
+            </Route>
+
+            {/* Employees */}
+            <Route
+                element = { <EmployeeBase/> }
+                path="/employee"
+            >
+                <Route
+                    index
+                    element = { <EmployeeList/> }
+                />
+                <Route
+                    element = { <RegisterEmployee/>}
+                    path = "add-new-employee"
+                />
+            </Route>
+
+            {/* Profile */}
+            <Route
+                element = { <Profile/> }
+                path="profile"
             />
-            <Route element = {
-                }
-                path=""
-            />
-            */}
+            {/* Suppliers */}
+            <Route
+                element = { <SuppliersBase/> }
+                path="/suppliers"
+            >
+                <Route
+                    index
+                    element = { <SuppliersList/> }
+                />
+
+                {/*
+                <Route
+                    element = { <ProductForm/>}
+                    path = "add-supplier"
+                />
+
+                <Route
+                    element = { <ProductForm/> }
+                    path="edit-supplier/:id"
+                />
+                */}
+
+
+            </Route>
+
+
         </Routes>
     );
 }

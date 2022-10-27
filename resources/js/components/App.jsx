@@ -16,9 +16,14 @@ function App() {
                     <Header sidemenu={sideMenu}/>
                     <div className="d-flex flex-row w-100 h-100 position-relative">
                         <Sidebar reference = {sideMenu} navigateTo = {navigate}/>
-                        <main className= "flex-fill h-100" style={{overflowY:'auto'}}>
+                        <main className= "d-flex flex-column main-panel">
                             <div className="side-backdrop w-100 h-100"></div>
-                            <Routing/>
+                            <div className="p-3" style={{height:"80vh", overflowY:'auto', overflowX:"hidden"}}>
+                                <Routing/>
+                            </div>
+                            <footer className="d-flex justify-content-center align-items-center flex-fill footer">
+                                <span className="text-light">&#169; All Rights Reserved</span>
+                            </footer>
                         </main>
                     </div>
                 </div>

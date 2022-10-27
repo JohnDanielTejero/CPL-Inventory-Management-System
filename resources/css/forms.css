@@ -1,0 +1,18 @@
+.bg-input{
+    background-color: rgb(44, 47, 51) !important;
+}
+
+.table-dark.jumpstart-table{
+    --bs-table-bg: rgb(45, 48, 53) !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

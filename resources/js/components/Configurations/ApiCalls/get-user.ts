@@ -6,15 +6,15 @@ class UserService{
         return request({
             url : base + url,
             method: 'GET'
-        }, null);
+        });
     }
 
-    checkPermission(url:string, permissions:any){
+    checkPermission(url:string, permissions:Array<string>){
         return request({
             url : base + url,
             method : 'GET',
             body : JSON.stringify(permissions)
-        }, null);
+        });
 
     }
 }

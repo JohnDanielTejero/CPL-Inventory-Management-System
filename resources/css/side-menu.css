@@ -1,5 +1,5 @@
 .side-menu.active{
-    width: 20rem;
+    width: 30vw;
     transition: all 500ms ease-in-out;
 }
 .side-menu{
@@ -52,6 +52,9 @@
 
 @media screen and (max-width: 768px) {
 
+    .side-menu{
+        width: 20rem !important;
+    }
     .side-menu div div button div .side-menu-collapsible{
         display: block;
     }
