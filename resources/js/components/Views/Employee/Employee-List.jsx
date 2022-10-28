@@ -47,13 +47,12 @@ function EmployeeList(){
                     </tbody>
                 </table>
             </section>
-
             <div class="modal fade" id="selectStore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-fullscreen-md-down">
                     <div class="modal-content bg-dark jumpstart text-light">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Change Store</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form className="row gy-2">

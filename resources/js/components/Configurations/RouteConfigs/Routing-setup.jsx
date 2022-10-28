@@ -25,10 +25,18 @@ import SalesBase from "../../Views/Sales/SalesBase";
 import SalesList from "../../Views/Sales/SalesList";
 import SalesForm from "../../Views/Sales/SalesForm";
 import SalesInformation from "../../Views/Sales/SalesInformation";
+import Stocks from "../../Views/Stocks/StocksList";
+import Login from "../../Views/Login";
 
 function Routing(){
     return(
         <Routes>
+            {/* login */}
+            <Route
+                element = { <Login/> }
+                path = { "/login" }
+            />
+
             {/* Dashboard */}
             <Route
                 element = { <Dashboard/> }
@@ -166,22 +174,9 @@ function Routing(){
 
             {/* Stocks */}
             <Route
-                element = { <StoresBase/> }
-                path="stores"
+                element = { <Stocks/> }
+                path="stocks"
             >
-                <Route
-                    index
-                    element = { <StoresList/> }
-                />
-                <Route
-                    element = { <StoresForm/>}
-                    path = "add-store"
-                />
-
-                <Route
-                    element = { <StoresForm/>}
-                    path = "edit-store/:id"
-                />
             </Route>
         </Routes>
     );
