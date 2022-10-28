@@ -21,6 +21,10 @@ import StoresForm from "../../Views/Stores/StoresForm";
 import CategoriesBase from "../../Views/Categories/CategoriesBase";
 import Categories from "../../Views/Categories/CategoriesList";
 import CategoryForm from "../../Views/Categories/CategoriesForm";
+import SalesBase from "../../Views/Sales/SalesBase";
+import SalesList from "../../Views/Sales/SalesList";
+import SalesForm from "../../Views/Sales/SalesForm";
+import SalesInformation from "../../Views/Sales/SalesInformation";
 
 function Routing(){
     return(
@@ -122,21 +126,41 @@ function Routing(){
 
             {/* Sales */}
             <Route
-                element = { <StoresBase/> }
-                path="stores"
+                element = { <SalesBase/> }
+                path="sales"
             >
                 <Route
                     index
-                    element = { <StoresList/> }
+                    element = { <SalesList/> }
                 />
                 <Route
-                    element = { <StoresForm/>}
-                    path = "add-store"
+                    element = { <SalesForm/>}
+                    path = "add-sale"
                 />
 
                 <Route
-                    element = { <StoresForm/>}
-                    path = "edit-store/:id"
+                    element = { <SalesInformation/>}
+                    path = "sale-information/:id"
+                />
+            </Route>
+
+            {/* Category */}
+            <Route
+                element = { <CategoriesBase/> }
+                path="category"
+            >
+                <Route
+                    index
+                    element = { <Categories/> }
+                />
+                <Route
+                    element = { <CategoryForm/>}
+                    path = "add-category"
+                />
+
+                <Route
+                    element = { <CategoryForm/> }
+                    path = "edit-category/:id"
                 />
             </Route>
 
@@ -157,26 +181,6 @@ function Routing(){
                 <Route
                     element = { <StoresForm/>}
                     path = "edit-store/:id"
-                />
-            </Route>
-
-            {/* Category */}
-            <Route
-                element = { <CategoriesBase/> }
-                path="category"
-            >
-                <Route
-                    index
-                    element = { <Categories/> }
-                />
-                <Route
-                    element = { <CategoryForm/>}
-                    path = "add-category"
-                />
-
-                <Route
-                    element = { <CategoryForm/>}
-                    path = "edit-category/:id"
                 />
             </Route>
         </Routes>

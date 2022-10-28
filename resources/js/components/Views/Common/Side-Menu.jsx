@@ -20,7 +20,7 @@ function Sidebar({reference, navigateTo}){
         if (currentLocation != null){
             const buttons = document.querySelectorAll('[data-side-url]')
             buttons.forEach(e => {
-                if (currentLocation.includes(e.getAttribute('data-side-url'))){
+                if ((e.getAttribute('data-side-url')).indexOf(currentLocation) != -1){
                     e.classList.add('active');
                 }else{
                     e.classList.remove('active');

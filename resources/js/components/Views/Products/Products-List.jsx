@@ -6,6 +6,7 @@ function Products(){
         console.log(e);
         navigate(e.target.getAttribute('data-route-target'));
     }
+
     return(
         <>
             <section className="d-flex justify-content-end mb-2">
