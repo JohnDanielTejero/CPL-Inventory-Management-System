@@ -30,6 +30,7 @@ function Products(){
                             <th>Paid</th>
                             <th>Price</th>
                             <th>Category</th>
+                            <th>Expiration</th>
                             <th>Markup %</th>
                             <th>Action</th>
                         </tr>
@@ -42,6 +43,7 @@ function Products(){
                             <td style={{width:"5rem"}}>$2000000</td>
                             <td style={{width:"6rem"}}>10 pcs</td>
                             <td style={{width:"6rem"}}>BOTTLES</td>
+                            <td style={{width:"5rem"}}>some date</td>
                             <td style={{width:"5rem"}}>100%</td>
                             <td style={{width:"5rem"}} className="p-2">
                                 <div className="d-flex justify-content-center align-items-center">
