@@ -40,7 +40,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+
     ];
 
      /**
@@ -61,5 +61,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function User_Roles()
+    {
+        return $this->belongsToMany(User_Role::class, 'user__roles', 'user_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 }

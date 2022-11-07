@@ -108,10 +108,10 @@ function Sidebar({reference, navigateTo}){
                 </div>
             </div>
 
-            <div className="overflow-hidden w-100 bg-dark bg-gradient"  style={{height:'5rem'}}>
+            <div className="overflow-hidden w-100 bg-dark bg-gradient"  style={{height:'18%'}}>
                 <div className="w-100 h-100 d-flex justify-content-center">
                     <Link
-                        className="btn btn-dark bg-gradient border border-0 rounded-0 d-flex flex-row align-items-center"
+                        className="btn btn-dark bg-gradient border border-0 rounded-0 d-flex flex-row align-items-center py-0"
                         style = {{width:'70%'}}
                         to ={"/profile"}
                     >
@@ -121,7 +121,7 @@ function Sidebar({reference, navigateTo}){
                             <span className="side-menu-collapsible overflow-hidden">Store affiliate</span>
                         </div>
                     </Link>
-                    <button className="btn btn-dark bg-gradient bg-opacity-50 border border-0 rounded-0" style = {{width:'30%'}}>
+                    <button className="btn btn-dark bg-gradient bg-opacity-50 border border-0 rounded-0 py-0" style = {{width:'30%'}}>
                         <span className="d-inline-block bi bi-box-arrow-right"></span>
                         <span className="d-inline-block w-100">
                             Logout

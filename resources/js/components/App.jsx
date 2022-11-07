@@ -18,17 +18,13 @@ function App() {
                         <Sidebar reference = {sideMenu} navigateTo = {navigate}/>
                         <main className= "d-flex flex-column main-panel">
                             <div className="side-backdrop w-100 h-100"></div>
-                            <div className="p-3" style={{height:"80vh", overflowY:'auto', overflowX:"hidden"}}>
+                            <div className="p-3" style={{height:"80%", overflowY:'auto', overflowX:"hidden"}}>
                                 <Routing/>
                             </div>
-                            <footer className="d-flex justify-content-center align-items-center flex-fill footer">
-                                <span className="text-light">&#169; All Rights Reserved</span>
-                            </footer>
                         </main>
                     </div>
                 </div>
             </Mainlayout>
-
     );
 }
 
