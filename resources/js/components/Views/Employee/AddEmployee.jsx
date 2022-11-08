@@ -50,7 +50,17 @@ function RegisterEmployee(){
                             <option>Hello</option>
 
                         </select>
-                        <label className =  "ms-2" htmlFor="store">Store</label>
+                        <label className =  "ms-2" htmlFor="role">Store</label>
+                    </div>
+                    <div className="col-12 form-floating">
+                        <select
+                            className="form-select bg-input text-light border border-dark"
+                            id = "role"
+                        >
+                            <option>Hello</option>
+
+                        </select>
+                        <label className =  "ms-2" htmlFor="store">Role</label>
                     </div>
 
                     <div className="col-12">
