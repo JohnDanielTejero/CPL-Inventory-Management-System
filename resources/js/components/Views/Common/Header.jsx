@@ -13,7 +13,12 @@ function Header({sidemenu}){
                     <button className="btn btn-dark me-2" onClick={toggleMenu} type='button'>
                         <span className="bi bi-list text-light h4"></span>
                     </button>
-                    <Link className="navbar-brand" to={'/'}>Jumpstart</Link>
+                    <Link className="navbar-brand" to={'/'}>
+                        <img src="img/Jumpstart Logo.png" style={{height:50, width:50}}/>
+                        <span className="ms-3">
+                            Jumpstart
+                        </span>
+                    </Link>
                 </div>
 
             </nav>
