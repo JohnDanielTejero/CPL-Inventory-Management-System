@@ -33,10 +33,6 @@ function EmployeeList(){
                             <td style={{width:"5rem"}}>100%</td>
                             <td style={{width:"5rem"}} className="p-2">
                                 <div className="d-flex justify-content-center align-items-center">
-                                    <button className="btn btn-outline-light bg-gradient ms-2" data-bs-toggle = "modal" data-bs-target = "#selectStore">
-                                        <i className="bi bi-person-workspace"></i>
-                                        <span className = "ms-1">Transfer</span>
-                                    </button>
                                     <button className="btn btn-dark jumpstart ms-2">
                                         <i className="bi bi-trash"></i>
                                         <span className = "ms-1">Delete</span>
@@ -47,35 +43,6 @@ function EmployeeList(){
                     </tbody>
                 </table>
             </section>
-            <div className="modal fade" id="selectStore" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1">
-                <div className="modal-dialog modal-dialog-scrollable modal-dialog-fullscreen-md-down">
-                    <div className="modal-content bg-dark jumpstart text-light">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">Change Store</h5>
-                            <button type="button" className="btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form className="row gy-2">
-                                <div className="col-12">
-                                    <label htmlFor="store">
-                                        Store
-                                    </label>
-                                    <select
-                                        className="form-select bg-input text-light border border-dark"
-                                        id = "store"
-                                    >
-                                        <option>Hello</option>
-                                    </select>
-                                </div>
-                                <input type={"hidden"} id = "employee-select"/>
-                                <div className="col-12 d-flex justify-content-end">
-                                    <button type="button" className="btn btn-dark jumpstart w-100">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </>
     );
 }

@@ -58,6 +58,14 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * creates new user
+     *
+     * Only admin can add new user
+     *
+     * @param Request $request - for input validation
+     * @return JsonResponse a failure or success message
+     */
     public function register(Request $request){
 
         $validator = Validator::make($request->all(),

@@ -32,8 +32,18 @@ class UserService extends ApiEndpoint{
         });
     }
 
-    insertUser(){
-
+    /**
+     * creates new user or employee
+     *
+     * @param user Object containing user information
+     * @returns Object as response
+     */
+    insertUser(user:Object){
+        return this. request({
+            url : this.endpoint + '/register',
+            method : 'POST',
+            body : JSON.stringify(user)
+        });
     }
 
     deleteUser(){
@@ -44,6 +54,12 @@ class UserService extends ApiEndpoint{
 
     }
 
+    /**
+     * attempts to authenticate user
+     *
+     * @param credentials Object containing email and password
+     * @returns Object as response: TOKEN
+     */
     login(credentials:Object){
         return this. request({
             url : this.endpoint + '/login',
@@ -52,6 +68,11 @@ class UserService extends ApiEndpoint{
         });
     }
 
+    /**
+     * invalidates the user's JWT on the server
+     *
+     * @returns Object as response
+     */
     logout(){
         return this. request({
             url : this.endpoint + '/logout',
@@ -59,7 +80,12 @@ class UserService extends ApiEndpoint{
         });
     }
 
-    //role based methods
+    /**
+     * checks if user has any role
+     *
+     * @param permissions Array of strings
+     * @returns boolean
+     */
     hasAnyRole(permissions:Array<string>){
         return this. request({
             url : this.endpoint + '/has-any-roles',
@@ -68,6 +94,12 @@ class UserService extends ApiEndpoint{
         });
     }
 
+    /**
+     * checks if users has all roles
+     *
+     * @param permissions Array of strings
+     * @returns boolean
+     */
     hasRoles(permissions:Array<string>){
         return this. request({
             url : this.endpoint + '/has-all-roles',
@@ -76,6 +108,12 @@ class UserService extends ApiEndpoint{
         });
     }
 
+    /**
+     * checks if user has a role
+     *
+     * @param permission string
+     * @returns boolean
+     */
     hasPermission(permission:string){
         return this. request({
             url : this.endpoint + '/permission',
