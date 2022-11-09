@@ -102,12 +102,17 @@ export function getCookie(ckey:string) {
     return "";
 }
 
+/**
+ * function for deleting cookie for the JWT
+ *
+ * @param ckey key for the cookie
+ * @returns void
+ */
 export function deleteCookie(ckey:string){
    if(getCookie(ckey)){
         document.cookie = ckey + "=;expires="+ 0 + ";path=/"
    }
-
-   //return;
+   return;
 }
 
 
