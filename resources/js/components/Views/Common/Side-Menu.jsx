@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import userCrud from "../../Configurations/ApiCalls/user-crud";
+import { getCookie } from "../../Configurations/constants";
 
-function Sidebar({reference, navigateTo}){
+function Sidebar({reference, navigateTo, logout}){
 
     const location = useLocation();
     const [currentLocation, setCurrentLocation] = useState();
@@ -16,7 +18,7 @@ function Sidebar({reference, navigateTo}){
         }
     },[location]);
 
-    useEffect(()=>{
+    useEffect( () => {
         if (currentLocation != null){
             const buttons = document.querySelectorAll('[data-side-url]')
             buttons.forEach(e => {
@@ -27,7 +29,22 @@ function Sidebar({reference, navigateTo}){
                 }
             });
         }
-    },[currentLocation]);
+    }, [currentLocation]);
+
+
+    const [user, setUser] = useState(null);
+
+    useEffect(async () => {
+        if(getCookie('token')){
+            const currentuser = await userCrud.getActiveUser();
+            setUser(await currentuser);
+        }
+
+        return (() => {
+          setUser(null);
+        });
+
+    }, []);
 
 
     const removePopUp = (e) => {
@@ -117,11 +134,10 @@ function Sidebar({reference, navigateTo}){
                     >
                         <span className="bi bi-person-circle display-6"></span>
                         <div className="d-flex flex-column align-items-start ps-3 w-100">
-                            <span className="side-menu-collapsible overflow-hidden h5">User name</span>
-                            <span className="side-menu-collapsible overflow-hidden">Store affiliate</span>
+                            <span className="side-menu-collapsible overflow-hidden h5">{ user != null && user.first_name + " " + user.last_name }</span>
                         </div>
                     </Link>
-                    <button className="btn btn-dark bg-gradient bg-opacity-50 border border-0 rounded-0 py-0" style = {{width:'30%'}}>
+                    <button className="btn btn-dark bg-gradient bg-opacity-50 border border-0 rounded-0 py-0" style = {{width:'30%'}} onClick={logout}>
                         <span className="d-inline-block bi bi-box-arrow-right"></span>
                         <span className="d-inline-block w-100">
                             Logout

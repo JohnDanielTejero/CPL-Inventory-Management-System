@@ -1,3 +1,5 @@
+import moment from "moment";
+
 /**
  * function for setting a delay in between search requests
  *
@@ -77,7 +79,7 @@ export function setCookie(ckey:string ,cvalue:string, exdays:number = 30) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     let expires = "expires=" + d.toUTCString();
     document.cookie = ckey + "=" + cvalue + ";" + expires + ";path=/";
-  }
+}
 
 /**
  * function for retrieving cookie for the JWT
@@ -98,4 +100,22 @@ export function getCookie(ckey:string) {
       }
     }
     return "";
-  }
+}
+
+export function deleteCookie(ckey:string){
+   if(getCookie(ckey)){
+        document.cookie = ckey + "=;expires="+ 0 + ";path=/"
+   }
+
+   //return;
+}
+
+
+/**
+ * Returns a human readable format of date
+ * @param date Date object
+ * @returns string
+ */
+export function dateToHumanReadable(date:Date){
+    return moment(moment(date).format('MMMM DD YYYY, h:mm:ss a'), 'MMMM Do YYYY, h:mm:ss a').fromNow();
+}

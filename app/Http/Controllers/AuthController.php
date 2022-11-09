@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +21,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register','isLoggedIn', 'hasRole']]);
+        $this->middleware('auth:api', ['except' => ['login','register','isLoggedIn']]);
     }
 
     /**
@@ -61,37 +63,38 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'name' => ['required', 'string'],
-                'email' => ['required', 'string','email','unique:users'],
+                'email' => ['required', 'string', 'email', 'unique:users'],
                 'password'=>['required', 'string'],
-                'role' => ['required', 'integer'],
-                'store' => ['required', 'integer']
+                'role' => ['required'],
+                'store' => ['required']
             ]
         );
 
         if($validator->fails()){
             return response()->json([
-                ['message' => 'failed'],
+                ['status' => 'failed validation'],
                 $validator->errors(),
             ], 400);
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' =>  $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $role = Role::find($request->role);
 
+        if($role != null){
 
-        //$token = Auth::login($user);
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'User created successfully',
-        //     'user' => $user,
-        //     'authorisation' => [
-        //         'token' => $token,
-        //         'type' => 'bearer',
-        //     ]
-        // ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' =>  $request->email,
+                'password' => Hash::make($request->password),
+                'store_id' => $request->store,
+            ]);
+            $user->User_Roles()->attach($role);
+
+            return response()->json(['status' => 'created'], 201);
+
+        }else{
+            return response()->json(['status' => 'missing role'], 400);
+        }
+
     }
 
     /**
@@ -105,7 +108,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
-        ]);
+        ], 200);
     }
 
     /**
@@ -113,8 +116,14 @@ class AuthController extends Controller
      *
      * @return JsonResponse User object
      */
-    public function getUser(){
-        return response()->json(Auth::user());
+    public function getUser(Request $request){
+
+        if($request->user()->store_id != null){
+            $user = User::join('stores', 'store_id', '=', 'stores.id')->where('users.id', $request->user()->id)->first();
+            return response()->json($user);
+        }else{
+            return response()->json(Auth::user());
+        }
     }
 
     /**
@@ -137,13 +146,18 @@ class AuthController extends Controller
     public function getAllUser(Request $request){
         if($request['query'] == null){
             return response()->json(
-                User::all(), 200
+                User::join('stores', 'store_id', '=', 'stores.id')->whereHas('User_Roles', function (Builder $query){
+                    $query->where('role_name', '!=', 'ROLE_ADMIN');
+                })->where('user.id', '!=', $request->user()->id)->get(), 200
             );
         }else{
             return response()->json(
-                User::where('first_name', 'LIKE', '%'.$request['query'].'%')
+                User::join('stores', 'store_id', '=', 'stores.id')
+                    ->where('first_name', 'LIKE', '%'.$request['query'].'%')
                     ->orWhere('last_name', 'LIKE','%'.$request['query'].'%')
-                    ->get(),
+                    ->whereHas('User_Roles', function (Builder $query){
+                        $query->where('role_name', '!=', 'ROLE_ADMIN');
+                    })->get(),
                 200
             );
         }

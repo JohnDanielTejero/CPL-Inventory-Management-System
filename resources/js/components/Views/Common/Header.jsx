@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Header({sidemenu}){
+function Header({sidemenu, isAuth}){
 
     const toggleMenu = () => {
         sidemenu.current.classList.toggle('active');
@@ -10,9 +10,12 @@ function Header({sidemenu}){
         <header style={{minHeight:'5rem', zIndex:'100'}}>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark h-100 px-3">
                 <div className="d-flex flex-row">
-                    <button className="btn btn-dark me-2" onClick={toggleMenu} type='button'>
-                        <span className="bi bi-list text-light h4"></span>
-                    </button>
+                    {
+                        isAuth &&
+                        <button className="btn btn-dark me-2" onClick={toggleMenu} type='button'>
+                            <span className="bi bi-list text-light h4"></span>
+                        </button>
+                    }
                     <Link className="navbar-brand" to={'/'}>
                         <img src={"http://localhost:8000/img/Jumpstart Logo.png"} style={{height:50, width:50}}/>
                         <span className="ms-3">

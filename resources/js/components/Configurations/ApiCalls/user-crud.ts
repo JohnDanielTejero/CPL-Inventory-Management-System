@@ -52,6 +52,13 @@ class UserService extends ApiEndpoint{
         });
     }
 
+    logout(){
+        return this. request({
+            url : this.endpoint + '/logout',
+            method : 'GET',
+        });
+    }
+
     //role based methods
     hasAnyRole(permissions:Array<string>){
         return this. request({

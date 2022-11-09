@@ -37,9 +37,10 @@ Route::controller(AuthController::class)
     ->group(function () {
         Route::post('login', 'login');
         Route::post('register', 'register');
-        Route::post('logout', 'logout');
+        Route::get('logout', 'logout');
         Route::post('refresh', 'refresh');
         Route::get('current-user', 'getUser');
+        Route::get('all-users', 'getAllUser');
         Route::post('has-permission', 'hasRole');
         Route::post('has-any-roles', 'hasAnyRole');
         Route::post('has-all-roles', 'hasAllRoles');
