@@ -1,8 +1,8 @@
-import checkPermission from "../ApiCalls/get-user";
+import userCrud from "../../Configurations/ApiCalls/user-crud";
 
 async function Authorization({component, permission}){
-    const response = await checkPermission('someurl', permission);
-    return (await response.json()) ? component: <Navigate to = "/"/>;
+    const response = await userCrud.hasAnyRole(permission);
+    return (await response.json()) ? component: <Navigate to = "/login"/>;
 }
 
 export default Authorization;

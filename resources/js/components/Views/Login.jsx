@@ -1,11 +1,11 @@
-function Login(){
+function Login({method}){
     return(
         <div className="row">
             <div className="col-0 col-md-3"></div>
             <div className="col-12 col-md-6">
                 <div className="card bg-dark text-light">
                     <div className="card-body">
-                        <form className="bg-dark row gy-2 text-light" autoComplete="off">
+                        <form className="bg-dark row gy-2 text-light" autoComplete="off" onSubmit={method}>
                             <h1 className="text-center">Sign In</h1>
                             <div className="col-12 form-floating">
                                 <input className="form-control border-dark bg-input" id = "email" type={"email"} placeholder="..."/>

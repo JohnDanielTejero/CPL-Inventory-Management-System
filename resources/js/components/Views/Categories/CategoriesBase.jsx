@@ -1,5 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
 
+/**
+ * Base template component for category page.
+ * @returns JSX.Element
+ */
 function CategoriesBase(){
     return(
         <div className="p-5 d-flex flex-column">

@@ -16,6 +16,6 @@ class Purchase extends Model
     ];
 
     public function stock(){
-        return $this->belongsToMany(Stock_Purchase::class, 'stock__purchases', 'purchase_id', 'stock_id');
+        return $this->belongsToMany(Stock::class, 'stock__purchases', 'purchase_id', 'stock_id');
     }
 }

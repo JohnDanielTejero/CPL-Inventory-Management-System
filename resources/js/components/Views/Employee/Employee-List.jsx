@@ -47,14 +47,14 @@ function EmployeeList(){
                     </tbody>
                 </table>
             </section>
-            <div class="modal fade" id="selectStore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-                <div class="modal-dialog modal-dialog-scrollable modal-dialog-fullscreen-md-down">
-                    <div class="modal-content bg-dark jumpstart text-light">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Change Store</h5>
-                            <button type="button" class="btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="selectStore" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-scrollable modal-dialog-fullscreen-md-down">
+                    <div className="modal-content bg-dark jumpstart text-light">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="staticBackdropLabel">Change Store</h5>
+                            <button type="button" className="btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <form className="row gy-2">
                                 <div className="col-12">
                                     <label htmlFor="store">
@@ -69,7 +69,7 @@ function EmployeeList(){
                                 </div>
                                 <input type={"hidden"} id = "employee-select"/>
                                 <div className="col-12 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-dark jumpstart w-100">Submit</button>
+                                    <button type="button" className="btn btn-dark jumpstart w-100">Submit</button>
                                 </div>
                             </form>
                         </div>

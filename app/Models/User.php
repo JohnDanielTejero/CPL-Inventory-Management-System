@@ -63,13 +63,101 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * Relationship with roles (Many to Many)
+     * @return BelongsToMany
+     */
     public function User_Roles()
     {
-        return $this->belongsToMany(User_Role::class, 'user__roles', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'user__roles', 'user_id', 'role_id');
     }
 
+    /**
+     * Relationship with stores (One to One)
+     * @return BelongsTo
+     */
     public function store()
     {
         return $this->belongsTo(Store::class);
     }
+
+    /**
+     * Checks whether user has any role
+     * @param array|string
+     * @return bool
+     */
+    public function hasAnyRole($role)
+    {
+        if (is_array($role)) {
+            foreach ($role as $rolecheck) {
+                if ($this->hasPermission($rolecheck)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->hasPermission($role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether a user has only one role
+     * @param string
+     * @return bool
+     */
+    public function hasPermission(string $role)
+    {
+        if ($this->User_Roles()->where('role_name', $role)->first() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks whether a user has all roles
+     * @param array|string
+     * @return bool
+     */
+    public function hasRoles($role)
+    {
+        if (is_array($role)) {
+            foreach ($role as $rolecheck) {
+                if (!$this->hasPermission($rolecheck)) {
+                    return false;
+                }
+            }
+        } else {
+            if (!$this->hasPermission($role)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks whether a user has any role unwanted
+     * @param array|string
+     * @return bool
+     */
+
+    public function excludeAnyRole($role)
+    {
+        if (is_array($role)) {
+            foreach ($role as $rolecheck) {
+                if ($this->hasPermission($rolecheck)) {
+                    return false;
+                }
+            }
+        } else {
+            if ($this->hasPermission($role)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
+

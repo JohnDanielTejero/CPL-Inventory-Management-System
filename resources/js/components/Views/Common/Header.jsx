@@ -14,7 +14,7 @@ function Header({sidemenu}){
                         <span className="bi bi-list text-light h4"></span>
                     </button>
                     <Link className="navbar-brand" to={'/'}>
-                        <img src="img/Jumpstart Logo.png" style={{height:50, width:50}}/>
+                        <img src={"http://localhost:8000/img/Jumpstart Logo.png"} style={{height:50, width:50}}/>
                         <span className="ms-3">
                             Jumpstart
                         </span>

@@ -28,12 +28,13 @@ import SalesInformation from "../../Views/Sales/SalesInformation";
 import Stocks from "../../Views/Stocks/StocksList";
 import Login from "../../Views/Login";
 
-function Routing(){
+function Routing({isAuth, login}){
+
     return(
         <Routes>
             {/* login */}
             <Route
-                element = { <Login/> }
+                element = { <Login method = {login}/> }
                 path = { "/login" }
             />
 
@@ -154,7 +155,7 @@ function Routing(){
 
             {/* Category */}
             <Route
-                element = { <CategoriesBase/> }
+                element = { <Authenticated component={ <CategoriesBase/> } isAuth = {isAuth} /> }
                 path="category"
             >
                 <Route
