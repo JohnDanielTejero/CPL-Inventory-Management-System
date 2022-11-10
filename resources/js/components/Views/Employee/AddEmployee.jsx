@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import testCrud from "../../Configurations/ApiCalls/test-crud";
+import storeCrud from "../../Configurations/ApiCalls/store-crud";
 import userCrud from "../../Configurations/ApiCalls/user-crud";
 import { cannotBeEmpty, removeError, setErrorWithMessage, setSuccess, validateEmail, validateName } from "../../Configurations/constants";
 
@@ -18,7 +18,7 @@ function RegisterEmployee(){
     let navigate = useNavigate();
 
     useEffect(async () => {
-        const dropdown = await Promise.all([userCrud.getRoles(), testCrud.getStores()]);
+        const dropdown = await Promise.all([userCrud.getRoles(), storeCrud.getStores("")]);
         setRoles(await dropdown[0]);
         setStores(await dropdown[1]);
 

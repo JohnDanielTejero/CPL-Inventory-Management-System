@@ -1,10 +1,34 @@
 import { useNavigate } from "react-router-dom";
-
+import { useState, useEffect } from 'react';
+import storeCrud from "../../Configurations/ApiCalls/store-crud";
+import debounce, { dateToHumanReadable } from "../../Configurations/constants";
 function StoresList(){
+
+    const [search, setSearch] = useState('');
+    const [stores, setStores] = useState([]);
+
+    useEffect(async () => {
+        setStores(await storeCrud.getStores(''));
+    },[]);
+
+    useEffect(async () =>{
+        setStores(await storeCrud.getStores(search));
+    },[search]);
+
     const navigate = useNavigate();
     const buttonNavigate = (e) => {
         navigate(e.target.getAttribute('data-route-target'));
     }
+
+    const handleSearch = e => {
+        debounce(setSearch(e.target.value));
+    }
+
+    const handleDelete = async (e) => {
+        const response = await storeCrud.deleteStore(e.target.getAttribute('data-delete-target'));
+        setStores(await response);
+    }
+
     return(
         <>
             <section className="d-flex justify-content-end mb-2">
@@ -14,6 +38,7 @@ function StoresList(){
                         id = "search"
                         placeholder="..."
                         autoComplete="off"
+                        onChange={handleSearch}
                     />
                     <label htmlFor="search" className="text-light">Search</label>
                 </div>
@@ -30,57 +55,33 @@ function StoresList(){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style={{height:"5rem", overflow:"hidden"}}>
-                            <td style={{width:"5rem"}}>Tite</td>
-                            <td style={{width:"6rem"}}>10 pcs</td>
-                            <td style={{width:"5rem"}}>100%</td>
-                            <td style={{width:"5rem"}}>100%</td>
-                            <td style={{width:"5rem"}} className="p-2">
-                                <div className="d-flex justify-content-center align-items-center">
-                                    <button className="btn btn-outline-light bg-gradient" data-route-target = "edit-store/2" onClick={buttonNavigate}>
-                                        <i className="bi bi-pen"></i>
-                                        <span className = "ms-1">Edit</span>
-                                    </button>
-                                    <button className="btn btn-dark jumpstart ms-2">
-                                        <i className="bi bi-trash"></i>
-                                        <span className = "ms-1">Delete</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        {
+                            stores.map(e => {
+                                return (
+                                    <tr style={{height:"5rem", overflow:"hidden"}} key={e.stores_id}>
+                                        <td style={{width:"5rem"}}>{ e.Store_Name }</td>
+                                        <td style={{width:"6rem"}}>{ e.Store_Address }</td>
+                                        <td style={{width:"5rem"}}>{ dateToHumanReadable(e.created_at) }</td>
+                                        <td style={{width:"5rem"}}>{ dateToHumanReadable(e.updated_at) }</td>
+                                        <td style={{width:"5rem"}} className="p-2">
+                                            <div className="d-flex justify-content-center align-items-center">
+                                                <button className="btn btn-outline-light bg-gradient" data-route-target = {"edit-store/" + e.stores_id} onClick={buttonNavigate}>
+                                                    <i className="bi bi-pen" style={{pointerEvents:'none'}}></i>
+                                                    <span className = "ms-1" style={{pointerEvents:'none'}}>Edit</span>
+                                                </button>
+                                                <button className="btn btn-dark jumpstart ms-2" onClick = {handleDelete} data-delete-target = {e.stores_id}>
+                                                    <i className="bi bi-trash" style={{pointerEvents:'none'}}></i>
+                                                    <span className = "ms-1" style={{pointerEvents:'none'}}>Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
             </section>
-
-            <div class="modal fade" id="selectStore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-                <div class="modal-dialog modal-dialog-scrollable modal-dialog-fullscreen-md-down">
-                    <div class="modal-content bg-dark jumpstart text-light">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Change Store</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form className="row gy-2">
-                                <div className="col-12">
-                                    <label htmlFor="store">
-                                        Store
-                                    </label>
-                                    <select
-                                        className="form-select bg-input text-light border border-dark"
-                                        id = "store"
-                                    >
-                                        <option>Hello</option>
-                                    </select>
-                                </div>
-                                <input type={"hidden"} id = "employee-select"/>
-                                <div className="col-12 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-dark jumpstart w-100">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </>
     );
 }

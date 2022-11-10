@@ -1,6 +1,6 @@
 function Stocks(){
     return(
-        <>
+        <div style = {{height:"40rem", overflowY:"auto"}}>
             <div className="card bg-dark text-light">
                 <div className="card-header bg-transparent">
                     <section className="table-responsive w-100">
@@ -84,7 +84,7 @@ function Stocks(){
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

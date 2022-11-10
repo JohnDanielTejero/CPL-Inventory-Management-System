@@ -1,10 +1,43 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import supplierCrud from "../../Configurations/ApiCalls/supplier-crud";
+import debounce from "../../Configurations/constants";
 
+/**
+ * Component to for suppliers table
+ *
+ * @returns JSX.Element
+ */
 function SuppliersList(){
+
     const navigate = useNavigate();
     const buttonNavigate = (e) => {
         navigate(e.target.getAttribute('data-route-target'));
     }
+
+    const [search, setSearch] =useState("");
+    const [suppliers, setSuppliers] = useState([]);
+
+    useEffect(async () => {
+        const collection = supplierCrud.getSuppliers('');
+        setSuppliers(await collection);
+
+    }, []);
+
+    useEffect(async () => {
+        const collection = supplierCrud.getSuppliers(search);
+        setSuppliers(await collection);
+    }, [search]);
+
+    const handleSearch = e => {
+        debounce(setSearch(e));
+    }
+
+    const handleDelete = async e => {
+        const response = await supplierCrud.deleteSupplier(e.target.getAttribute('data-delete-supplier'));
+        setSuppliers(await response);
+    }
+
     return(
         <>
             <section className="d-flex justify-content-end mb-2">
@@ -14,6 +47,7 @@ function SuppliersList(){
                         id = "search"
                         placeholder="..."
                         autoComplete="off"
+                        onChange={handleSearch}
                     />
                     <label htmlFor="search" className="text-light">Search</label>
                 </div>
@@ -22,36 +56,36 @@ function SuppliersList(){
                     <table className="table table-dark jumpstart-table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Supplier ID</th>
                                 <th>Supplier Name</th>
                                 <th>Contact No</th>
                                 <th>Email</th>
-                                <th>Added At</th>
-                                <th>Modified At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style={{height:"5rem", overflow:"hidden"}}>
-                                <td style={{width:"5rem"}}>Tite</td>
-                                <td style={{width:"6rem"}}>20 pcs</td>
-                                <td style={{width:"6rem"}}>10 pcs</td>
-                                <td style={{width:"5rem"}}>$2000000</td>
-                                <td style={{width:"5rem"}}>100%</td>
-                                <td style={{width:"5rem"}}>100%</td>
-                                <td style={{width:"5rem"}} className="p-2">
-                                    <div className="d-flex justify-content-center align-items-center">
-                                        <button className="btn btn-outline-light bg-gradient" data-route-target = "edit-supplier/2" onClick={buttonNavigate}>
-                                            <i className="bi bi-pen"></i>
-                                            <span className = "ms-1">Edit</span>
-                                        </button>
-                                        <button className="btn btn-dark jumpstart ms-2">
-                                            <i className="bi bi-trash"></i>
-                                            <span className = "ms-1">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            {
+                                suppliers.map( e => {
+                                    return (
+                                        <tr style={{height:"5rem", overflow:"hidden"}} key = {e.supp_id}>
+                                            <td style={{width:"6rem"}}>{ e.Supp_Name }</td>
+                                            <td style={{width:"6rem"}}>{ e.Supp_ContactNo }</td>
+                                            <td style={{width:"5rem"}}>{ e.Supp_Email }</td>
+                                            <td style={{width:"5rem"}} className="p-2">
+                                                <div className="d-flex justify-content-center align-items-center">
+                                                    <button className="btn btn-outline-light bg-gradient" data-route-target = {"edit-supplier/" + e.supp_id } onClick={buttonNavigate}>
+                                                        <i className="bi bi-pen"></i>
+                                                        <span className = "ms-1">Edit</span>
+                                                    </button>
+                                                    <button className="btn btn-dark jumpstart ms-2" onClick={handleDelete} data-delete-supplier = {e.supp_id}>
+                                                        <i className="bi bi-trash" style={{pointerEvents:"none"}}></i>
+                                                        <span className = "ms-1" style={{pointerEvents:"none"}}>Delete</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
             </section>

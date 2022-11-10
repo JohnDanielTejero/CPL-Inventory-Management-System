@@ -11,7 +11,7 @@ abstract class ApiEndpoint{
 
     /**
      *
-     * @param options { url:'url', method:'METHOD', body: 'data'}
+     * @param options { url : 'url', method:'METHOD', body: 'data'}
      * @param contentType Defaults to application/json, can be changed if left as not null
      * @returns Object response
      */

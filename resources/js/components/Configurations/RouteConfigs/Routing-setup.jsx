@@ -135,7 +135,20 @@ function Routing({isAuth, login, updateUser, permission}){
 
             {/* Stores */}
             <Route
-                element = { <StoresBase/> }
+                element = {
+                    <Authenticated component = {
+                        <Authorization component = {
+                                <StoresBase/>
+                            }
+                            permission = { permission }
+                            allowedroles = { ['ROLE_ADMIN'] }
+                        />
+
+                    }
+
+                    isAuth = {isAuth}
+                />
+                }
                 path="stores"
             >
                 <Route

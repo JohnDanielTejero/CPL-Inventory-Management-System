@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
-use App\Models\Role;
-use App\Models\Store;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,7 +58,29 @@ Route::controller(AuthController::class)
         Route::delete('delete-user/{user}', 'deleteUser');
     });
 
-//temporary controller for retrieving stores
-Route::get('/stores', function(){
-    return response()->json(Store::all(), 200);
-});
+/**
+ * Route group for store interaction
+ */
+Route::controller(StoreController::class)
+    ->prefix('/stores')
+    ->group(function () {
+        Route::get('all-stores', 'index');
+        Route::get('store/{store}', 'show');
+        Route::post('add-store', 'store');
+        Route::patch('update-store/{store}', 'update');
+        Route::delete('delete-store/{store}', 'destroy');
+    });
+
+/**
+ * Route group for supplier interaction
+ */
+Route::controller(SupplierController::class)
+    ->prefix('/suppliers')
+    ->group(function () {
+        Route::get('all-suppliers', 'index');
+        Route::get('supplier/{supplier}', 'show');
+        Route::post('add-supplier', 'store');
+        Route::patch('update-supplier/{supplier}', 'update');
+        Route::delete('delete-supplier/{supplier}', 'destroy');
+    });
+

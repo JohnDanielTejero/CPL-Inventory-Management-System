@@ -16,13 +16,14 @@ function CategoryForm(){
 
     //current active category state
     const [activeCategory, setActiveCategory] = useState(null);
+
     useEffect(async () => {
         if(id != undefined){
             setActiveCategory(await categoryCrud.getCategory(id));
         }else{
             setActiveCategory(null);
         }
-    },[]);
+    }, [id]);
 
     //events
     const handleCategoryName = (e) => {
@@ -182,10 +183,6 @@ function CategoryForm(){
                         <div className="invalid-feedback" id = "category-description-feedback">
                         </div>
                     </div>
-
-                    {
-                        location.pathname != "/category/add-category" && <input type={"hidden"} value="" id = "category_id"/>
-                    }
                     <div className="col-12">
                         <button className="w-100 btn btn-dark jumpstart border border-dark">
                             {

@@ -99,6 +99,7 @@ function Sidebar({reference, navigateTo, logout, user, permission}){
                         <span>Suppliers</span>
                     </button>
                 </div>
+
                 {/* Sales */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
                     <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "sales">
@@ -108,12 +109,15 @@ function Sidebar({reference, navigateTo, logout, user, permission}){
                 </div>
 
                 {/* Stores */}
-                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "stores">
-                        <span className="bi bi-shop-window me-2"></span>
-                        <span>Stores</span>
-                    </button>
-                </div>
+                {
+                    hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                        <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                            <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "stores">
+                                <span className="bi bi-shop-window me-2"></span>
+                                <span>Stores</span>
+                            </button>
+                        </div>
+                }
 
                 {/* Stocks */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>

@@ -12,7 +12,7 @@ class Store extends Model
     protected $primaryKey = 'stores_id';
     protected $fillable = [
         'Store_Name',
-        'Store_Desc',
+        'Store_Address',
     ];
 
     public function user()
