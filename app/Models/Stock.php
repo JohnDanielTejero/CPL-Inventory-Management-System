@@ -10,6 +10,7 @@ class Stock extends Model
     use HasFactory;
 
     protected $primaryKey = 'stock_id';
+    public $timestamps = false;
     protected $fillable = [
         'Stock_Quantity',
         'Stock_Status',

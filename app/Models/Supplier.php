@@ -10,6 +10,8 @@ class Supplier extends Model
     use HasFactory;
 
     protected $primaryKey = "supp_id";
+    public $timestamps = false;
+
     protected $fillable = [
         'Supp_Name',
         'Supp_Email',
