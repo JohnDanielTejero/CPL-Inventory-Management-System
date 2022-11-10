@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import userCrud from "../../Configurations/ApiCalls/user-crud";
-import { getCookie } from "../../Configurations/constants";
+import { hasAnyRole } from "../../Configurations/constants";
 
-function Sidebar({reference, navigateTo, logout}){
+/**
+ * Sidebar component for the application
+ *
+ * @param {reference, navigateTo, logout, user, permission} param0
+ * @returns JSX.Element
+ */
+function Sidebar({reference, navigateTo, logout, user, permission}){
 
     const location = useLocation();
     const [currentLocation, setCurrentLocation] = useState();
@@ -31,22 +36,6 @@ function Sidebar({reference, navigateTo, logout}){
         }
     }, [currentLocation]);
 
-
-    const [user, setUser] = useState(null);
-
-    useEffect(async () => {
-        if(getCookie('token')){
-            const currentuser = await userCrud.getActiveUser();
-            setUser(await currentuser);
-        }
-
-        return (() => {
-          setUser(null);
-        });
-
-    }, []);
-
-
     const removePopUp = (e) => {
         if (window.innerWidth < 768){
             e.target.parentElement.parentElement.parentElement.classList.remove('active');
@@ -56,26 +45,33 @@ function Sidebar({reference, navigateTo, logout}){
 
     return(
         <aside className = "bg-light d-flex flex-column h-100 side-menu active" ref = {reference}>
-            <div className="w-100 bg-dark bg-gradient flex-fill" style={{overflowY: 'auto', overflowX: 'hidden'}}>
+            <div className="w-100 bg-dark bg-gradient" style={{overflowY: 'auto', overflowX: 'hidden', height:'85%'}}>
                 {/* Dashboard */}
-                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button
-                        className="side-menu-button w-100 h-100"
-                        onClick={removePopUp}
-                        data-side-url = "/"
-                    >
-                        <span className="bi bi-speedometer2 me-2"></span>
-                        <span>Dashboard</span>
-                    </button>
-                </div>
+                {
+                    hasAnyRole(permission, ['ROLE_ADMIN', 'ROLE_STORE_OWNER']) &&
+                        <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                            <button
+                                className="side-menu-button w-100 h-100"
+                                onClick={removePopUp}
+                                data-side-url = "/"
+                            >
+                                <span className="bi bi-speedometer2 me-2"></span>
+                                <span>Dashboard</span>
+                            </button>
+                        </div>
+                }
 
                 {/* Category */}
-                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "category">
-                        <span className="bi bi-tags-fill me-2"></span>
-                        <span>Category</span>
-                    </button>
-                </div>
+                {
+                    hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                        <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                            <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "category">
+                                <span className="bi bi-tags-fill me-2"></span>
+                                <span>Category</span>
+                            </button>
+                        </div>
+
+                }
 
                 {/* Products */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
@@ -86,12 +82,15 @@ function Sidebar({reference, navigateTo, logout}){
                 </div>
 
                 {/* User */}
-                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "employee">
-                        <span className="bi bi-people-fill me-2"></span>
-                        <span>Employee</span>
-                    </button>
-                </div>
+                {
+                    hasAnyRole(permission, ['ROLE_ADMIN', 'ROLE_STORE_OWNER']) &&
+                    <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                        <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "employee">
+                            <span className="bi bi-people-fill me-2"></span>
+                            <span>Employee</span>
+                        </button>
+                    </div>
+                }
 
                 {/* Suppliers */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
@@ -125,8 +124,8 @@ function Sidebar({reference, navigateTo, logout}){
                 </div>
             </div>
 
-            <div className="overflow-hidden w-100 bg-dark bg-gradient"  style={{height:'18%'}}>
-                <div className="w-100 h-100 d-flex justify-content-center">
+            <div className="overflow-hidden w-100 bg-dark bg-gradient flex-fill">
+                <div className="w-100 d-flex justify-content-center" style={{height:"100%"}}>
                     <Link
                         className="btn btn-dark bg-gradient border border-0 rounded-0 d-flex flex-row align-items-center py-0"
                         style = {{width:'70%'}}

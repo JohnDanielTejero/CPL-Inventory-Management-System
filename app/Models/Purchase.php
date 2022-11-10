@@ -9,6 +9,7 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'purchase_id';
     protected $fillable = [
         'Purchase_By',
         'Purchase_Payable',

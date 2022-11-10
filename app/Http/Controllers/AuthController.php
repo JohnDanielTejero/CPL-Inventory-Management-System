@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
+use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -70,7 +71,8 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(),
             [
-                'name' => ['required', 'string'],
+                'first_name' => ['required', 'string'],
+                'last_name' => ['required', 'string'],
                 'email' => ['required', 'string', 'email', 'unique:users'],
                 'password'=>['required', 'string'],
                 'role' => ['required'],
@@ -86,21 +88,31 @@ class AuthController extends Controller
         }
 
         $role = Role::find($request->role);
+        $store = Store::find($request->store);
 
-        if($role != null){
+        if($role != null && $store != null){
 
             $user = User::create([
-                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' =>  $request->email,
                 'password' => Hash::make($request->password),
                 'store_id' => $request->store,
             ]);
-            $user->User_Roles()->attach($role);
 
-            return response()->json(['status' => 'created'], 201);
+            $user->User_Roles()->attach($role);
+            return response()->json([['status' => 'created']], 200);
 
         }else{
-            return response()->json(['status' => 'missing role'], 400);
+            $error_response = [['status' => 'missing entity']];
+            if ($role == null){
+                $error_response.array_push(['role' => 'role does not exist']);
+            }
+
+            if ($store == null){
+                $error_response.array_push(['store' => 'store does not exist']);
+            }
+            return response()->json($error_response, 400);
         }
 
     }
@@ -127,10 +139,13 @@ class AuthController extends Controller
     public function getUser(Request $request){
 
         if($request->user()->store_id != null){
-            $user = User::join('stores', 'store_id', '=', 'stores.id')->where('users.id', $request->user()->id)->first();
+            $user = User::join('stores', 'users.store_id', '=', 'stores.stores_id')
+                ->with('User_Roles')
+                ->where('users.user_id', $request->user()->user_id)
+                ->first(['users.*', 'stores.Store_Name', 'stores.Store_Address']);
             return response()->json($user);
         }else{
-            return response()->json(Auth::user());
+            return response()->json(User::with('User_Roles')->where('user_id', $request->user()->user_id)->first());
         }
     }
 
@@ -152,22 +167,71 @@ class AuthController extends Controller
      * @return JsonResponse collection of users
      */
     public function getAllUser(Request $request){
-        if($request['query'] == null){
-            return response()->json(
-                User::join('stores', 'store_id', '=', 'stores.id')->whereHas('User_Roles', function (Builder $query){
-                    $query->where('role_name', '!=', 'ROLE_ADMIN');
-                })->where('user.id', '!=', $request->user()->id)->get(), 200
-            );
+        if($request['query'] == null || $request['query'] == ""){
+
+            switch ($request) {
+                case $request->user()->hasPermission('ROLE_ADMIN'):
+                    return response()->json(
+                        User::join('stores', 'store_id', '=', 'stores.stores_id')->whereHas('User_Roles', function (Builder $query){
+                            $query->where('role_name', '!=', 'ROLE_ADMIN');
+                        })->where('users.user_id', '!=', $request->user()->user_id)
+                        ->latest('users.created_at')
+                        ->get(['users.*', 'stores.Store_Name', 'stores.Store_Address']), 200
+                    );
+                    break;
+                case $request->user()->hasPermission('ROLE_STORE_OWNER'):
+                    return response()->json(
+                        User::join('stores', 'store_id', '=', 'stores.stores_id')->whereHas('User_Roles', function (Builder $query){
+                            $query->where('role_name', '!=', 'ROLE_ADMIN')->where('role_name', '!=', 'ROLE_STORE_OWNER');
+                        })->where('users.user_id', '!=', $request->user()->user_id)
+                        ->where('store_id', $request->user()->store->stores_id)
+                        ->latest('users.created_at')
+                        ->get(['users.*', 'stores.Store_Name', 'stores.Store_Address']), 200
+                    );
+                    break;
+
+                default:
+                    return response()->json([['status'=>'forbidden']], 403);
+                    break;
+            }
+
         }else{
-            return response()->json(
-                User::join('stores', 'store_id', '=', 'stores.id')
-                    ->where('first_name', 'LIKE', '%'.$request['query'].'%')
-                    ->orWhere('last_name', 'LIKE','%'.$request['query'].'%')
-                    ->whereHas('User_Roles', function (Builder $query){
-                        $query->where('role_name', '!=', 'ROLE_ADMIN');
-                    })->get(),
-                200
-            );
+            switch ($request) {
+                case $request->user()->hasPermission('ROLE_ADMIN'):
+                    return response()->json(
+                        User::join('stores', 'store_id', '=', 'stores.stores_id')
+                            ->where('first_name', 'LIKE', '%'.$request['query'].'%')
+                            ->orWhere('last_name', 'LIKE','%'.$request['query'].'%')
+                            ->whereHas('User_Roles', function (Builder $query){
+                                $query->where('role_name', '!=', 'ROLE_ADMIN');
+                            })->where('users.user_id', '!=', $request->user()->user_id)
+                            ->latest('users.created_at')
+                            ->get(['users.*', 'stores.Store_Name', 'stores.Store_Address']),
+                        200
+                    );
+                    break;
+
+                case $request->user()->hasPermission('ROLE_STORE_OWNER'):
+                    return response()->json(
+                        User::join('stores', 'store_id', '=', 'stores.stores_id')
+                            ->where('first_name', 'LIKE', '%'.$request['query'].'%')
+                            ->orWhere('last_name', 'LIKE','%'.$request['query'].'%')
+                            ->whereHas('User_Roles', function (Builder $query){
+                                $query->where('role_name', '!=', 'ROLE_ADMIN')
+                                    ->where('role_name', '!=', 'ROLE_STORE_OWNER');
+                            })->where('users.user_id', '!=', $request->user()->user_id)
+                            ->where('store_id', $request->user()->store->stores_id)
+                            ->latest('users.created_at')
+                            ->get(['users.*', 'stores.Store_Name', 'stores.Store_Address']),
+                        200
+                    );
+                    break;
+
+                default:
+                    return response()->json([['status'=>'forbidden']], 403);
+                    break;
+            }
+
         }
     }
 
@@ -227,4 +291,69 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Delete a user record
+     *
+     * Only admin can delete user!
+     *
+     * @param User $user user entity, in request takes id as argument
+     * @return JsonResponse deletion message.
+     */
+    public function deleteUser(Request $request, User $user){
+        if ($user != null){
+            if($user->delete()){
+                return $this->getAllUser($request);
+            }
+        }else{
+            return response()->json([['status' => 'resource not found']], 404);
+        }
+    }
+
+    /**
+     * For admin display only!!
+     *
+     * Display all available roles.
+     *
+     * @return JsonResponse collection of roles.
+     */
+    public function allAvailableRoles(){
+        return response()->json(Role::where('Role_Name', '!=', 'ROLE_ADMIN')->get(), 200);
+    }
+
+    /**
+     * Function for user to edit own's profile
+     *
+     * @return JsonResponse current user's updated profile
+     */
+    public function editUser(Request $request){
+
+        if ($request->user() == null){
+            return response()->json([['status' => 'not found'], ['message' => 'user does not exist']], 404);
+        }
+
+        $validator = Validator::make($request->all(),
+            [
+                'first_name' => ['required', 'string'],
+                'last_name' => ['required', 'string'],
+                'password'=>['required', 'string'],
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                ['status' => 'failed validation'],
+                $validator->errors(),
+            ], 400);
+        }
+
+        if( $request->user()->update([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'password'=> Hash::make($request['password']),
+        ])){
+            return response()->json([['status' => 'updated'], $request->user()], 200);
+        }
+
+
+    }
 }

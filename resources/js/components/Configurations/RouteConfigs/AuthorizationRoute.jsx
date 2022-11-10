@@ -1,8 +1,8 @@
-import userCrud from "../../Configurations/ApiCalls/user-crud";
+import { Navigate } from "react-router-dom";
+import { hasAnyRole } from "../constants";
 
-async function Authorization({component, permission}){
-    const response = await userCrud.hasAnyRole(permission);
-    return (await response.json()) ? component: <Navigate to = "/login"/>;
+function Authorization({component:component, permission, allowedroles}){
+    return (hasAnyRole(permission, allowedroles)) ? component : <Navigate to = "/profile"/>;
 }
 
 export default Authorization;

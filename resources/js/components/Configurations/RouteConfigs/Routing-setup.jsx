@@ -5,7 +5,6 @@ import Authenticated from "./AuthenticatedRoute";
 import Dashboard from "../../Views/Home";
 import ProductsBase from "../../Views/Products/Products-Base";
 import Products from "../../Views/Products/Products-List";
-import AddProduct from "../../Views/Products/Products-Form";
 import ProductForm from "../../Views/Products/Products-Form";
 import ProductDetails from "../../Views/Products/Product-Information";
 import EmployeeBase from "../../Views/Employee/EmployeeBase";
@@ -28,19 +27,40 @@ import SalesInformation from "../../Views/Sales/SalesInformation";
 import Stocks from "../../Views/Stocks/StocksList";
 import Login from "../../Views/Login";
 
-function Routing({isAuth, login}){
+/**
+ * Routing configuration for react project
+ *
+ * @param {isAuth, login, updateUser, permission} param0
+ * @returns Routes
+ */
+function Routing({isAuth, login, updateUser, permission}){
 
     return(
         <Routes>
             {/* login */}
             <Route
-                element = { <Login method = {login}/> }
+                element = {
+                    <Anonymous component={ <Login method = {login}/> } isAuth = { isAuth }/>
+                }
                 path = { "/login" }
             />
 
             {/* Dashboard */}
             <Route
-                element = { <Dashboard/> }
+                element = {
+                    <Authenticated
+                        component = {
+                            <Authorization
+                                component = {
+                                    <Dashboard/>
+                                }
+                                permission = {permission}
+                                allowedroles = {['ROLE_ADMIN', 'ROLE_STORE_OWNER']}
+                            />
+                        }
+                        isAuth = {isAuth}
+                    />
+                }
                 index
             />
 
@@ -86,7 +106,7 @@ function Routing({isAuth, login}){
 
             {/* Profile */}
             <Route
-                element = { <Profile/> }
+                element = { <Profile updateUser = {updateUser}/> }
                 path="profile"
             />
 
@@ -155,7 +175,14 @@ function Routing({isAuth, login}){
 
             {/* Category */}
             <Route
-                element = { <Authenticated component={ <CategoriesBase/> } isAuth = {isAuth} /> }
+                element = {
+                    <Authenticated component = {
+                        <Authorization component = { <CategoriesBase/> }
+                            permission = {permission}
+                            allowedroles = {['ROLE_ADMIN']}
+                        /> } isAuth = {isAuth}
+                    />
+                }
                 path="category"
             >
                 <Route

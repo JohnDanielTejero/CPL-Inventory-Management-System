@@ -20,7 +20,7 @@ function SalesList(){
                     <label htmlFor="search" className="text-light">Search</label>
                 </div>
             </section>
-            <section className="table-responsive w-100">
+            <section className="table-responsive w-100" style={{height:'30rem', overflowY:'auto'}}>
                 <table className="table table-dark jumpstart-table table-bordered table-hover">
                     <thead>
                         <tr>

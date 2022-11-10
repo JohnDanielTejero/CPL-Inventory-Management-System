@@ -2,6 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 
 /**
  * Base template component for category page.
+ *
  * @returns JSX.Element
  */
 function CategoriesBase(){

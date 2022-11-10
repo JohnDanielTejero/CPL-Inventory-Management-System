@@ -1,5 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 
+/**
+ * Component layout for employees page
+ *
+ * @returns JSX.Element
+ */
 function EmployeeBase(){
     return(
         <div className="p-5 d-flex flex-column">

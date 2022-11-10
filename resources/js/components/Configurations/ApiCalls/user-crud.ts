@@ -16,7 +16,7 @@ class UserService extends ApiEndpoint{
      */
     getAllUsers(query:string|null){
         return this.request({
-            url : this.endpoint + "/users?query=" + query,
+            url : this.endpoint + "/all-users?query=" + query,
             method : 'GET',
         });
     }
@@ -39,19 +39,38 @@ class UserService extends ApiEndpoint{
      * @returns Object as response
      */
     insertUser(user:Object){
-        return this. request({
+        return this.request({
             url : this.endpoint + '/register',
             method : 'POST',
             body : JSON.stringify(user)
         });
     }
 
-    deleteUser(){
-
+    /**
+     * deletes a user or employee entity
+     *
+     * @param id id of the user
+     * @returns Object as response
+     */
+    deleteUser(id:number){
+        return this.request({
+            url : this.endpoint + '/delete-user/' + id,
+            method : 'DELETE'
+        });
     }
 
-    editUser(){
-
+    /**
+     * Updates the current user's profile
+     *
+     * @param userinfo body of user to be updated
+     * @returns Object as response
+     */
+    editUser(userinfo:Object){
+        return this.request({
+            url : this.endpoint + '/update-user-profile',
+            method : 'PATCH',
+            body : JSON.stringify(userinfo),
+        });
     }
 
     /**
@@ -121,6 +140,18 @@ class UserService extends ApiEndpoint{
             body : JSON.stringify(permission)
         });
 
+    }
+
+    /**
+     * gets all available roles
+     *
+     * @returns Array<Object>
+     */
+    getRoles(){
+        return this.request({
+            url : this.endpoint + "/roles",
+            method : 'GET'
+        });
     }
 }
 

@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->id();
+            $table->id('stores_id');
             $table->text('Store_Name');
             $table->text('Store_Address');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

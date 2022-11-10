@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('stocks', function (Blueprint $table) {
-            $table->id();
+            $table->id('stock_id');
             $table->string('Stock_Quantity');
             $table->string('Stock_Status');
             $table->foreignId('Store_Id')->onDelete('cascade');

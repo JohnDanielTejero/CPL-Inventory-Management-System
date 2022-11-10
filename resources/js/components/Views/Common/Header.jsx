@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 
+/**
+ * Header component for the application
+ *
+ * @param {sidemenu, isAuth} param0 parameter contains reference from sidemenu and state of authentication
+ * @returns JSX.Element
+ */
 function Header({sidemenu, isAuth}){
 
     const toggleMenu = () => {

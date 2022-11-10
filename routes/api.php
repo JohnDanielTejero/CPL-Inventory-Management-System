@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Models\Role;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * Route group for categories
+ */
 Route::group([
         'prefix'=>'/category'
     ],
@@ -32,16 +37,28 @@ Route::group([
     }
 );
 
+
+/**
+ * Route group for auth controller.
+ */
 Route::controller(AuthController::class)
     ->prefix('/users')
     ->group(function () {
-        Route::post('login', 'login');
-        Route::post('register', 'register');
+        Route::get('roles', 'allAvailableRoles');
         Route::get('logout', 'logout');
-        Route::post('refresh', 'refresh');
         Route::get('current-user', 'getUser');
         Route::get('all-users', 'getAllUser');
+        Route::post('login', 'login');
+        Route::post('register', 'register');
+        Route::post('refresh', 'refresh');
         Route::post('has-permission', 'hasRole');
         Route::post('has-any-roles', 'hasAnyRole');
         Route::post('has-all-roles', 'hasAllRoles');
+        Route::patch('update-user-profile', 'editUser');
+        Route::delete('delete-user/{user}', 'deleteUser');
+    });
+
+//temporary controller for retrieving stores
+Route::get('/stores', function(){
+    return response()->json(Store::all(), 200);
 });

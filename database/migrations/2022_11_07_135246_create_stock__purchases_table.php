@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('stock_id');
             $table->unsignedBigInteger('purchase_id');
             $table->integer('quantity');
-            $table->foreign('stock_id')->references('id')->on('stocks')->onDelete('cascade');
-            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
+            $table->foreign('stock_id')->references('stock_id')->on('stocks')->onDelete('cascade');
+            $table->foreign('purchase_id')->references('purchase_id')->on('purchases')->onDelete('cascade');
             $table->primary(['stock_id', 'purchase_id']);
         });
     }

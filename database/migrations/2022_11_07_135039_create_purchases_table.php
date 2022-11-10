@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('purchases', function (Blueprint $table) {
-            $table->id();
+            $table->id('purchase_id');
             $table->string('Purchase_By');
             $table->string('Purchase_Payable');
             $table->dateTime('Purchase_Date');

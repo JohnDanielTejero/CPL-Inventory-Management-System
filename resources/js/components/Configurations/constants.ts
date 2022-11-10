@@ -32,7 +32,7 @@ export function cannotBeEmpty(element:any){
  */
 export function validateName(name:string) {
     //var regex = /^[A-Z][a-z]*$/;
-    var regex = /^[A-Z\s][a-z\s]*$/;
+    var regex = /^[A-Z][A-Za-z\s]*$/;
     return regex.test(name);
 }
 
@@ -122,5 +122,87 @@ export function deleteCookie(ckey:string){
  * @returns string
  */
 export function dateToHumanReadable(date:Date){
-    return moment(moment(date).format('MMMM DD YYYY, h:mm:ss a'), 'MMMM Do YYYY, h:mm:ss a').fromNow();
+    return date != undefined ?
+        moment(moment(new Date(date)).format('MMMM DD YYYY, h:mm:ss a'), 'MMMM Do YYYY, h:mm:ss a').fromNow()
+        : "not yet updated";
+}
+
+/**
+ * sets the error of input field with error message
+ *
+ * @param element Element
+ * @param message string
+ */
+export function setErrorWithMessage(element:any, message:string){
+    element.classList.remove('is-valid');
+    element.classList.add('is-invalid');
+    let e = document.querySelector("#" + element.getAttribute("id") + "-feedback");
+    if (e != null){
+        e.innerHTML = message;
+    }
+}
+
+/**
+ * removes error and set the field to success state
+ *
+ * @param element Element
+ */
+export function setSuccess(element:any){
+    element.classList.add('is-valid');
+    element.classList.remove('is-invalid');
+    let e = document.querySelector("#" + element.getAttribute("id") + "-feedback");
+    if (e != null){
+        e.innerHTML = "";
+    }
+}
+
+/**
+ * Checks if user has any of roles.
+ *
+ * @param roles the roles the user has.
+ * @param allowedroles the roles that you set to be allowed.
+ * @returns boolean
+ */
+export function hasAnyRole(roles:Array<string>, allowedroles:Array<string>){
+
+    if (typeof roles == "undefined") return;
+
+    for (const role of roles){
+        if (allowedroles.indexOf(role) != -1){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Checks if user has the role.
+ *
+ * @param role the role the user has.
+ * @param allowedRole the role that you set to be allowed.
+ * @returns
+ */
+export function hasPermission(role:string, allowedRole:string){
+    if (role == allowedRole){
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Checks if user has all roles.
+ *
+ * @param roles the roles the user has.
+ * @param allowedroles the roles that you set to be allowed.
+ * @returns
+ */
+export function hasAllRoles(roles:Array<string>, allowedroles:Array<string>){
+    if (typeof roles == "undefined") return;
+    for (const role of roles){
+        if (allowedroles.indexOf(role) == -1){
+            return false;
+        }
+    }
+    return true;
 }

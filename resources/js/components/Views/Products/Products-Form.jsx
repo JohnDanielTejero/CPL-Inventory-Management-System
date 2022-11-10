@@ -5,7 +5,7 @@ function ProductForm(){
     const location = useLocation();
 
     return (
-        <div className="card bg-dark bg-opacity-75 text-light h-100">
+        <div className="card bg-dark bg-opacity-75 text-light" style={{height:"40rem", overflowY:"auto"}}>
             <div className="card-body">
                 <form className="row gy-2 p-2" autoComplete="off">
                     <div className="col-12">
@@ -16,7 +16,7 @@ function ProductForm(){
                         </h1>
                     </div>
 
-                    <div className="col-12 form-floating">
+                    <div className="col-md-6 col-12 form-floating">
                         <input
                             className="form-control bg-input text-light border border-dark"
                             id = "product_name"
@@ -24,7 +24,7 @@ function ProductForm(){
                         />
                         <label className =  "ms-2" htmlFor="product_name">Product Name</label>
                     </div>
-                    <div className="col-12 form-floating">
+                    <div className="col-12 col-md-6 form-floating">
                         <input
                             type={"number"}
                             min={0}
@@ -68,7 +68,7 @@ function ProductForm(){
                             className="form-control bg-input text-light border border-dark"
                             id = "product_desc"
                             placeholder="..."
-                            style={{height:"15rem"}}
+                            style={{height:"10rem"}}
                         />
                         <label className = "ms-2" htmlFor="product_desc">Product Description</label>
                     </div>

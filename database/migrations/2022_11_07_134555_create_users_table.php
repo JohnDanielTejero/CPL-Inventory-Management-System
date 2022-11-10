@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id('user_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedBigInteger('store_id')->nullable();
-            $table->foreign('store_id')->references('id')->on('stores')->nullOnDelete();
+            $table->foreign('store_id')->references('stores_id')->on('stores')->nullOnDelete();
         });
     }
 

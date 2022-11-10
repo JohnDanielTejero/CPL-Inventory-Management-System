@@ -1,4 +1,4 @@
-import { validateName, removeError, cannotBeEmpty } from "../../Configurations/constants";
+import { validateName, removeError, cannotBeEmpty, setSuccess, setErrorWithMessage } from "../../Configurations/constants";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import categoryCrud from "../../Configurations/ApiCalls/category-crud";
@@ -28,29 +28,20 @@ function CategoryForm(){
     const handleCategoryName = (e) => {
        if(cannotBeEmpty(e.target)){
             if(validateName(e.target.value.trim())){
-                e.target.classList.remove('is-invalid');
-                e.target.classList.add('is-valid');
+                setSuccess(e.target);
             }else{
-                e.target.classList.remove('is-valid');
-                e.target.classList.add('is-invalid');
-                document.querySelector("#" + e.target.getAttribute("id") + "-feedback").innerHTML = "category name is invalid!";
+               setErrorWithMessage(e.target, "Category name is invalid!");
             }
         }else{
-            e.target.classList.remove('is-valid');
-            e.target.classList.add('is-invalid');
-            document.querySelector("#" + e.target.getAttribute("id") + "-feedback").innerHTML = "category name is required!";
+            setErrorWithMessage(e.target, 'Category name is required!');
        }
     }
 
     const handleCategoryDesc = (e) => {
         if(cannotBeEmpty(e.target)){
-            e.target.classList.remove('is-invalid');
-            e.target.classList.add('is-valid');
-            document.querySelector("#" + e.target.getAttribute("id") + "-feedback").innerHTML = "";
+            setSuccess(e.target);
         }else{
-            e.target.classList.remove('is-valid');
-            e.target.classList.add('is-invalid');
-            document.querySelector("#" + e.target.getAttribute("id") + "-feedback").innerHTML = "category description is required!";
+            setErrorWithMessage(e.target, "Category description is required!");
        }
     }
 
@@ -62,29 +53,20 @@ function CategoryForm(){
 
         if(cannotBeEmpty(e.target[0])){
             if(validateName(e.target[0].value.trim())){
-                e.target[0].classList.remove('is-invalid');
-                e.target[0].classList.add('is-valid');
+                setSuccess(e.target[0])
                 nameValid = true;
             }else{
-                e.target[0].classList.remove('is-valid');
-                e.target[0].classList.add('is-invalid');
-                document.querySelector("#" + e.target[0].getAttribute("id") + "-feedback").innerHTML = "category name is invalid!";
+                setErrorWithMessage(e.target[0],"Category name is invalid!");
             }
         }else{
-            e.target[0].classList.remove('is-valid');
-            e.target[0].classList.add('is-invalid');
-            document.querySelector("#" + e.target[0].getAttribute("id") + "-feedback").innerHTML = "category name is required!";
+            setErrorWithMessage(e.target[0], "Category name is required");
         }
 
         if(cannotBeEmpty(e.target[1])){
-            e.target[1].classList.remove('is-invalid');
-            e.target[1].classList.add('is-valid');
-            document.querySelector("#" + e.target[1].getAttribute("id") + "-feedback").innerHTML = "";
+            setSuccess(e.target[1]);
             descValid = true;
         }else{
-            e.target[1].classList.remove('is-valid');
-            e.target[1].classList.add('is-invalid');
-            document.querySelector("#" + e.target[1].getAttribute("id") + "-feedback").innerHTML = "category description is required!";
+            setErrorWithMessage(e.target[1], 'Category description is required!');
        }
 
        if(nameValid && descValid){
@@ -97,7 +79,7 @@ function CategoryForm(){
                 );
 
                 if (response.errors != null){
-                    console.log(response);
+
                     for (const [key, value] of Object.entries(response.errors)){
                         console.log(key + value[0]);
                         if (key == "Category_Name"){
@@ -106,15 +88,16 @@ function CategoryForm(){
                             nameValid = false;
 
                             if (value[0].includes('field is required')){
-                                document.querySelector("#" + e.target[0].getAttribute("id") + "-feedback").innerHTML = "category name is required";
+                                document.querySelector("#" + e.target[0].getAttribute("id") + "-feedback").innerHTML = "Category name is required";
                             }
+
                         }else if (key == "Category_Desc"){
                             e.target[1].classList.add('is-invalid');
                             e.target[1].classList.remove('is-valid');
                             descValid = false;
 
                             if (value[0].includes('field is required')){
-                                document.querySelector("#" + e.target[1].getAttribute("id") + "-feedback").innerHTML = "category description is required";
+                                document.querySelector("#" + e.target[1].getAttribute("id") + "-feedback").innerHTML = "Category description is required";
                             }
                         }
                     }
@@ -131,7 +114,7 @@ function CategoryForm(){
                 );
 
                 if (response.errors != null){
-                    console.log(response);
+
                     for (const [key, value] of Object.entries(response.errors)){
                         console.log(key + value[0]);
                         if (key == "Category_Name"){
@@ -140,7 +123,7 @@ function CategoryForm(){
                             nameValid = false;
 
                             if (value[0].includes('field is required')){
-                                document.querySelector("#" + e.target[0].getAttribute("id") + "-feedback").innerHTML = "category name is required";
+                                document.querySelector("#" + e.target[0].getAttribute("id") + "-feedback").innerHTML = "Category name is required";
                             }
                         }else if (key == "Category_Desc"){
                             e.target[1].classList.add('is-invalid');
@@ -148,7 +131,7 @@ function CategoryForm(){
                             descValid = false;
 
                             if (value[0].includes('field is required')){
-                                document.querySelector("#" + e.target[1].getAttribute("id") + "-feedback").innerHTML = "category description is required";
+                                document.querySelector("#" + e.target[1].getAttribute("id") + "-feedback").innerHTML = "Category description is required";
                             }
                         }
                     }

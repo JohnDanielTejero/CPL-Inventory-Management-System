@@ -13,15 +13,20 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'user_id';
+    public $timestamps = true;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'role_id',
+        'store_id',
     ];
 
     /**
@@ -78,7 +83,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Store::class, 'store_id', 'stores_id');
     }
 
     /**

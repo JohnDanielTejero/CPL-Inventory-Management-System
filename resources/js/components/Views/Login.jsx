@@ -1,5 +1,10 @@
 import { cannotBeEmpty, removeError, validateEmail } from "../Configurations/constants";
 
+/**
+ * Login component to log to the page
+ * @param {*} param0 the first method is reference to login function from app
+ * @returns JSX.Element
+ */
 function Login({method}){
 
     const handleEmailChange = (e) => {

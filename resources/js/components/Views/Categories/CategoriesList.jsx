@@ -20,13 +20,11 @@ function Categories(){
     }
 
     useEffect(async () => {
-        setCategories(await categoryCrud.getCategories());
-        //categoryCrud.getCategories().then(res => setCategories(res));
+        setCategories(await categoryCrud.getCategories(''));
     },[]);
 
     useEffect(async () => {
         setCategories(await categoryCrud.getCategories(search.trim()));
-        //categoryCrud.getCategories(search.trim()).then(res => setCategories(res));
     },[search]);
 
     //events
@@ -53,7 +51,7 @@ function Categories(){
                     <label htmlFor="search" className="text-light">Search</label>
                 </div>
             </section>
-            <section className="table-responsive w-100">
+            <section className="table-responsive w-100" style={{height:'30rem', overflowY:'auto'}}>
                 <table className="table table-dark jumpstart-table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -67,17 +65,17 @@ function Categories(){
                         {
                             categories.map((value) => {
                                 return(
-                                    <tr style={{height:"5rem", overflow:"hidden"}} key={value.id}>
-                                        <td style={{width:"5rem"}}>{ value.id }</td>
+                                    <tr style={{height:"5rem", overflow:"hidden"}} key={value.category_id}>
+                                        <td style={{width:"5rem"}}>{ value.category_id }</td>
                                         <td style={{width:"5rem"}}>{value.Category_Name }</td>
                                         <td style={{width:"15rem"}}>{ value.Category_Desc } </td>
                                         <td style={{width:"5rem"}} className="p-2">
                                             <div className="d-flex justify-content-center align-items-center">
-                                                <button className="btn btn-outline-light bg-gradient" data-route-target = {"edit-category/" + value.id} onClick={buttonNavigate}>
+                                                <button className="btn btn-outline-light bg-gradient" data-route-target = {"edit-category/" + value.category_id} onClick={buttonNavigate}>
                                                     <i className="bi bi-pen"></i>
                                                     <span className = "ms-1">Edit</span>
                                                 </button>
-                                                <button className="btn btn-dark jumpstart ms-2" data-categ-target={value.id} onClick={handleDelete}>
+                                                <button className="btn btn-dark jumpstart ms-2" data-categ-target={value.category_id} onClick={handleDelete}>
                                                     <i className="bi bi-trash"style={{pointerEvents:"none"}}></i>
                                                     <span className = "ms-1" style={{pointerEvents:"none"}}>Delete</span>
                                                 </button>

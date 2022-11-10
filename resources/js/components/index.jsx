@@ -7,6 +7,9 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 import { BrowserRouter } from 'react-router-dom';
 
+/**
+ * Index entry point of react app
+ */
 if (document.getElementById('app')) {
 
     ReactDOM.render(
