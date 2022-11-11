@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('Product_Name');
             $table->string('Product_Desc');
             $table->string('Product_Price');
-            $table->integer('Product_Paid');
-            $table->integer('Product_Payable');
+            $table->integer('Product_Paid')->nullable();
+            $table->integer('Product_Payable')->nullable();
             $table->integer('Product_Markup');
             $table->text('Product_Image');
-            $table->dateTime('Product_Expiry');
+            $table->dateTime('Product_Expiry')->nullable();
             $table->foreignId('Supplier_Id')->onDelete('cascade');
             $table->foreignId('Category_Id')->nullOnDelete()->nullable();
         });

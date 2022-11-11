@@ -335,7 +335,7 @@ class AuthController extends Controller
             [
                 'first_name' => ['required', 'string'],
                 'last_name' => ['required', 'string'],
-                'password'=>['required', 'string'],
+                'password' => ['required', 'string'],
             ]
         );
 

@@ -60,6 +60,7 @@ class SupplierController extends Controller
          */
         public function show(Supplier $supplier)
         {
+            if($supplier == null) return response()->json([['status' => 'resource not found']], 404);
             return response()->json($supplier, 200);
     }
 

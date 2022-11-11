@@ -42,6 +42,8 @@ class PopulateTable extends Command
         echo "category data generated at ".date("Y, M, d h:i:sa")."\n";
         Artisan::call('db:seed --class=SupplierSeeder');
         echo "supplier data generated at ".date("Y, M, d h:i:sa")."\n";
+        Artisan::call('db:seed --class=ProductSeeder');
+        echo "product data generated at ".date("Y, M, d h:i:sa")."\n";
 
         Log::info('starter data generated successfully at'.date("Y, M, d h:i:sa"));
         echo 'starter data generated successfully at '.date("Y, M, d h:i:sa");

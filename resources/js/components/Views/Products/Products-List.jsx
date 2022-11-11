@@ -1,10 +1,35 @@
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import productCrud from "../../Configurations/ApiCalls/product-crud";
+import debounce from "../../Configurations/constants";
 
 function Products(){
     const navigate = useNavigate();
     const buttonNavigate = (e) => {
-        console.log(e);
         navigate(e.target.getAttribute('data-route-target'));
+    }
+
+    const [products, setProducts] = useState([]);
+    const [search, setSearch] = useState('');
+
+    useEffect(async () => {
+        const resp = productCrud.getAllProducts('');
+        setProducts(await resp);
+    },[]);
+
+    useEffect(async () => {
+        const resp = productCrud.getAllProducts(search);
+        setProducts(await resp);
+    }, [search]);
+
+    const handleSearch = e => {
+        debounce(setSearch(e.target.value));
+    }
+
+    const handleDelete = async e => {
+        const resp = productCrud.deleteProduct(e.target.getAttribute('data-delete-product'));
+        setProducts(await resp);
     }
 
     return(
@@ -16,6 +41,7 @@ function Products(){
                         id = "search"
                         placeholder="..."
                         autoComplete="off"
+                        onChange={handleSearch}
                     />
                     <label htmlFor="search" className="text-light">Search</label>
                 </div>
@@ -36,32 +62,38 @@ function Products(){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style={{height:"5rem", overflow:"hidden"}}>
-                            <td className = "h-100" style={{width:"2rem"}}>1</td>
-                            <td style={{width:"5rem"}}>Tite</td>
-                            <td style={{width:"6rem"}}>20 pcs</td>
-                            <td style={{width:"5rem"}}>$2000000</td>
-                            <td style={{width:"6rem"}}>10 pcs</td>
-                            <td style={{width:"6rem"}}>BOTTLES</td>
-                            <td style={{width:"5rem"}}>some date</td>
-                            <td style={{width:"5rem"}}>100%</td>
-                            <td style={{width:"5rem"}} className="p-2">
-                                <div className="d-flex justify-content-center align-items-center">
-                                    <button className="btn btn-outline-light bg-gradient" data-route-target = "edit-product/2" onClick={buttonNavigate}>
-                                        <i className="bi bi-pen"></i>
-                                        <span className = "ms-1">Edit</span>
-                                    </button>
-                                    <button className="btn btn-dark ms-2" data-route-target = "product-information/2" onClick={buttonNavigate}>
-                                        <i className="bi bi-eye"></i>
-                                        <span className = "ms-1">View</span>
-                                    </button>
-                                    <button className="btn btn-dark jumpstart ms-2">
-                                        <i className="bi bi-trash"></i>
-                                        <span className = "ms-1">Delete</span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        {
+                            products.map((e) => {
+                                return(
+                                <tr style={{height:"5rem", overflow:"hidden"}} key = { e.product_id }>
+                                    <td className = "h-100" style={{width:"2rem"}}>{ e.product_id }</td>
+                                    <td style={{width:"5rem"}}> { e.Product_Name } </td>
+                                    <td style={{width:"6rem"}}> { e.Product_Payable } </td>
+                                    <td style={{width:"5rem"}}> { e.Product_Paid } </td>
+                                    <td style={{width:"6rem"}}> P { e.Product_Price } </td>
+                                    <td style={{width:"6rem"}}> { e.category.Category_Name } </td>
+                                    <td style={{width:"5rem"}}> { e.Product_Expiry != null ? moment(e.Product_Expiry).format("MMM Do YY") : 'no expiration' } </td>
+                                    <td style={{width:"5rem"}}> { e.Product_Markup + "%"} </td>
+                                    <td style={{width:"5rem"}} className="p-2">
+                                        <div className="d-flex justify-content-center align-items-center">
+                                            <button className="btn btn-outline-light bg-gradient" data-route-target = {"edit-product/" + e.product_id} onClick={buttonNavigate}>
+                                                <i className="bi bi-pen" style = {{pointerEvents:'none'}}></i>
+                                                <span className = "ms-1" style = {{pointerEvents:'none'}}>Edit</span>
+                                            </button>
+                                            <button className="btn btn-dark ms-2" data-route-target = {"product-information/" + e.product_id} onClick={buttonNavigate}>
+                                                <i className="bi bi-eye" style = {{pointerEvents:'none'}}></i>
+                                                <span className = "ms-1" style = {{pointerEvents:'none'}}>View</span>
+                                            </button>
+                                            <button className="btn btn-dark jumpstart ms-2" data-delete-product = {e.product_id} onClick={handleDelete}>
+                                                <i className="bi bi-trash" style = {{pointerEvents:'none'}}></i>
+                                                <span className = "ms-1" style = {{pointerEvents:'none'}}>Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
             </section>

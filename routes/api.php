@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Http\Request;
@@ -84,3 +85,14 @@ Route::controller(SupplierController::class)
         Route::delete('delete-supplier/{supplier}', 'destroy');
     });
 
+Route::controller(ProductsController::class)
+    ->prefix('/products')
+    ->group(function () {
+        Route::get('all-products', 'index');
+        Route::get('product/{product}', 'show');
+        Route::post('add-product', 'store');
+        Route::patch('update-product/{product}', 'update');
+        Route::put('add-payable/{product}', 'add_payable');
+        Route::put('add-paid/{product}', 'add_paid');
+        Route::delete('delete-product/{product}', 'destroy');
+    });

@@ -7,6 +7,7 @@ import { getCookie } from "../constants";
  */
 abstract class ApiEndpoint{
 
+    readonly endpoint:string;
     readonly baseEndpoint:string = "http://localhost:8000/api";
 
     /**
@@ -17,8 +18,9 @@ abstract class ApiEndpoint{
      */
     request = async (options:any, contentType?:string) => {
 
-        const headers = new Headers({
+        let headers = new Headers({
             'Content-Type': 'application/json',
+            'Accept' : 'application/json',
         })
 
         if(getCookie("ACCESS_TOKEN")) {
