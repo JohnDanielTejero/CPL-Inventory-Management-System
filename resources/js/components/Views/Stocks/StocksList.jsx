@@ -34,7 +34,7 @@ function Stocks(){
                         </thead>
                         <tbody>
                             <tr style={{height:"5rem", overflow:"hidden"}}>
-                                <td style={{width:"20rem"}}>Tite</td>
+                                <td style={{width:"20rem"}}>aaaa</td>
                                 <td style={{width:"6rem"}}>10 pcs</td>
                                 <td style={{width:"5rem"}}>Available</td>
                                 <td style={{width:"5rem"}} className="p-2">

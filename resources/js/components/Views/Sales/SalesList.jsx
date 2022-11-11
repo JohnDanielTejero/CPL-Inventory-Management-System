@@ -34,7 +34,7 @@ function SalesList(){
                     <tbody>
                         <tr style={{height:"5rem", overflow:"hidden"}}>
                             <td className = "h-100" style={{width:"2rem"}}>1</td>
-                            <td style={{width:"5rem"}}>Tite</td>
+                            <td style={{width:"5rem"}}>aaa</td>
                             <td style={{width:"5rem"}}>$2000000</td>
                             <td style={{width:"6rem"}}>Some Date</td>
                             <td style={{width:"5rem"}} className="p-2">
