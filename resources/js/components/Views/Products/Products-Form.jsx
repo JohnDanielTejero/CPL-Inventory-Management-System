@@ -36,8 +36,9 @@ function ProductForm(){
                 Product_Markup : e.target[2].value,
                 category : Number(e.target[3].value),
                 supplier : Number(e.target[4].value),
-                Product_Image : e.target[5].value,
-                Product_Desc : e.target[6].value,
+                Product_Expiry : e.target[5].value,
+                Product_Image : e.target[6].value,
+                Product_Desc : e.target[7].value,
             });
 
             const resp = await attempt;
@@ -134,7 +135,8 @@ function ProductForm(){
                     <div className="col-12">
                         <label className = "ms-2" htmlFor="Product_Image">Product Image</label>
                         <input
-                            type={"file"} accept="image/png, image/gif, image/jpeg, image/jpg, image/svg"
+                            typeof="image"
+                            type="file" accept="image/png, image/gif, image/jpeg, image/jpg, image/svg"
                             className="form-control bg-input text-light border border-dark"
                             id = "Product_Image"
                             placeholder="PNG, JPG, GIF, SVG allowed"
