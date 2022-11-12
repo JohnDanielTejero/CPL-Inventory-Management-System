@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import storeCrud from "../../Configurations/ApiCalls/store-crud";
 import userCrud from "../../Configurations/ApiCalls/user-crud";
-import { cannotBeEmpty, removeError, setErrorWithMessage, setSuccess, validateEmail, validateName } from "../../Configurations/constants";
+import { cannotBeEmpty, hasAnyRole, removeError, setErrorWithMessage, setSuccess, validateEmail, validateName } from "../../Configurations/constants";
 
 /**
  * Component for adding employees/register
@@ -11,16 +11,23 @@ import { cannotBeEmpty, removeError, setErrorWithMessage, setSuccess, validateEm
  *
  * @returns JSX.Element
  */
-function RegisterEmployee(){
+function RegisterEmployee({permission, user}){
 
     const [stores, setStores] = useState([]);
     const [roles, setRoles] = useState([]);
     let navigate = useNavigate();
 
     useEffect(async () => {
-        const dropdown = await Promise.all([userCrud.getRoles(), storeCrud.getStores("")]);
-        setRoles(await dropdown[0]);
-        setStores(await dropdown[1]);
+        if (hasAnyRole(permission, ['ROLE_ADMIN'])){
+            const dropdown = await Promise.all([userCrud.getRoles(), storeCrud.getStores("")]);
+            setRoles(await dropdown[0]);
+            setStores(await dropdown[1]);
+        }else{
+            const dropdown = await Promise.all([userCrud.getRoles(), storeCrud.getStore(user.store_id)]);
+            setRoles(await dropdown[0]);
+            setStores(await dropdown[1]);
+        }
+
 
     }, []);
 
@@ -224,7 +231,7 @@ function RegisterEmployee(){
                             placeholder="..."
                             onBlur={removeError}
                             onChange = {handleLastName}
-                            />
+                        />
                         <label className =  "ms-2" htmlFor="last_name">Last Name</label>
                         <div className="invalid-feedback" id = "last_name-feedback"></div>
                     </div>
@@ -234,7 +241,7 @@ function RegisterEmployee(){
                             id = "email"
                             placeholder="..."
                             onBlur={removeError}
-                        onChange = {handleEmail}
+                            onChange = {handleEmail}
                         />
                         <label className =  "ms-2" htmlFor="email">Email</label>
                         <div className="invalid-feedback" id = "email-feedback"></div>
@@ -247,7 +254,7 @@ function RegisterEmployee(){
                             type={"password"}
                             onBlur={removeError}
                             onChange = {handlePassword}
-                            />
+                        />
                         <label className = "ms-2" htmlFor="password">Password</label>
                         <div className="invalid-feedback" id = "password-feedback"></div>
                     </div>
@@ -259,15 +266,27 @@ function RegisterEmployee(){
                             onBlur={removeError}
                             onChange = {handleStore}
                             >
-                            <option value = "" disabled>Please Select</option>
-                            {
-                                stores.map((e) => {
+                                {
+                                    hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                                    <>
+                                        <option value = "" disabled>Please Select</option>
+                                        {
+                                            stores.map((e) => {
 
-                                    return(
-                                        <option value = {e.stores_id} key = {e.Store_Address}>{ e.Store_Name }</option>
-                                        )
+                                                return(
+                                                    <option value = {e.stores_id} key = {e.Store_Address}>{ e.Store_Name }</option>
+                                                    )
 
-                                    })
+                                            })
+                                        }
+
+                                    </>
+
+                                }
+                                {
+                                    typeof stores != "undefined" &&
+                                        hasAnyRole(permission, ['ROLE_STORE_OWNER']) &&
+                                            <option value = {stores.stores_id} key = {stores.Store_Address}>{ stores.Store_Name }</option>
                                 }
 
                         </select>
@@ -282,15 +301,31 @@ function RegisterEmployee(){
                             defaultValue={""}
                             onChange = {handleRole}
                             >
-                                <option value = "" disabled>Please Select</option>
                                 {
-                                    roles.map((e) => {
+                                    hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                                    <>
+                                        <option value = "" disabled>Please Select</option>
+                                        {
+                                            roles.map((e) => {
 
-                                        return(
-                                            <option value = {e.roles_id} key = {e.Role_Desc}>{ e.Role_Name }</option>
-                                            )
+                                                return(
+                                                    <option value = {e.roles_id} key = {e.Role_Desc}>{ e.Role_Name }</option>
+                                                    )
 
-                                    })
+                                            })
+                                        }
+                                    </>
+                                }
+                                {
+                                    hasAnyRole(permission, ['ROLE_STORE_OWNER']) &&
+                                        roles.map((e) => {
+
+                                            return(
+                                                <option value = {e.roles_id} key = {e.Role_Desc}>{ e.Role_Name }</option>
+                                                )
+
+                                        })
+
                                 }
 
                         </select>

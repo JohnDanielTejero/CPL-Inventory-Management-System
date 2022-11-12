@@ -316,8 +316,14 @@ class AuthController extends Controller
      *
      * @return JsonResponse collection of roles.
      */
-    public function allAvailableRoles(){
-        return response()->json(Role::where('Role_Name', '!=', 'ROLE_ADMIN')->get(), 200);
+    public function allAvailableRoles(Request $request){
+        if ($request->user()->hasPermission('ROLE_ADMIN')){
+            return response()->json(Role::where('Role_Name', '!=', 'ROLE_ADMIN')->get(), 200);
+        }else if ($request->user()->hasPermission('ROLE_STORE_OWNER')){
+            return response()->json(Role::where('Role_Name', '!=', 'ROLE_ADMIN')->where('Role_Name', '!=', 'ROLE_STORE_OWNER')->get(), 200);
+        }else{
+            return response()->json([['status' => 'forbidden request']], 403);
+        }
     }
 
     /**

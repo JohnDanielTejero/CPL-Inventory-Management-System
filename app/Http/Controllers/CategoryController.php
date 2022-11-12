@@ -17,7 +17,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        //$this->middleware(['auth:api', 'auth.allrole:ROLE_ADMIN']);
+        $this->middleware(['auth:api', 'auth.allrole:ROLE_ADMIN']);
     }
     /**
      * Display a listing of the resource.

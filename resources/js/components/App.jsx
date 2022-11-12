@@ -127,7 +127,7 @@ function App() {
                                 isAuth && <div className="side-backdrop w-100 h-100"></div>
                             }
                             <div className="p-3" style={{height:"100%", overflowY:'auto', overflowX:"hidden"}}>
-                                <Routing isAuth={ isAuth } login = {login} updateUser = {setUser} permission = {roles}/>
+                                <Routing isAuth={ isAuth } login = {login} updateUser = {setUser} permission = {roles} user = {user}/>
                             </div>
                         </main>
                     </div>

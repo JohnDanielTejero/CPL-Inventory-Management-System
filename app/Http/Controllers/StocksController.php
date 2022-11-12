@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Stock;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Store;
 
 class StocksController extends Controller
 {
@@ -12,9 +14,12 @@ class StocksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Store $store)
     {
-        //
+        return response()->json([
+            ['status' => 'success'],
+            Stock::where('Store_Id', $store->stores_id)->with('product')->get(),
+        ], 200);
     }
 
     /**
@@ -24,17 +29,6 @@ class StocksController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
     {
         //
     }

@@ -21,7 +21,7 @@ class Stock extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'Product_Id', 'product_id');
     }
 
     public function purchase()
@@ -31,7 +31,7 @@ class Stock extends Model
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Store::class, 'Store_Id', 'stores_id');
     }
 }
 

@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id('stock_id');
             $table->string('Stock_Quantity');
             $table->string('Stock_Status');
-            $table->foreignId('Store_Id')->onDelete('cascade');
-            $table->foreignId('Product_Id')->onDelete('cascade');
+            $table->unsignedBigInteger('Store_Id');
+            $table->unsignedBigInteger('Product_Id');
+            $table->foreign('Store_Id')->references('stores_id')->on('stores')->onDelete('cascade');
+            $table->foreign('Product_Id')->references('product_id')->on('products')->onDelete('cascade');
+            $table->unique(['Store_Id', 'Product_Id']);
         });
     }
 

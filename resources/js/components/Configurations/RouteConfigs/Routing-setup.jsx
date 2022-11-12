@@ -30,10 +30,10 @@ import Login from "../../Views/Login";
 /**
  * Routing configuration for react project
  *
- * @param {isAuth, login, updateUser, permission} param0
+ * @param {isAuth, login, updateUser, permission, user} param0
  * @returns Routes
  */
-function Routing({isAuth, login, updateUser, permission}){
+function Routing({isAuth, login, updateUser, permission, user}){
 
     return(
         <Routes>
@@ -95,11 +95,11 @@ function Routing({isAuth, login, updateUser, permission}){
             {/* Employees */}
             <Route
                 element = {
-                    <Authenticated isAuth={isAuth} component = {
+                    <Authenticated isAuth = {isAuth} component = {
                         <Authorization
                             component = {<EmployeeBase/>}
                             permission = {permission}
-                            allowedroles= {['ROLE_ADMIN, ROLE_STORE_OWNER']}
+                            allowedroles= {['ROLE_ADMIN', 'ROLE_STORE_OWNER']}
                         />
                     }/>
                  }
@@ -110,7 +110,7 @@ function Routing({isAuth, login, updateUser, permission}){
                     element = { <EmployeeList/> }
                 />
                 <Route
-                    element = { <RegisterEmployee/>}
+                    element = { <RegisterEmployee permission = {permission} user = {user}/>}
                     path = "add-new-employee"
                 />
             </Route>
@@ -232,10 +232,9 @@ function Routing({isAuth, login, updateUser, permission}){
 
             {/* Stocks */}
             <Route
-                element = { <Stocks/> }
+                element = { <Stocks user = {user} permission = {permission}/> }
                 path="stocks"
-            >
-            </Route>
+            />
         </Routes>
     );
 }
