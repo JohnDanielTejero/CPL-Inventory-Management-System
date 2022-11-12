@@ -1,5 +1,6 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
-import { Modal, ModalBody, ModalDialog } from "react-bootstrap";
+import { Modal, ModalBody } from "react-bootstrap";
 import productCrud from "../../Configurations/ApiCalls/product-crud";
 import stocksCrud from "../../Configurations/ApiCalls/stocks-crud";
 import storeCrud from "../../Configurations/ApiCalls/store-crud";
@@ -20,11 +21,18 @@ function Stocks({user, permission}){
         }else{
             setProducts(null);
             setStores(null);
-            setStore(await (await storeCrud.getStore(user.store_id)));
+            const currentstore = await storeCrud.getStore(user.store_id);
+            setStore(await currentstore);
+            const stockresp = await stocksCrud.getStocks(currentstore.stores_id);
+            setStocks(await stockresp[1]);
         }
 
         if(hasAnyRole(permission, ['ROLE_ADMIN'])){
-            setStore(await (await storeCrud.getStore(document.querySelector('#select-store').value)));
+            const attempt = await storeCrud.getStore(document.querySelector('#select-store').value);
+            const currentstore = await attempt;
+            setStore(currentstore);
+            const stockresp = await stocksCrud.getStocks(currentstore.stores_id);
+            setStocks(await stockresp[1]);
         }
 
     }, []);
@@ -45,7 +53,7 @@ function Stocks({user, permission}){
     //modal stuff
     const [addStockModal, enableStockModal] = useState(false);
     const [transferStockModal, enableTransferStockModal] = useState(false);
-    const [targetProduct, setTargetProduct] = useState(null);
+    const [targetStock, setTargetStock] = useState(null);
 
     function addStockModalClose(){
         enableStockModal(false);
@@ -56,12 +64,29 @@ function Stocks({user, permission}){
     }
 
     function transferStockModalOpen(e){
-        setTargetProduct(e.target.getAttribute('data-product-target'));
+        setTargetStock(e.target.getAttribute('data-product-target'));
         enableTransferStockModal(true);
     }
 
     function transferStockModalClose(){
         enableTransferStockModal(false);
+    }
+
+    const handleDeleteStock = async e => {
+        try{
+            let resp = await stocksCrud.deleteStocks(
+                {'store' : store.stores_id},
+                e.target.getAttribute('data-stocks-delete')
+            )
+            setStocks(resp[1]);
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    const addStockSubmit = async e => {
+        e.preventDefault();
+
     }
 
     return(
@@ -110,6 +135,9 @@ function Stocks({user, permission}){
                                 <th>Product Name</th>
                                 <th>Quantity in Stock</th>
                                 <th>Stock Status</th>
+                                <th>Category</th>
+                                <th>Expiration</th>
+                                <th>Markup</th>
                                 {
                                     hasAnyRole(permission, ['ROLE_ADMIN']) &&
                                         <th>Action</th>
@@ -117,26 +145,37 @@ function Stocks({user, permission}){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style={{height:"5rem", overflow:"hidden"}}>
-                                <td style={{width:"20rem"}}>aaaa</td>
-                                <td style={{width:"6rem"}}>10 pcs</td>
-                                <td style={{width:"5rem"}}>Available</td>
-                                        {
-                                            hasAnyRole(permission, ['ROLE_ADMIN']) &&
-                                            <td style={{width:"5rem"}} className="p-2">
-                                                <div className="d-flex justify-content-center align-items-center">
-                                                    <button className="btn btn-outline-light bg-gradient ms-2" onClick={transferStockModalOpen} data-product-target = "1">
-                                                        <i className="bi bi-person-workspace" style ={{pointerEvents:"none"}}></i>
-                                                        <span className = "ms-1" style ={{pointerEvents:"none"}}>Transfer</span>
-                                                    </button>
-                                                    <button className="btn btn-dark jumpstart ms-2"style ={{pointerEvents:"none"}}>
-                                                        <i className="bi bi-trash" style ={{pointerEvents:"none"}}></i>
-                                                        <span className = "ms-1">Delete</span>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        }
-                            </tr>
+                            {
+                                stocks != null &&
+                                    stocks.map(e => {
+                                        return(
+                                            <tr style={{height:"5rem", overflow:"hidden"}} key = {e.stock_id}>
+                                                <td style={{width:"20rem"}}>{ (e.product).Product_Name }</td>
+                                                <td style={{width:"6rem"}}>{ e.Stock_Quantity }</td>
+                                                <td style={{width:"5rem"}}>{ e.Stock_Status }</td>
+                                                <td style={{width:"5rem"}}>{ e.Category_Name }</td>
+                                                <td style={{width:"5rem"}}>{ e.product.Product_Expiry != null ? moment(e.product.Product_Expiry).format("MMM Do YY") : 'no expiration' } </td>
+                                                <td style={{width:"5rem"}}>{ e.product.Product_Markup }</td>
+                                                        {
+                                                            hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                                                            <td style={{width:"5rem"}} className="p-2">
+                                                                <div className="d-flex justify-content-center align-items-center">
+                                                                    <button className="btn btn-outline-light bg-gradient ms-2" onClick={transferStockModalOpen} data-product-target = {(e.product).product_id}>
+                                                                        <i className="bi bi-person-workspace" style ={{pointerEvents:"none"}}></i>
+                                                                        <span className = "ms-1" style ={{pointerEvents:"none"}}>Transfer</span>
+                                                                    </button>
+                                                                    <button className="btn btn-dark jumpstart ms-2" data-stocks-delete={e.stock_id} onClick={handleDeleteStock}>
+                                                                        <i className="bi bi-trash" style ={{pointerEvents:"none"}}></i>
+                                                                        <span className = "ms-1" style ={{pointerEvents:"none"}}>Delete</span>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        }
+                                            </tr>
+                                        )
+                                    })
+
+                            }
                         </tbody>
                     </table>
                 </section>
@@ -149,7 +188,7 @@ function Stocks({user, permission}){
                     <button type="button" className = "btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close" onClick={addStockModalClose}></button>
                 </Modal.Header>
                 <ModalBody className="bg-dark jumpstart text-light">
-                    <form className="row g-2">
+                    <form className="row g-2" onSubmit={addStockSubmit}>
                         <div className="col-12 form-floating">
                             <select className = "form-select bg-input text-light border border-dark" id = "product" defaultValue={""}>
                                 <option disabled value = "">Please select</option>
@@ -168,6 +207,7 @@ function Stocks({user, permission}){
                             <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'}/>
                             <label htmlFor = "amount">Specify amount</label>
                         </div>
+                            <input className id = "store" placeholder="..." type={'hidden'} value = {store != null ? store.stores_id : ""}/>
                         <div className="col-12">
                             <button className="w-100 btn btn-dark jumpstart">
                                 Submit
@@ -187,7 +227,7 @@ function Stocks({user, permission}){
                             <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'}/>
                             <label htmlFor = "amount">Specify amount</label>
                         </div>
-                        <input type={"hidden"} id = "product-select" value = {targetProduct}/>
+                        <input type={"hidden"} id = "product-select" value = {targetStock}/>
                         <div className="col-12">
                             <button className="w-100 btn btn-dark jumpstart">
                                 Submit

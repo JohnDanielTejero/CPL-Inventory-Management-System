@@ -66,7 +66,7 @@ Route::controller(StoreController::class)
     ->prefix('/stores')
     ->group(function(){
         Route::get('all-stores', 'index')->middleware('auth.allrole:ROLE_ADMIN');
-        Route::get('store/{store}', 'show')->middleware('auth.anyrole:ROLE_ADMIN,ROLE_STORE_OWNER');
+        Route::get('store/{store}', 'show');
         Route::post('add-store', 'store')->middleware('auth.allrole:ROLE_ADMIN');
         Route::patch('update-store/{store}', 'update')->middleware('auth.allrole:ROLE_ADMIN');
         Route::delete('delete-store/{store}', 'destroy')->middleware('auth.allrole:ROLE_ADMIN');
@@ -107,5 +107,7 @@ Route::controller(StocksController::class)
     ->prefix('/stocks')
     ->group(function(){
         Route::get('all-stocks/{store}', 'index');
-
+        Route::post('add-stocks', 'store');
+        Route::put('transfer-stocks/{stock}', 'transferStocks');
+        Route::delete('delete-stock/{stock}', 'destroy');
     });

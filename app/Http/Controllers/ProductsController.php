@@ -120,7 +120,7 @@ class ProductsController extends Controller
         //file upload
         $destination = 'public';
         $file = $request->file('Product_Image') != null ? Storage::disk($destination)->put('products', $request->file('Product_Image')) : null;
-        $expiry = $request['Product_Expiry'] != null ? $request['Product_Expiry'] : null;
+        $expiry = $request['Product_Expiry'] != null ? $request['Product_Expiry'] : $product->Product_Expiry;
 
         return response()->json([
             ['status' => 'updated'],

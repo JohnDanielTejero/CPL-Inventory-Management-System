@@ -42,7 +42,7 @@ class ProductSeeder extends Seeder
         ]);
 
         DB::table('products')->insert([
-            'Product_Name' => 'Sample Product 1',
+            'Product_Name' => 'Sample Product 3',
             'Product_Desc' => 'Sample Product Not for Production',
             'Product_Price' => '6000',
             'Product_Paid' => '50',
