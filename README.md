@@ -19,6 +19,8 @@ Inventory management system for Jumpstart which has the following features:
 - Laravel for API
 - ERDPlus for ERD
 - AxureRP for Wireframes
+- MySQL for Database Server
+- MySQL workbench for MySQL GUI
 
 ## Libraries Used
 - PHPOpenSourceSaver/JWTAuth for JWT
