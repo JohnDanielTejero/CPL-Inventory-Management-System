@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import productCrud from "../../Configurations/ApiCalls/product-crud";
 import { removeError, setErrorWithMessage } from "../../Configurations/constants";
-import { Button, Modal } from "react-bootstrap";
 
+/**
+ * for showing product details
+ * where you can add payables and paid amount
+ *
+ * @returns JSX.Element
+ */
 function ProductDetails(){
     const [product, setProduct] = useState(null);
     let { id } = useParams();
-    const [showPayable, setShowPayable] = useState(false);
-    const [showPaid, setShowPaid] = useState(false);
 
     useEffect(async () => {
         const resp = await productCrud.getProduct(id);

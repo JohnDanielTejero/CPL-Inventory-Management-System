@@ -1,10 +1,17 @@
 import ApiEndpoint from "./service-base";
-import axios from 'axios';
-import { getCookie } from "../constants";
 
+/**
+ * Class for product related CRUD
+ */
 class ProductService extends ApiEndpoint{
      readonly endpoint: string = this.baseEndpoint + "/products";
 
+     /**
+      * Gets all products depending on searched criteria.
+      *
+      * @param query string or null
+      * @returns Object response
+      */
      getAllProducts(query?:string){
         return this.request({
             url : this.endpoint + "/all-products?query=" + query,
@@ -12,6 +19,12 @@ class ProductService extends ApiEndpoint{
         });
      }
 
+     /**
+      * Retrieves a particular product
+      *
+      * @param id number targets the product id
+      * @returns Object response
+      */
      getProduct(id:number){
         return this.request({
             url : this.endpoint + '/product/' + id,
@@ -19,6 +32,12 @@ class ProductService extends ApiEndpoint{
         });
      }
 
+     /**
+      * Deletes a particular product
+      *
+      * @param id number targets the product id
+      * @returns Object response
+      */
      deleteProduct(id:number){
         return this.request({
             url : this.endpoint + '/delete-product/' + id,
@@ -26,8 +45,13 @@ class ProductService extends ApiEndpoint{
         });
      }
 
+     /**
+      * Adds a product
+      *
+      * @param body payload to add product
+      * @returns
+      */
      addProduct(body:any){
-
         return this.fileUpload({
             method : 'POST',
             url : this.endpoint + '/add-product',
@@ -35,6 +59,13 @@ class ProductService extends ApiEndpoint{
         });
      }
 
+     /**
+      * Updates a particular product
+      *
+      * @param body updated information of the product
+      * @param id number targets the product id
+      * @returns Object response
+      */
      updateProduct(body:Object, id:number){
         return this.request({
             url : this.endpoint + '/update-product/' + id,
@@ -43,6 +74,13 @@ class ProductService extends ApiEndpoint{
         });
      }
 
+     /**
+      * Adds a payable amount on product
+      *
+      * @param body payload
+      * @param id number targets the product id
+      * @returns Object response
+      */
      addPayable(body:Object, id:number){
         return this.request({
             url : this.endpoint + '/add-payable/' + id,
@@ -51,6 +89,13 @@ class ProductService extends ApiEndpoint{
         });
      }
 
+     /**
+      * Adds paid amount on product and reduce payable amount
+      *
+      * @param body payload
+      * @param id number targets the product id
+      * @returns Object response
+      */
      addPaid(body:Object, id:number){
         return this.request({
             url : this.endpoint + '/add-paid/' + id,

@@ -117,7 +117,9 @@ function Routing({isAuth, login, updateUser, permission}){
 
             {/* Profile */}
             <Route
-                element = { <Profile updateUser = {updateUser}/> }
+                element = {
+                    <Authenticated isAuth={isAuth} component = {<Profile updateUser = {updateUser}/>}/>
+                 }
                 path="profile"
             />
 

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import categoryCrud from "../../Configurations/ApiCalls/category-crud";
 import productCrud from "../../Configurations/ApiCalls/product-crud";
 import supplierCrud from "../../Configurations/ApiCalls/supplier-crud";
 import { removeError, setErrorWithMessage } from "../../Configurations/constants";
 
+/**
+ * Component for adding and editing product information
+ *
+ * @returns JSX.Element
+ */
 function ProductForm(){
 
     const [categories, setCategories] = useState([]);
@@ -14,6 +19,7 @@ function ProductForm(){
     const location = useLocation();
     let { id } = useParams();
     const navigate = useNavigate();
+
     useEffect(async () => {
         const dropdown = await Promise.all([categoryCrud.getCategories(''), supplierCrud.getSuppliers('')]);
         setCategories(dropdown[0]);

@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import productCrud from "../../Configurations/ApiCalls/product-crud";
 import debounce from "../../Configurations/constants";
 
+/**
+ * Component for showing all products
+ *
+ * @returns JSX.Element
+ */
 function Products(){
     const navigate = useNavigate();
     const buttonNavigate = (e) => {

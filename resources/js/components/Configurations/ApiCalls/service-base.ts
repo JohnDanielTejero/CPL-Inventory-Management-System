@@ -39,6 +39,11 @@ abstract class ApiEndpoint{
         );
     }
 
+    /**
+     *
+     * @param options Object: { method : "method", url: url, data :payload }
+     * @returns Object response
+     */
     fileUpload(options:any){
         let header = {
             'Content-Type': 'multipart/form-data',
