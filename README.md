@@ -1,3 +1,93 @@
+## <h1 align="center">CPL Inventory Management System</h1>
+<p>
+    Inventory management system for Jumpstart in accordance to CPL module in Lithan Educlaas.
+</p>
+
+## Overview
+Inventory management system for Jumpstart which has the following features:
+- Authentication and Authorization
+- Real-time monitoring and managing of sales
+- Monitoring and managing suppliers information
+- Sorting product via categories
+- Manage multiple branches stocks
+- Manage retail branches
+- Employee management
+- Profile management
+
+## Technologies Used
+- Laravel UI React
+- Laravel for API
+- ERDPlus for ERD
+- AxureRP for Wireframes
+- MySQL for Database Server
+- MySQL workbench for MySQL GUI
+
+## Libraries Used
+- PHPOpenSourceSaver/JWTAuth for JWT
+- MomentJs for date format
+- Bootstrap 5 for CSS
+- intlTelInput for contact number
+
+## TODO: 
+After cloning the repository you are expected to:
+- Perform migration via `php artisan migrate`
+- Generate sample data via `php artisan generate:sampledata`
+- Run the server via `php artisan serve`
+- [Optional] Run Vite to run ReactJs via `npm run dev`
+ 
+## Conceptual Design
+--ERD and EERD here--
+
+## Roles
+<table>
+  <tr>
+    <th>Role</th>
+    <th>Role Description</th>
+  </tr>
+  <tr>
+    <td>ROLE_ADMIN</td>
+    <td>Admin role for the inventory management. has access to: Products/Category/Dashboard/Employee/Suppliers/Stores/Stocks</td>
+  </tr>
+  <tr>
+    <td>ROLE_STORE_OWNER</td>
+    <td>Store owner role for the inventory management. has access to: Sales/Employee/Dashboard/Stocks</td>
+  </tr>
+  <tr>
+    <td>ROLE_EMPLOYEE</td>
+    <td>Employee role for the inventory management has access to: Sales/Stocks</td>
+  </tr>
+</table>
+
+## Sample Entities
+
+<table>
+  <tr>
+    <th>Role</th>
+    <th>Email</th>
+    <th>Password</th>
+  </tr>
+  <tr>
+    <td>ROLE_ADMIN</td>
+    <td>admin@gmail.com</td>
+    <td>wasd</td>
+  </tr>
+  <tr>
+    <td>ROLE_STORE_OWNER</td>
+    <td>jsmith@gmail.com</td>
+    <td>wasd</td>
+  </tr>
+  <tr>
+    <td>ROLE_EMPLOYEE</td>
+    <td>johndoe@gmail.com</td>
+    <td>wasd</td>
+  </tr>
+</table>
+
+## Demonstration 
+--video here--
+--screenshots here--
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
