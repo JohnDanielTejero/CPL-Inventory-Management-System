@@ -42,6 +42,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+
         $validate = Validator::make($request->all(), [
             'Product_Name' => ['required','string'],
             'Product_Desc' => ['required', 'string'],
@@ -70,7 +71,7 @@ class ProductsController extends Controller
                 'Product_Markup' => $request['Product_Markup'],
                 'Product_Paid' => 0,
                 'Product_Payable' => 0,
-                'Product_Image' => env('APP_URL').":8000/".basename($file),
+                'Product_Image' => env('APP_URL').":8000/storage/products/".basename($file),
                 'Product_Expiry' => $expiry,
                 'Supplier_Id' => $request['supplier'],
                 'Category_Id' => $request['category']
@@ -88,7 +89,7 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        return response()->json(Product::where("product_id", $product->product_id)->with('supplier')->first(), 200);
+        return response()->json([['status' => 'success'], Product::where("product_id", $product->product_id)->with('supplier')->first()], 200);
     }
 
     /**
@@ -124,7 +125,7 @@ class ProductsController extends Controller
                 'Product_Desc' => $request['Product_Desc'],
                 'Product_Price' => $request['Product_Price'],
                 'Product_Markup' => $request['Product_Markup'],
-                'Product_Image' => $file != null ? env('APP_URL').":8000/".basename($file) : $product->Product_Image,
+                'Product_Image' => $file != null ? env('APP_URL').":8000/storage/products/".basename($file) : $product->Product_Image,
                 'Product_Expiry' => $expiry,
                 'Supplier_Id' => $request['supplier'] != null || $request['supplier'] != "" ? $request['supplier'] : $product['Supplier_Id'],
                 'Category_Id' => $request['category'] != null || $request['category'] != "" ? $request['category'] : $product['Category_Id'],
@@ -170,14 +171,11 @@ class ProductsController extends Controller
             return response()->json([['status' => 'invalid request'], $validate->errors()], 400);
         }
 
-        return response()->json([
-            ['status' => 'update success'],
-            [
-                $product->update([
-                    'Product_Payable' => $product->Product_Payable + $request->add_payable,
-                ])
-            ]
-        ], 200);
+        $product->update([
+            'Product_Payable' => $product->Product_Payable + $request->add_payable,
+        ]);
+
+        return $this->show($product);
     }
 
 
@@ -198,15 +196,10 @@ class ProductsController extends Controller
         if ($validate->fails()){
             return response()->json([['status' => 'invalid request'], $validate->errors()], 400);
         }
-
-        return response()->json([
-            ['status' => 'update success'],
-            [
-                $product->update([
-                    'Product_Payable' => $product->Product_Payable - $request->add_paid,
-                    'Product_Paid' => $product->Product_Paid - $request->add_paid,
-                ])
-            ]
-        ], 200);
+        $product->update([
+            'Product_Payable' => $product->Product_Payable - $request->add_paid,
+            'Product_Paid' => $product->Product_Paid + $request->add_paid,
+        ]);
+        return $this->show($product);
     }
 }

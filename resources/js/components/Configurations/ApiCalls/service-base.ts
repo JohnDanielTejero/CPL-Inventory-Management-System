@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getCookie } from "../constants";
 
 /**
@@ -16,7 +17,7 @@ abstract class ApiEndpoint{
      * @param contentType Defaults to application/json, can be changed if left as not null
      * @returns Object response
      */
-    request = async (options:any, contentType?:string) => {
+    request = async (options:any) => {
 
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -25,10 +26,6 @@ abstract class ApiEndpoint{
 
         if(getCookie("ACCESS_TOKEN")) {
             headers.append('Authorization', 'Bearer ' + getCookie("ACCESS_TOKEN"))
-        }
-
-        if (contentType){
-            headers.set('Content-Type', contentType);
         }
 
         const defaults = {headers: headers};
@@ -40,6 +37,24 @@ abstract class ApiEndpoint{
                     return json;
                 })
         );
+    }
+
+    fileUpload(options:any){
+        let header = {
+            'Content-Type': 'multipart/form-data',
+            'Accept' : 'application/json',
+        }
+
+        if(getCookie("ACCESS_TOKEN")) {
+            header['Authorization'] = 'Bearer ' + getCookie("ACCESS_TOKEN");
+        }
+
+        return axios({
+            method : options.method,
+            url : options.url,
+            data : options.data,
+            headers: header,
+        })
     }
 }
 

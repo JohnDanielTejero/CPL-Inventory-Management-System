@@ -48,25 +48,28 @@ function Routing({isAuth, login, updateUser, permission}){
             {/* Dashboard */}
             <Route
                 element = {
-                    <Authenticated
-                        component = {
-                            <Authorization
-                                component = {
-                                    <Dashboard/>
-                                }
-                                permission = {permission}
-                                allowedroles = {['ROLE_ADMIN', 'ROLE_STORE_OWNER']}
-                            />
-                        }
-                        isAuth = {isAuth}
-                    />
+                    <Authenticated isAuth ={isAuth} component = {
+                        <Authorization
+                            component = {<Dashboard/>}
+                            permission = {permission}
+                            allowedroles = {['ROLE_ADMIN', 'ROLE_STORE_OWNER']}
+                        />
+                    }/>
                 }
                 index
             />
 
             {/* Products */}
             <Route
-                element = { <ProductsBase/> }
+                element = {
+                    <Authenticated isAuth = {isAuth} component = {
+                        <Authorization
+                            component ={<ProductsBase/>}
+                            permission={permission}
+                            allowedroles ={['ROLE_ADMIN']}
+                        />
+                    }/>
+                 }
                 path="/products"
             >
                 <Route
@@ -91,7 +94,15 @@ function Routing({isAuth, login, updateUser, permission}){
 
             {/* Employees */}
             <Route
-                element = { <EmployeeBase/> }
+                element = {
+                    <Authenticated isAuth={isAuth} component = {
+                        <Authorization
+                            component = {<EmployeeBase/>}
+                            permission = {permission}
+                            allowedroles= {['ROLE_ADMIN, ROLE_STORE_OWNER']}
+                        />
+                    }/>
+                 }
                 path="/employee"
             >
                 <Route
@@ -112,7 +123,15 @@ function Routing({isAuth, login, updateUser, permission}){
 
             {/* Suppliers */}
             <Route
-                element = { <SuppliersBase/> }
+                element = {
+                    <Authenticated isAuth={isAuth} component = {
+                        <Authorization
+                            component = {<SuppliersBase/>}
+                            permission = {permission}
+                            allowedroles = {['ROLE_ADMIN']}
+                        />
+                    }/>
+                 }
                 path="/suppliers"
             >
                 <Route
@@ -136,18 +155,14 @@ function Routing({isAuth, login, updateUser, permission}){
             {/* Stores */}
             <Route
                 element = {
-                    <Authenticated component = {
-                        <Authorization component = {
-                                <StoresBase/>
-                            }
+                    <Authenticated isAuth = {isAuth} component = {
+                        <Authorization
+                            component = {<StoresBase/>}
                             permission = { permission }
                             allowedroles = { ['ROLE_ADMIN'] }
                         />
 
-                    }
-
-                    isAuth = {isAuth}
-                />
+                    }/>
                 }
                 path="stores"
             >
@@ -189,12 +204,12 @@ function Routing({isAuth, login, updateUser, permission}){
             {/* Category */}
             <Route
                 element = {
-                    <Authenticated component = {
+                    <Authenticated  isAuth = {isAuth} component = {
                         <Authorization component = { <CategoriesBase/> }
                             permission = {permission}
                             allowedroles = {['ROLE_ADMIN']}
-                        /> } isAuth = {isAuth}
-                    />
+                        />
+                    }/>
                 }
                 path="category"
             >

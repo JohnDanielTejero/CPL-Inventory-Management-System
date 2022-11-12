@@ -64,22 +64,25 @@ function Sidebar({reference, navigateTo, logout, user, permission}){
                 {/* Category */}
                 {
                     hasAnyRole(permission, ['ROLE_ADMIN']) &&
-                        <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                            <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "category">
-                                <span className="bi bi-tags-fill me-2"></span>
-                                <span>Category</span>
-                            </button>
-                        </div>
+                    <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                        <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "category">
+                            <span className="bi bi-tags-fill me-2"></span>
+                            <span>Category</span>
+                        </button>
+                    </div>
 
                 }
 
                 {/* Products */}
-                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "products">
-                        <span className="bi bi-bag-fill me-2"></span>
-                        <span>Products</span>
-                    </button>
-                </div>
+                {
+                    hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                    <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                        <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "products">
+                            <span className="bi bi-bag-fill me-2"></span>
+                            <span>Products</span>
+                        </button>
+                    </div>
+                }
 
                 {/* User */}
                 {
@@ -93,12 +96,15 @@ function Sidebar({reference, navigateTo, logout, user, permission}){
                 }
 
                 {/* Suppliers */}
-                <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
-                    <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "suppliers">
-                        <span className="bi bi-truck me-2"></span>
-                        <span>Suppliers</span>
-                    </button>
-                </div>
+                {
+                    hasAnyRole(permission, ['ROLE_ADMIN']) &&
+                    <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>
+                        <button className="side-menu-button w-100 h-100" onClick={removePopUp} data-side-url= "suppliers">
+                            <span className="bi bi-truck me-2"></span>
+                            <span>Suppliers</span>
+                        </button>
+                    </div>
+                }
 
                 {/* Sales */}
                 <div className="overflow-hidden w-100 d-flex justify-content-center align-items-center" style={{height:'5rem'}}>

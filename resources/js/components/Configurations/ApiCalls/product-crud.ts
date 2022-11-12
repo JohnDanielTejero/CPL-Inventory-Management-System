@@ -1,4 +1,6 @@
 import ApiEndpoint from "./service-base";
+import axios from 'axios';
+import { getCookie } from "../constants";
 
 class ProductService extends ApiEndpoint{
      readonly endpoint: string = this.baseEndpoint + "/products";
@@ -25,11 +27,12 @@ class ProductService extends ApiEndpoint{
      }
 
      addProduct(body:any){
-        return this.request({
-            url : this.endpoint + '/add-product',
+
+        return this.fileUpload({
             method : 'POST',
-            body : JSON.stringify(body),
-        }, 'multipart/form-data; boundary=???')
+            url : this.endpoint + '/add-product',
+            data : body,
+        });
      }
 
      updateProduct(body:Object, id:number){
@@ -37,12 +40,12 @@ class ProductService extends ApiEndpoint{
             url : this.endpoint + '/update-product/' + id,
             method : 'PATCH',
             body : JSON.stringify(body),
-        }, 'multipart/form-data; boundary=???')
+        });
      }
 
      addPayable(body:Object, id:number){
         return this.request({
-            url : this.endpoint + '/add-paid/' + id,
+            url : this.endpoint + '/add-payable/' + id,
             method : 'PUT',
             body : JSON.stringify(body),
         });

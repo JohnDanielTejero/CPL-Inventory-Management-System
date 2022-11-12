@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import productCrud from "../../Configurations/ApiCalls/product-crud";
+import { removeError, setErrorWithMessage } from "../../Configurations/constants";
+import { Button, Modal } from "react-bootstrap";
 
 function ProductDetails(){
     const [product, setProduct] = useState(null);
     let { id } = useParams();
+    const [showPayable, setShowPayable] = useState(false);
+    const [showPaid, setShowPaid] = useState(false);
+
     useEffect(async () => {
         const resp = await productCrud.getProduct(id);
-        setProduct(await resp);
+        setProduct(await resp[1]);
     },[id]);
 
     const handlePaidAmount = e => {
@@ -15,6 +20,52 @@ function ProductDetails(){
             e.target.value = product.Product_Payable;
         }
     }
+    const handlePayableSubmit = async e => {
+        e.preventDefault();
+        const attempt = await productCrud.addPayable({
+            add_payable : e.target[0].value,
+        }, id);
+
+    const resp = await attempt;
+    switch(resp[0].status){
+        case "invalid request":
+            for(const [key, value] of Object.entries(resp[1])){
+                setErrorWithMessage(document.querySelector('#' + key), value);
+            }
+            break;
+        case "success":
+            setProduct(resp[1]);
+            e.target[0].value = 0;
+            break;
+            default:
+                return;
+            }
+        }
+
+    const handlePaidSubmit = async e => {
+        e.preventDefault();
+        console.log(e.target[0].value);
+        const attempt = await productCrud.addPaid({
+            add_paid : e.target[0].value,
+        }, id);
+
+        const resp = await attempt;
+        console.log(resp);
+        switch(resp[0].status){
+            case "invalid request":
+                for(const [key, value] of Object.entries(resp[1])){
+                    setErrorWithMessage(document.querySelector('#' + key), value);
+                }
+                break;
+            case 'success':
+                setProduct(resp[1]);
+                e.target[0].value = 0;
+                break;
+            default:
+                return;
+        }
+    }
+
 
     return(
         <>
@@ -39,12 +90,12 @@ function ProductDetails(){
                                                 <td style={{width:"10rem"}}>{ product.product_id }</td>
                                             </tr>
                                             <tr style={{height:"5rem", overflow:"hidden"}}>
+                                                <td>Product Name</td>
                                                 <td style={{width:"10rem"}}>{ product.Product_Name }</td>
-                                                <td>Some Product Name </td>
                                             </tr>
                                             <tr style={{height:"5rem", overflow:"hidden"}}>
+                                                <td>Supplier: </td>
                                                 <td style={{width:"10rem"}}>{ product.supplier.Supp_Name }</td>
-                                                <td>Some Supplier Name </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -82,6 +133,7 @@ function ProductDetails(){
                             </button>
                         </div>
                     </section>
+
                     <div className="modal fade" id="addPayable" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1">
                         <div className="modal-dialog modal-dialog-scrollable modal-dialog-fullscreen-md-down">
                             <div className="modal-content bg-dark jumpstart text-light">
@@ -90,15 +142,16 @@ function ProductDetails(){
                                     <button type="button" className="btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <form className="row gy-2">
+                                    <form className="row gy-2" onSubmit={handlePayableSubmit}>
                                         <div className="col-12">
                                             <label htmlFor="amount">
                                                 Amount
                                             </label>
-                                            <input className="form-control bg-input text-light border border-dark" type="number"/>
+                                            <input className="form-control bg-input text-light border border-dark" type="number" id = "add_payable" onBlur={removeError}/>
+                                            <div className="invalid-feedback" id = "add_payable-feedback"></div>
                                         </div>
                                         <div className="col-12 d-flex justify-content-end">
-                                            <button type="button" className="btn btn-dark jumpstart w-100">Submit</button>
+                                            <button className="btn btn-dark jumpstart w-100">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -113,15 +166,15 @@ function ProductDetails(){
                                     <button type="button" className="btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <form className="row gy-2">
+                                    <form className="row gy-2" onSubmit={handlePaidSubmit}>
                                         <div className="col-12">
                                             <label htmlFor="amount">
                                                 Amount
                                             </label>
-                                            <input className="form-control bg-input text-light border border-dark" type="number" max={ product.Product_Paid } onChange ={handlePaidAmount}/>
+                                            <input className="form-control bg-input text-light border border-dark" id = "add_paid" type="number" max={ product.Product_Payable } onChange ={handlePaidAmount} onBlur={removeError}/>
                                         </div>
                                         <div className="col-12 d-flex justify-content-end">
-                                            <button type="button" className="btn btn-dark jumpstart w-100">Submit</button>
+                                            <button className="btn btn-dark jumpstart w-100">Submit</button>
                                         </div>
                                     </form>
                                 </div>
