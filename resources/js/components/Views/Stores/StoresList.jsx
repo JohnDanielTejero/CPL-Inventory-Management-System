@@ -9,10 +9,20 @@ function StoresList(){
 
     useEffect(async () => {
         setStores(await storeCrud.getStores(''));
+
+        return(() => {
+            setStores(null);
+        });
+
     },[]);
 
     useEffect(async () =>{
         setStores(await storeCrud.getStores(search));
+
+        return(() => {
+            setStores(null);
+        });
+
     },[search]);
 
     const navigate = useNavigate();

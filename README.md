@@ -5,14 +5,16 @@
 
 ## Overview
 Inventory management system for Jumpstart which has the following features:
-- Authentication and Authorization
+<strong>NOTE: </strong> This project is currently on progress and thus the highlighted are the only ones finished as of
+11/13/22!
+- `Authentication and Authorization`
 - Real-time monitoring and managing of sales
-- Monitoring and managing suppliers information
-- Sorting product via categories
-- Manage multiple branches stocks
-- Manage retail branches
-- Employee management
-- Profile management
+- `Monitoring and managing suppliers information`
+- `Sorting product via categories`
+- `Manage multiple branches stocks`
+- `Manage retail branches`
+- `Employee management`
+- `Profile management`
 
 ## Technologies Used
 - Laravel UI React
@@ -86,7 +88,6 @@ After cloning the repository you are expected to:
 ## Demonstration 
 --video here--
 --screenshots here--
-
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 

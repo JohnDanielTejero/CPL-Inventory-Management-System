@@ -40,7 +40,9 @@ function Routing({isAuth, login, updateUser, permission, user}){
             {/* login */}
             <Route
                 element = {
-                    <Anonymous component={ <Login method = {login}/> } isAuth = { isAuth }/>
+                    <Anonymous isAuth = { isAuth } component = {
+                        <Login method = {login}/>
+                    }/>
                 }
                 path = { "/login" }
             />
@@ -118,7 +120,9 @@ function Routing({isAuth, login, updateUser, permission, user}){
             {/* Profile */}
             <Route
                 element = {
-                    <Authenticated isAuth={isAuth} component = {<Profile updateUser = {updateUser}/>}/>
+                    <Authenticated isAuth={isAuth} component = {
+                        <Profile updateUser = {updateUser}/>
+                    }/>
                  }
                 path="profile"
             />
@@ -128,9 +132,9 @@ function Routing({isAuth, login, updateUser, permission, user}){
                 element = {
                     <Authenticated isAuth={isAuth} component = {
                         <Authorization
-                            component = {<SuppliersBase/>}
-                            permission = {permission}
-                            allowedroles = {['ROLE_ADMIN']}
+                            component = { <SuppliersBase/> }
+                            permission = { permission }
+                            allowedroles = { ['ROLE_ADMIN'] }
                         />
                     }/>
                  }
@@ -232,7 +236,11 @@ function Routing({isAuth, login, updateUser, permission, user}){
 
             {/* Stocks */}
             <Route
-                element = { <Stocks user = {user} permission = {permission}/> }
+                element = {
+                    <Authenticated isAuth={isAuth} component ={
+                        <Stocks user = {user} permission = {permission}/>
+                    }/>
+                 }
                 path="stocks"
             />
         </Routes>

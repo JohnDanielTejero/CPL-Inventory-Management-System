@@ -16,6 +16,11 @@ function ProductDetails(){
     useEffect(async () => {
         const resp = await productCrud.getProduct(id);
         setProduct(await resp[1]);
+
+        return(()=>{
+            setProduct(null);
+        });
+
     },[id]);
 
     const handlePaidAmount = e => {

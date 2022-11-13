@@ -23,6 +23,11 @@ function StoresForm(){
         }else{
             setStore(null);
         }
+
+        return (() => {
+            setStore(null);
+        });
+
     }, [location]);
 
     //events

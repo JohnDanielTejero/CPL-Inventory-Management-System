@@ -44,6 +44,10 @@ function Stocks({user, permission}){
             setStocks(await stockresp[1]);
         }
 
+        return (() => {
+            setStore(null);
+            setStocks(null);
+        })
     }, []);
 
     useEffect(async () => {
@@ -53,6 +57,9 @@ function Stocks({user, permission}){
         }else{
             setStocks(null);
         }
+        return(() => {
+            setStocks(null);
+        })
     }, [store]);
 
     const handleStoreChange = async e => {
@@ -250,6 +257,10 @@ function Stocks({user, permission}){
                     <button type="button" className = "btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close" onClick={addStockModalClose}></button>
                 </Modal.Header>
                 <ModalBody className="bg-dark jumpstart text-light">
+                    <div className="d-flex mb-3">
+                        <span className="fw-bold">Current in inventory: </span>
+                        <span className="ms-1">{ targetProduct != null ? targetProduct.Product_Paid : "" }</span>
+                    </div>
                     <form className="row g-2" onSubmit={addStockSubmit}>
                         <div className="col-12 form-floating">
                             <select className = "form-select bg-input text-light border border-dark" id = "product" defaultValue={""} onChange={handleProductChange} onBlur={removeError}>
@@ -287,6 +298,10 @@ function Stocks({user, permission}){
                     <button type="button" className = "btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close" onClick={transferStockModalClose}></button>
                 </Modal.Header>
                 <ModalBody className="bg-dark jumpstart text-light">
+                    <div className="d-flex mb-3">
+                        <span className="fw-bold">Current in inventory: </span>
+                        <span className="ms-1">{ targetProduct != null ? targetProduct.Product_Paid : "" }</span>
+                    </div>
                     <form className="row g-2" onSubmit={transferStockSubmit}>
                         <div className="col-12 form-floating">
                             <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'} onChange={limitAmount}/>

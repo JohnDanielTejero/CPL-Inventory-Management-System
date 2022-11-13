@@ -21,11 +21,18 @@ function Products(){
     useEffect(async () => {
         const resp = productCrud.getAllProducts('');
         setProducts(await resp);
+
+        return(()=>{
+            setProducts([]);
+        });
     },[]);
 
     useEffect(async () => {
         const resp = productCrud.getAllProducts(search);
         setProducts(await resp);
+        return (()=>{
+            setSearch('');
+        })
     }, [search]);
 
     const handleSearch = e => {

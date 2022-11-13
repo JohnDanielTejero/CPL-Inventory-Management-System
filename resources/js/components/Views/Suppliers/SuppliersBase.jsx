@@ -1,5 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 
+/**
+ * Suppliers component base template
+ *
+ * @returns JSX.Element
+ */
 function SuppliersBase(){
     return(
         <div className="p-5 d-flex flex-column" style = {{height:"40rem", overflowY:"auto"}}>

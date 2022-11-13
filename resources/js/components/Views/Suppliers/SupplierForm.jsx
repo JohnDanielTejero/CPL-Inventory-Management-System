@@ -5,6 +5,11 @@ import { useLocation, useParams } from "react-router-dom";
 import supplierCrud from "../../Configurations/ApiCalls/supplier-crud";
 import { cannotBeEmpty, removeError, setErrorWithMessage, setSuccess, validateEmail, validateName, validateNumber } from "../../Configurations/constants";
 
+/**
+ * Supplier form for adding and editing supplier information
+ *
+ * @returns JSX.Element
+ */
 function SupplierForm(){
 
     const [selectedFlag, setSelectedFlag] = useState("");
@@ -20,6 +25,11 @@ function SupplierForm(){
         }else{
             setSupplier(null);
         }
+
+        return (() => {
+            setSupplier(null);
+            setSelectedFlag('');
+        });
 
     }, [location]);
 
@@ -37,11 +47,18 @@ function SupplierForm(){
         return() => {
             $('.iti__flag-container').off('click');
         }
+
     },[]);
 
     useEffect(() => {
         document.querySelector("#Supp_ContactNo").value = "";
         document.querySelector("#Supp_ContactNo").value = "+" + selectedFlag + " "  + document.querySelector("#Supp_ContactNo").value;
+
+        return (() => {
+            setSupplier(null);
+            setSelectedFlag('');
+        });
+
     },[selectedFlag]);
 
     //events

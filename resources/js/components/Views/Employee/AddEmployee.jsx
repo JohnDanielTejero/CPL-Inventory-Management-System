@@ -28,6 +28,10 @@ function RegisterEmployee({permission, user}){
             setStores(await dropdown[1]);
         }
 
+        return(() => {
+            setRoles([]);
+            setStores([]);
+        });
 
     }, []);
 

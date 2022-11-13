@@ -17,6 +17,10 @@ function EmployeeList(){
         let activeEmployees = await userCrud.getAllUsers('');
         setEmployees(await activeEmployees);
 
+        return(() => {
+            setEmployees([]);
+        });
+
     }, []);
 
     useEffect(async () => {
@@ -24,6 +28,10 @@ function EmployeeList(){
         const activeEmployees = await userCrud.getAllUsers(search);
         setEmployees(await activeEmployees);
 
+        return(()=>{
+            setEmployees([]);
+            setSearch('');
+        });
     }, [search]);
 
     const handleSearch = (e) => {

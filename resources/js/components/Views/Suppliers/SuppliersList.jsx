@@ -22,11 +22,22 @@ function SuppliersList(){
         const collection = supplierCrud.getSuppliers('');
         setSuppliers(await collection);
 
+        return(() => {
+            setSuppliers([]);
+            setSearch('');
+        });
+
     }, []);
 
     useEffect(async () => {
         const collection = supplierCrud.getSuppliers(search);
         setSuppliers(await collection);
+
+        return(() => {
+            setSuppliers([]);
+            setSearch('');
+        });
+
     }, [search]);
 
     const handleSearch = e => {

@@ -31,6 +31,10 @@ function ProductForm(){
         }else{
             setProduct(null);
         }
+
+        return(()=>{
+            setProduct(null);
+        });
     }, [id]);
 
     const handleSubmit = async e => {

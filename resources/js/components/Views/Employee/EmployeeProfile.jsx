@@ -14,6 +14,11 @@ function Profile({updateUser}){
     const [currentUser, setCurrentUser] = useState({});
     useEffect(async () => {
         setCurrentUser(await userCrud.getActiveUser());
+
+        return(() => {
+            setCurrentUser({});
+        });
+
     }, []);
 
     const handleFirstName = (e) => {
