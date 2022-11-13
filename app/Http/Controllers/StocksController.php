@@ -51,7 +51,7 @@ class StocksController extends Controller
         ]);
 
         if($validate->fails()){
-            return response()->json([['status' => 'invalid request'], $validate->errors()], 401);
+            return response()->json([['status' => 'invalid request'], $validate->errors()], 400);
         }
 
         $store = Store::find($request->store);

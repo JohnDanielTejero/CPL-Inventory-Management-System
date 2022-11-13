@@ -110,39 +110,48 @@ function Stocks({user, permission}){
             return;
         }
 
-        const attempt = await stocksCrud.addStocks({
-            'product' : e.target[0].value,
-            'amount' : e.target[1].value,
-            'store' : e.target[2].value,
-        });
+        try{
+            const attempt = await stocksCrud.addStocks({
+                'product' : e.target[0].value,
+                'amount' : e.target[1].value,
+                'store' : e.target[2].value,
+            });
 
-        const resp = await attempt;
-        if (resp[0].status == 'success'){
-            setStocks(resp[1]);
-            setTargetProduct(null);
-            enableStockModal(false);
-        }else{
-            setErrorWithMessage(e.target[1], resp[1].amount);
+            const resp = await attempt;
+            if (resp[0].status == 'success'){
+                setStocks(resp[1]);
+                setTargetProduct(null);
+                enableStockModal(false);
+            }else{
+                setErrorWithMessage(e.target[1], resp[1].amount);
+            }
+        }catch(error){
+            setErrorWithMessage(e.target[0], "this stock is already in the store's inventory, please select another product");
         }
+
     }
 
     const transferStockSubmit = async e => {
         e.preventDefault();
+        try{
+            const attempt = await stocksCrud.transferStocks({
+                'store' : e.target[2].value,
+                'amount' : e.target[0].value,
+            }, e.target[1].value);
 
-        const attempt = await stocksCrud.transferStocks({
-            'store' : e.target[2].value,
-            'amount' : e.target[0].value,
-        }, e.target[1].value);
-
-        const resp = await attempt;
-        if (resp[0].status == 'success'){
-            setStocks(resp[1]);
-            setTargetProduct(null);
-            enableTransferStockModal(false);
-        }else{
-            console.log(resp[1]);
-            setErrorWithMessage(e.target[0], resp[1].amount);
+            const resp = await attempt;
+            if (resp[0].status == 'success'){
+                setStocks(resp[1]);
+                setTargetProduct(null);
+                enableTransferStockModal(false);
+            }else{
+                console.log(resp[1]);
+                setErrorWithMessage(e.target[0], "this stock is already in the store's inventory, please select another product");
+            }
+        }catch(error){
+            console.log(e);
         }
+
     }
 
     const limitAmount = e => {
@@ -278,7 +287,7 @@ function Stocks({user, permission}){
                             <div className="invalid-feedback" id = "product-feedback"></div>
                         </div>
                         <div className="col-12 form-floating">
-                            <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'} onChange={limitAmount}/>
+                            <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'} onChange={limitAmount} onBlur={removeError}/>
                             <label htmlFor = "amount">Specify amount</label>
                             <div className="invalid-feedback" id="amount-feedback"></div>
                         </div>
