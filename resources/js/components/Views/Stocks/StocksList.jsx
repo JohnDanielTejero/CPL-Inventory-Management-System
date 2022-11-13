@@ -126,7 +126,7 @@ function Stocks({user, permission}){
                 setErrorWithMessage(e.target[1], resp[1].amount);
             }
         }catch(error){
-            setErrorWithMessage(e.target[0], "this stock is already in the store's inventory, please select another product");
+            setErrorWithMessage(e.target[0], "this product is already in the store's stock, please select another product.");
         }
 
     }
@@ -146,7 +146,7 @@ function Stocks({user, permission}){
                 enableTransferStockModal(false);
             }else{
                 console.log(resp[1]);
-                setErrorWithMessage(e.target[0], "this stock is already in the store's inventory, please select another product");
+                setErrorWithMessage(e.target[0], resp[1].amount);
             }
         }catch(error){
             console.log(e);
