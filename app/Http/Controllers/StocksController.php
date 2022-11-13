@@ -57,6 +57,9 @@ class StocksController extends Controller
         $store = Store::find($request->store);
         if($store == null) return response()->json([['status' => 'store not found']],404);
 
+        $product = Product::find($request->product);
+        if($product == null) return response()->json([['status' => 'store not found']], 404);
+
         if(Stock::create(
             [
                 'Stock_Quantity' => $request['amount'],
@@ -64,7 +67,9 @@ class StocksController extends Controller
                 'Product_Id' => $request['product'],
                 'Store_Id' => $request['store'],
             ]
-        )){
+        ) && $product->update([
+            'Product_Paid' => $product['Product_Paid'] - $request['amount'],
+        ])){
             return $this->index($store);
         }
     }
@@ -89,11 +94,12 @@ class StocksController extends Controller
         ]);
 
         if($validate->fails()){
-            return response()->json([['status' => 'invalid request'], $validate->errors()], 401);
+            return response()->json([['status' => 'invalid request'], $validate->errors()], 400);
         }
 
         $store = Store::find($request->store);
         if($store == null) return response()->json([['status' => 'store not found']], 404);
+
         $product = Product::find($stock->Product_Id);
         if($product == null) return response()->json([['status' => 'store not found']], 404);
 

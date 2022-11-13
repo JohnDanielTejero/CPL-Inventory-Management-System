@@ -1,11 +1,20 @@
+import { at } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Modal, ModalBody } from "react-bootstrap";
 import productCrud from "../../Configurations/ApiCalls/product-crud";
 import stocksCrud from "../../Configurations/ApiCalls/stocks-crud";
 import storeCrud from "../../Configurations/ApiCalls/store-crud";
-import { hasAnyRole } from "../../Configurations/constants";
+import { hasAnyRole, removeError, setErrorWithMessage } from "../../Configurations/constants";
 
+/**
+ * Component for stocks lists
+ *
+ * Admin can add stocks or transfer stocks.
+ *
+ * @param {user, permission}
+ * @returns JSX.Element
+ */
 function Stocks({user, permission}){
 
     const [products, setProducts] = useState(null);
@@ -54,6 +63,7 @@ function Stocks({user, permission}){
     const [addStockModal, enableStockModal] = useState(false);
     const [transferStockModal, enableTransferStockModal] = useState(false);
     const [targetStock, setTargetStock] = useState(null);
+    const [targetProduct, setTargetProduct] = useState(null);
 
     function addStockModalClose(){
         enableStockModal(false);
@@ -63,8 +73,10 @@ function Stocks({user, permission}){
         enableStockModal(true);
     }
 
-    function transferStockModalOpen(e){
-        setTargetStock(e.target.getAttribute('data-product-target'));
+    async function transferStockModalOpen(e){
+        setTargetStock(e.target.getAttribute('data-stock-target'));
+        const resp = await productCrud.getProduct(e.target.getAttribute('data-product-target'));
+        setTargetProduct(await resp[1]);
         enableTransferStockModal(true);
     }
 
@@ -86,7 +98,57 @@ function Stocks({user, permission}){
 
     const addStockSubmit = async e => {
         e.preventDefault();
+        if (e.target[0].value == ""){
+            setErrorWithMessage(e.target[0], 'select a product first');
+            return;
+        }
 
+        const attempt = await stocksCrud.addStocks({
+            'product' : e.target[0].value,
+            'amount' : e.target[1].value,
+            'store' : e.target[2].value,
+        });
+
+        const resp = await attempt;
+        if (resp[0].status == 'success'){
+            setStocks(resp[1]);
+            setTargetProduct(null);
+            enableStockModal(false);
+        }else{
+            setErrorWithMessage(e.target[1], resp[1].amount);
+        }
+    }
+
+    const transferStockSubmit = async e => {
+        e.preventDefault();
+
+        const attempt = await stocksCrud.transferStocks({
+            'store' : e.target[2].value,
+            'amount' : e.target[0].value,
+        }, e.target[1].value);
+
+        const resp = await attempt;
+        if (resp[0].status == 'success'){
+            setStocks(resp[1]);
+            setTargetProduct(null);
+            enableTransferStockModal(false);
+        }else{
+            console.log(resp[1]);
+            setErrorWithMessage(e.target[0], resp[1].amount);
+        }
+    }
+
+    const limitAmount = e => {
+        if (targetProduct != null){
+            if (e.target.value > targetProduct.Product_Paid){
+                e.target.value = targetProduct.Product_Paid;
+            }
+        }
+    }
+
+    const handleProductChange = async e => {
+        const resp = await productCrud.getProduct(e.target.value);
+        setTargetProduct(await resp[1]);
     }
 
     return(
@@ -160,7 +222,7 @@ function Stocks({user, permission}){
                                                             hasAnyRole(permission, ['ROLE_ADMIN']) &&
                                                             <td style={{width:"5rem"}} className="p-2">
                                                                 <div className="d-flex justify-content-center align-items-center">
-                                                                    <button className="btn btn-outline-light bg-gradient ms-2" onClick={transferStockModalOpen} data-product-target = {(e.product).product_id}>
+                                                                    <button className="btn btn-outline-light bg-gradient ms-2" onClick={transferStockModalOpen} data-stock-target = {e.stock_id} data-product-target = {e.product.product_id}>
                                                                         <i className="bi bi-person-workspace" style ={{pointerEvents:"none"}}></i>
                                                                         <span className = "ms-1" style ={{pointerEvents:"none"}}>Transfer</span>
                                                                     </button>
@@ -190,7 +252,7 @@ function Stocks({user, permission}){
                 <ModalBody className="bg-dark jumpstart text-light">
                     <form className="row g-2" onSubmit={addStockSubmit}>
                         <div className="col-12 form-floating">
-                            <select className = "form-select bg-input text-light border border-dark" id = "product" defaultValue={""}>
+                            <select className = "form-select bg-input text-light border border-dark" id = "product" defaultValue={""} onChange={handleProductChange} onBlur={removeError}>
                                 <option disabled value = "">Please select</option>
                                 {
                                     products != null &&
@@ -202,10 +264,12 @@ function Stocks({user, permission}){
                                 }
                             </select>
                             <label htmlFor = "product">Select Product</label>
+                            <div className="invalid-feedback" id = "product-feedback"></div>
                         </div>
                         <div className="col-12 form-floating">
-                            <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'}/>
+                            <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'} onChange={limitAmount}/>
                             <label htmlFor = "amount">Specify amount</label>
+                            <div className="invalid-feedback" id="amount-feedback"></div>
                         </div>
                             <input className id = "store" placeholder="..." type={'hidden'} value = {store != null ? store.stores_id : ""}/>
                         <div className="col-12">
@@ -216,18 +280,21 @@ function Stocks({user, permission}){
                     </form>
                 </ModalBody>
             </Modal>
+
             <Modal show = {transferStockModal} onHide = {transferStockModalClose} backdrop="static" keyboard ={false}>
                 <Modal.Header className="bg-dark jumpstart text-light">
                     <Modal.Title>Select Amount</Modal.Title>
                     <button type="button" className = "btn btn-outline-light bi bi-x" data-bs-dismiss="modal" aria-label="Close" onClick={transferStockModalClose}></button>
                 </Modal.Header>
                 <ModalBody className="bg-dark jumpstart text-light">
-                    <form className="row g-2">
+                    <form className="row g-2" onSubmit={transferStockSubmit}>
                         <div className="col-12 form-floating">
-                            <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'}/>
+                            <input className = "form-control bg-input text-light border border-dark" id = "amount" placeholder="..." type={'number'} onChange={limitAmount}/>
                             <label htmlFor = "amount">Specify amount</label>
+                            <div className="invalid-feedback" id = "amount-feedback"></div>
                         </div>
-                        <input type={"hidden"} id = "product-select" value = {targetStock}/>
+                        <input type={"hidden"} id = "stock" value = {targetStock}/>
+                        <input type={"hidden"} id = "store" value = {store != null ? store.stores_id : ""}/>
                         <div className="col-12">
                             <button className="w-100 btn btn-dark jumpstart">
                                 Submit

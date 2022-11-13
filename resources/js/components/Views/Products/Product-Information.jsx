@@ -175,6 +175,7 @@ function ProductDetails(){
                                                 Amount
                                             </label>
                                             <input className="form-control bg-input text-light border border-dark" id = "add_paid" type="number" max={ product.Product_Payable } onChange ={handlePaidAmount} onBlur={removeError}/>
+                                            <div className="invalid-feedback" id = "add_paid-feedback"></div>
                                         </div>
                                         <div className="col-12 d-flex justify-content-end">
                                             <button className="btn btn-dark jumpstart w-100">Submit</button>
