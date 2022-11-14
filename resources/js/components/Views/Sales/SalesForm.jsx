@@ -76,18 +76,21 @@ function SalesForm({user}){
                     if (e.target.value != null && item.stock == e.target.value){
                         setErrorWithMessage(e.target, "Duplicated product, cannot be selected");
                         e.target.value = "";
-
-                        break;
-                    }else{
-                        currentItems[index].stock = e.target.value;
-                        let activeStock = stocks.filter(s => s.stock_id == e.target.value);
-                        let markup = Number(activeStock[0].product.Product_Markup)/100;
-                        currentItems[index].price = Math.round(((( markup * (Number(activeStock[0].product.Product_Price) * 1)) + Number(activeStock[0].product.Product_Price)) + Number.EPSILON) * 100) / 100;
+                        currentItems[index].stock = null;
+                        currentItems[index].price = null;
+                        currentItems[index].quantity = null;
                         setItems(currentItems);
-                        break;
+                        return;
                     }
                 }
             }
+
+            currentItems[index].stock = e.target.value;
+            let activeStock = stocks.filter(s => s.stock_id == e.target.value);
+            let markup = Number(activeStock[0].product.Product_Markup)/100;
+            currentItems[index].price = Math.round(((( markup * (Number(activeStock[0].product.Product_Price) * 1)) + Number(activeStock[0].product.Product_Price)) + Number.EPSILON) * 100) / 100;
+            setItems(currentItems);
+
         }
     }
 
@@ -117,7 +120,6 @@ function SalesForm({user}){
 
     const handleSubmit = e => {
         e.preventDefault();
-
         if (cannotBeEmpty(e.target[0])){
 
         }else{

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
@@ -110,4 +111,13 @@ Route::controller(StocksController::class)
         Route::post('add-stocks', 'store');
         Route::put('transfer-stocks/{stock}', 'transferStocks');
         Route::delete('delete-stock/{stock}', 'destroy');
+    });
+
+/**
+ * Route group for purchases interactions
+ */
+Route::controller(SalesController::class)
+    ->prefix('/sales')
+    ->group(function(){
+
     });
