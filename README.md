@@ -37,8 +37,8 @@ After cloning the repository you are expected to:
 - Run the server via `php artisan serve`
 - [Optional] Run Vite to run ReactJs via `npm run dev`
  
-## Conceptual Design
---ERD and EERD here--
+## Entity Relation Diagram
+[entity-relation]!('public/img/ERD.png');
 
 ## Roles
 <table>

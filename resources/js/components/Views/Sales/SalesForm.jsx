@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import stocksCrud from "../../Configurations/ApiCalls/stocks-crud";
-import { removeError, setErrorWithMessage } from "../../Configurations/constants";
+import { cannotBeEmpty, removeError, setErrorWithMessage } from "../../Configurations/constants";
 
 /**
  * Adding new sales form component
@@ -26,7 +26,6 @@ function SalesForm({user}){
         if (items.length != 0){
             for(let item of items){
                 let totalProductPrice = Number(item.price) * Number(item.quantity);
-                console.log(totalProductPrice);
                 currentTotal += totalProductPrice;
             }
             setTotal(currentTotal);
@@ -97,10 +96,16 @@ function SalesForm({user}){
         if (currentItems[index].stock != null){
             if (e.target.value.trim().length == 0){
                 e.target.value = 0;
+            }else{
+                let currentValue = [...e.target.value];
+                if(currentValue[0] == 0){
+                    currentValue.shift();
+                    e.target.value = currentValue;
+                }
             }
             let activeStock = stocks.filter(s => s.stock_id == currentItems[index].stock);
-            if(e.target.value > activeStock[0].product.Product_Paid){
-                e.target.value = activeStock[0].product.Product_Paid;
+            if(e.target.value > Number(activeStock[0].Stock_Quantity)){
+                e.target.value = Number(activeStock[0].Stock_Quantity);
             }
             currentItems[index].quantity = e.target.value;
             setItems(currentItems);
@@ -112,6 +117,12 @@ function SalesForm({user}){
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        if (cannotBeEmpty(e.target[0])){
+
+        }else{
+            setErrorWithMessage(e.target[0], 'customer name is required');
+        }
 
     };
 
@@ -133,8 +144,10 @@ function SalesForm({user}){
                                     className="form-control bg-input text-light border border-dark"
                                     id = "customer_name"
                                     placeholder="..."
+                                    onBlur={removeError}
                                 />
                                 <label className = "ms-2" htmlFor="customer_name">Customer Name</label>
+                                <div className ="invalid-feedback" id ="customer_name-feedback"></div>
                             </div>
                             <div className="col-12">
                                 <div className="card bg-dark text-light" style={{height:"20rem", overflowX:"hidden", overflowY:"auto"}}>
