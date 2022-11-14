@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 import purchaseCrud from "../../Configurations/ApiCalls/purchase-crud";
 import { dateToHumanReadable } from "../../Configurations/constants";
 
+/**
+ * Component for displaying all purchase records
+ *
+ * @param {user} param0
+ * @returns JSX.Element
+ */
 function SalesList({user}){
 
     const [records, setRecords] = useState(null);
@@ -15,6 +21,11 @@ function SalesList({user}){
     useEffect(async () => {
         const currentRecords = await purchaseCrud.getSalesHistory(user.store_id);
         setRecords(await currentRecords[1]);
+
+        return (() => {
+            setRecords(null);
+        });
+
     }, []);
 
     const handleDelete = async e => {

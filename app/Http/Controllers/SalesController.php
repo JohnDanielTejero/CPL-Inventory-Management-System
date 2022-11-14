@@ -82,9 +82,10 @@ class SalesController extends Controller
      */
     public function show(Purchase $purchase)
     {
-       return response()->json($purchase->with(['stock' => function($query){
+        $purchase = Purchase::where('purchase_id', $purchase->purchase_id)->with(['stock' => function($query){
             $query->with('product')->get();
-        }])->first());
+        }])->first();
+       return response()->json($purchase);
     }
 
     /**

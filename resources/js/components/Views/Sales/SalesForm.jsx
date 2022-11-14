@@ -24,6 +24,11 @@ function SalesForm({user}){
         const attempt = await stocksCrud.getStocks(user.store_id);
         const resp = await attempt;
         setStocks(resp[1]);
+
+        return (() => {
+            setStocks(null);
+        });
+
     }, []);
 
     useEffect(() => {
@@ -35,6 +40,11 @@ function SalesForm({user}){
             }
             setTotal(currentTotal);
         }
+
+        return (() => {
+            setTotal(0);
+        });
+
     },[items]);
 
     const addElement = e => {
