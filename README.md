@@ -35,7 +35,7 @@ After cloning the repository you are expected to:
 - Perform migration via `php artisan migrate`
 - Generate sample data via `php artisan generate:sampledata`
 - Run the server via `php artisan serve`
-- [Optional] Run Vite to run ReactJs via `npm run dev`
+- ``Optional`` Run Vite to run ReactJs via `npm run dev`
  
 ## Entity Relation Diagram
 ![entity-relation](/public/img/ERD%20updated.png)
