@@ -5,10 +5,9 @@
 
 ## Overview
 Inventory management system for Jumpstart which has the following features:<br/>
-<strong>NOTE: </strong> This project is currently on progress and thus the highlighted are the only ones finished as of
-11/13/22!
+
 - `Authentication and Authorization`
-- Real-time monitoring and managing of sales
+- `Real-time monitoring and managing of sales`
 - `Monitoring and managing suppliers information`
 - `Sorting product via categories`
 - `Manage multiple branches stocks`
@@ -38,7 +37,9 @@ After cloning the repository you are expected to:
 - ``Optional`` Run Vite to run ReactJs via `npm run dev`
  
 ## Entity Relation Diagram
-![entity-relation](/public/img/ERD%20updated.png)
+![entity-relation](/public/img/ERD%20final.png)
+<br/>
+![entity-logical-design](/public/img/Logical%20design%20final.png)
 
 ## Roles
 <table>
