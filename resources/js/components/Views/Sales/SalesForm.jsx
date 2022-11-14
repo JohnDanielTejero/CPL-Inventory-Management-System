@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import purchaseCrud from "../../Configurations/ApiCalls/purchase-crud";
 import stocksCrud from "../../Configurations/ApiCalls/stocks-crud";
 import { cannotBeEmpty, removeError, setErrorWithMessage } from "../../Configurations/constants";
 
@@ -14,6 +16,9 @@ function SalesForm({user}){
     const [items, setItems] = useState([]);
     const [stocks, setStocks] = useState(null);
     const [total, setTotal] = useState(0);
+    const [alertError, setAlertError] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(async () => {
         const attempt = await stocksCrud.getStocks(user.store_id);
@@ -118,12 +123,49 @@ function SalesForm({user}){
         }
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
+
+        let productIsValid = true;
+        for(let item of items){
+            for (let e in item){
+                if(item[e] == null || item[e] == 0){
+                    setAlertError(true);
+                    productIsValid = false;
+                }
+            }
+        }
+
         if (cannotBeEmpty(e.target[0])){
+            if (productIsValid){
+                const attempt = await purchaseCrud.addNewSales({
+                    "items" : items,
+                    'customer' : e.target[0].value,
+                    'Payable' : total,
+                 });
+
+                const resp = await attempt;
+
+                switch (resp[0].status){
+                    case "success":
+                        navigate("/sales");
+                        break;
+                    case "bad request":
+                        if(resp[1].customer != null || typeof resp[1].customer != "undefined"){
+                            setErrorWithMessage(e.target[1], resp[1].customer[0]);
+                        }
+                        if(resp[1].items != null || typeof resp[1].items != "undefined"){
+                            setAlertError(true);
+                        }
+                        break;
+                    default:
+                        return;
+                }
+            }
 
         }else{
             setErrorWithMessage(e.target[0], 'customer name is required');
+            return;
         }
 
     };
@@ -153,6 +195,14 @@ function SalesForm({user}){
                             </div>
                             <div className="col-12">
                                 <div className="card bg-dark text-light" style={{height:"20rem", overflowX:"hidden", overflowY:"auto"}}>
+                                    {
+                                        alertError == true &&
+                                        <div className="alert alert-danger alert-dismissible fade-show">
+                                            <button type="button" className="btn-close" onClick={()=>{setAlertError(false)}}></button>
+                                            <h1>Error!</h1>
+                                            <p id = "error-message">Make sure that the products are not empty, and the fields have values!</p>
+                                        </div>
+                                    }
                                     <div className="card-body">
                                         <section className="table-responsive w-100">
                                             <table className="table table-dark jumpstart-table table-bordered table-hover">

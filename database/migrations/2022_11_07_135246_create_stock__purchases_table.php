@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('stock__purchases', function (Blueprint $table) {
             $table->unsignedBigInteger('stock_id');
             $table->unsignedBigInteger('purchase_id');
-            $table->integer('quantity');
+            $table->integer('quantity')->nullable();
+            $table->double('price')->nullable();
             $table->foreign('stock_id')->references('stock_id')->on('stocks')->onDelete('cascade');
             $table->foreign('purchase_id')->references('purchase_id')->on('purchases')->onDelete('cascade');
             $table->primary(['stock_id', 'purchase_id']);

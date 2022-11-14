@@ -24,7 +24,6 @@ function SalesList(){
                 <table className="table table-dark jumpstart-table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Purchased By</th>
                             <th>Total Payable</th>
                             <th>Paid At</th>
@@ -33,7 +32,6 @@ function SalesList(){
                     </thead>
                     <tbody>
                         <tr style={{height:"5rem", overflow:"hidden"}}>
-                            <td className = "h-100" style={{width:"2rem"}}>1</td>
                             <td style={{width:"5rem"}}>aaa</td>
                             <td style={{width:"5rem"}}>$2000000</td>
                             <td style={{width:"6rem"}}>Some Date</td>

@@ -119,5 +119,5 @@ Route::controller(StocksController::class)
 Route::controller(SalesController::class)
     ->prefix('/sales')
     ->group(function(){
-
+        Route::post('add-sales', 'store');
     });

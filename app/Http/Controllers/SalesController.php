@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Stock;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
@@ -25,7 +29,40 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $validate = Validator::make($request->all(),[
+            'items' => ['required','array'],
+            'customer' => ['required','string'],
+            'Payable' => ['required'],
+        ]);
+
+        if($validate->fails()){
+            return response()->json([['status' => 'bad request'], $validate->errors()], 400);
+        }
+
+        $purchase = Purchase::create([
+            'Purchase_By' => $request->customer,
+            'Purchase_Date' => date('Y-m-d H:i:s'),
+            'Purchase_Payable' => $request->Payable,
+        ]);
+
+        foreach($request->items as $item){
+            $stock = Stock::find($item['stock']);
+            $purchase->stock()->attach($stock);
+
+            DB::table('stock__purchases')
+                ->where('stock_id', $item['stock'])
+                ->where('purchase_id', $purchase->purchase_id)
+                ->update([
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price'],
+                ]);
+
+            $stock->update([
+                'Stock_Quantity' => $stock->Stock_Quantity - $item['quantity'],
+            ]);
+        }
+
+        return response()->json([['status' => 'success']], 200);
     }
 
     /**
