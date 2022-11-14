@@ -38,7 +38,7 @@ After cloning the repository you are expected to:
 - [Optional] Run Vite to run ReactJs via `npm run dev`
  
 ## Entity Relation Diagram
-![entity-relation](/public/img/ERD.png);
+![entity-relation](/public/img/ERD w bg.png);
 
 ## Roles
 <table>
