@@ -189,7 +189,15 @@ function Routing({isAuth, login, updateUser, permission, user}){
 
             {/* Sales */}
             <Route
-                element = { <SalesBase/> }
+                element = {
+                    <Authenticated isAuth={isAuth} component ={
+                        <Authorization
+                            permission = { permission }
+                            allowedroles = { ['ROLE_STORE_OWNER', 'ROLE_EMPLOYEE'] }
+                            component = { <SalesBase/> }
+                        />
+                    }/>
+                }
                 path="sales"
             >
                 <Route
@@ -197,7 +205,7 @@ function Routing({isAuth, login, updateUser, permission, user}){
                     element = { <SalesList/> }
                 />
                 <Route
-                    element = { <SalesForm/>}
+                    element = { <SalesForm user = {user}/>}
                     path = "add-sale"
                 />
 

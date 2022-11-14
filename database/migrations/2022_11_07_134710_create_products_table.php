@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('product_id');
             $table->string('Product_Name');
             $table->string('Product_Desc');
-            $table->string('Product_Price');
+            $table->double('Product_Price');
             $table->integer('Product_Paid')->nullable();
             $table->integer('Product_Payable')->nullable();
             $table->integer('Product_Markup');
