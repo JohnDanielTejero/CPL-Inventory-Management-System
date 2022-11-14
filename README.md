@@ -4,7 +4,7 @@
 </p>
 
 ## Overview
-Inventory management system for Jumpstart which has the following features:
+Inventory management system for Jumpstart which has the following features:<br/>
 <strong>NOTE: </strong> This project is currently on progress and thus the highlighted are the only ones finished as of
 11/13/22!
 - `Authentication and Authorization`
