@@ -4,6 +4,10 @@
 </p>
 
 ## Overview
+Front End: React JS v 17.0.2
+Back End: Laravel v 9.36.2 / php v 8.10
+Database: MySQL v 8.0.28
+
 Inventory management system for Jumpstart which has the following features:<br/>
 
 - `Authentication and Authorization`
