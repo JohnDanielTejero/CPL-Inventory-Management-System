@@ -6,19 +6,24 @@ use App\Models\Stock;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
 {
+    public function __constructor(){
+        $this->middleware(['auth:api', 'auth.anyrole:ROLE_STORE_OWNER, ROLE_EMPLOYEE']);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, Store $store)
     {
-        //
+        $purchase = Purchase::where('store_id', $store->stores_id)->get();
+        return response()->json([['status' => 'success'], $purchase], 200);
     }
 
     /**
@@ -33,6 +38,7 @@ class SalesController extends Controller
             'items' => ['required','array'],
             'customer' => ['required','string'],
             'Payable' => ['required'],
+            'store' => ['required'],
         ]);
 
         if($validate->fails()){
@@ -43,6 +49,7 @@ class SalesController extends Controller
             'Purchase_By' => $request->customer,
             'Purchase_Date' => date('Y-m-d H:i:s'),
             'Purchase_Payable' => $request->Payable,
+            'store_id' => $request->store,
         ]);
 
         foreach($request->items as $item){
@@ -57,8 +64,10 @@ class SalesController extends Controller
                     'price' => $item['price'],
                 ]);
 
+            $currentStockQuantity = $stock->Stock_Quantity - $item['quantity'];
             $stock->update([
-                'Stock_Quantity' => $stock->Stock_Quantity - $item['quantity'],
+                'Stock_Quantity' => $currentStockQuantity,
+                'Stock_Status' => $currentStockQuantity > 0 ? "Available" : "Out of stock",
             ]);
         }
 
@@ -68,12 +77,14 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Purchase $purchase
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Purchase $purchase)
     {
-        //
+       return response()->json($purchase->with(['stock' => function($query){
+            $query->with('product')->get();
+        }])->first());
     }
 
     /**
@@ -91,11 +102,15 @@ class SalesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param   Request $request
+     * @param   Purchase $purchase
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Purchase $purchase)
     {
-        //
+        if ($purchase->delete()){
+            return $this->index($request, Store::find($request->store));
+        }
+        return response()->json([['status' => "resource not found"]], 404);
     }
 }

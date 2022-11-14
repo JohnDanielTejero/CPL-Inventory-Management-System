@@ -108,9 +108,9 @@ Route::controller(StocksController::class)
     ->prefix('/stocks')
     ->group(function(){
         Route::get('all-stocks/{store}', 'index');
-        Route::post('add-stocks', 'store');
-        Route::put('transfer-stocks/{stock}', 'transferStocks');
-        Route::delete('delete-stock/{stock}', 'destroy');
+        Route::post('add-stocks', 'store')->middleware('auth.anyrole:ROLE_ADMIN');
+        Route::put('transfer-stocks/{stock}', 'transferStocks')->middleware('auth.anyrole:ROLE_ADMIN');
+        Route::delete('delete-stock/{stock}', 'destroy')->middleware('auth.anyrole:ROLE_ADMIN');
     });
 
 /**
@@ -119,5 +119,8 @@ Route::controller(StocksController::class)
 Route::controller(SalesController::class)
     ->prefix('/sales')
     ->group(function(){
+        Route::get('sales-history/{store}', 'index');
+        Route::get('purchase/{purchase}', 'show');
         Route::post('add-sales', 'store');
+        Route::delete('delete-sales/{purchase}', 'destroy');
     });

@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('Purchase_By');
             $table->string('Purchase_Payable');
             $table->dateTime('Purchase_Date');
+            $table->unsignedBigInteger('store_id');
+            $table->foreign('store_id')->references('stores_id')->on('stores')->onDelete('cascade');
+            //$table->foreign('Store_Id')->references('stores_id')->on('stores')->onDelete('cascade');
         });
     }
 

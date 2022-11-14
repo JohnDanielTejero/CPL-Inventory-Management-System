@@ -202,10 +202,10 @@ function Routing({isAuth, login, updateUser, permission, user}){
             >
                 <Route
                     index
-                    element = { <SalesList/> }
+                    element = { <SalesList user = {user} /> }
                 />
                 <Route
-                    element = { <SalesForm user = {user}/>}
+                    element = { <SalesForm user = {user} />}
                     path = "add-sale"
                 />
 

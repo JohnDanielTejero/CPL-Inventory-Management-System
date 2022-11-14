@@ -142,6 +142,7 @@ function SalesForm({user}){
                     "items" : items,
                     'customer' : e.target[0].value,
                     'Payable' : total,
+                    'store' : user.store_id,
                  });
 
                 const resp = await attempt;

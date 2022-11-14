@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Validator;
 
 class StocksController extends Controller
 {
+    public function __constructor(){
+        $this->middleware(['auth:api']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,17 +27,6 @@ class StocksController extends Controller
             ['status' => 'success'],
             Stock::where('Store_Id', $store->stores_id)->with('product')->join('categories', 'categories.category_id','product_id')->get(),
         ], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -72,18 +65,6 @@ class StocksController extends Controller
         ])){
             return $this->index($store);
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     public function transferStocks(Request $request, Stock $stock)

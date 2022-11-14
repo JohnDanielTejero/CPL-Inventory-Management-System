@@ -15,9 +15,14 @@ class Purchase extends Model
         'Purchase_By',
         'Purchase_Payable',
         'Purchase_Date',
+        'store_id',
     ];
 
+    public function store(){
+        return $this->belongsTo(Store::class, 'store_id', 'stores_id');
+    }
+
     public function stock(){
-        return $this->belongsToMany(Stock::class, 'stock__purchases', 'purchase_id', 'stock_id');
+        return $this->belongsToMany(Stock::class, 'stock__purchases', 'purchase_id', 'stock_id')->withPivot(['quantity', 'price']);
     }
 }
