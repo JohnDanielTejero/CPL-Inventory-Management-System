@@ -7,7 +7,7 @@
 **Front End:** React JS v 17.0.2<br/>
 **Back End:** Laravel v 9.36.2 / php v 8.10<br/>
 **Database:** MySQL v 8.0.28<br/>
-
+<!--Total of 16 days elapsed-->
 Inventory management system for Jumpstart which has the following features:<br/>
 
 - `Authentication and Authorization`
