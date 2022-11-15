@@ -14,7 +14,7 @@ class CategoryService extends ApiEndpoint{
      * @param query can be null or a string for search queries
      * @returns Object as response
      */
-    getCategories(query:string|null){
+    getCategories(query:string|null) : Promise<any> {
         return this.request({
             url : this.endpoint + "/categories?query=" + query,
             method : 'GET',
@@ -27,7 +27,7 @@ class CategoryService extends ApiEndpoint{
      * @param target the id of the category
      * @returns Object as response
      */
-    deleteCategory(target:number){
+    deleteCategory(target:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/delete-category/' + target,
             method : 'DELETE'
@@ -40,7 +40,7 @@ class CategoryService extends ApiEndpoint{
      * @param id the id of target category
      * @returns Object as response
      */
-    getCategory(id:string){
+    getCategory(id:string) : Promise<any> {
         return this.request({
             url : this.endpoint + "/category-information/" + id,
             method : 'GET',
@@ -53,7 +53,7 @@ class CategoryService extends ApiEndpoint{
      * @param body Object which contains category model
      * @returns Object as response
      */
-    addCategory(body:Object){
+    addCategory(body:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + '/add-category',
             method : 'POST',
@@ -68,7 +68,7 @@ class CategoryService extends ApiEndpoint{
      * @param id the id of the target category
      * @returns Object as response
      */
-    updateCategory(body:Object, id:string){
+    updateCategory(body:Object, id:string) : Promise<any> {
         return this.request({
             url : this.endpoint + '/update-category/' + id,
             method : 'PATCH',

@@ -14,7 +14,7 @@ class UserService extends ApiEndpoint{
      * @param query
      * @returns Object as Response
      */
-    getAllUsers(query:string|null){
+    getAllUsers(query:string|null) : Promise<any> {
         return this.request({
             url : this.endpoint + "/all-users?query=" + query,
             method : 'GET',
@@ -25,7 +25,7 @@ class UserService extends ApiEndpoint{
      *
      * @returns Object as response
      */
-    getActiveUser(){
+    getActiveUser() : Promise<any> {
         return this.request({
             url : this.endpoint + '/current-user',
             method: 'GET'
@@ -38,7 +38,7 @@ class UserService extends ApiEndpoint{
      * @param user Object containing user information
      * @returns Object as response
      */
-    insertUser(user:Object){
+    insertUser(user:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + '/register',
             method : 'POST',
@@ -52,7 +52,7 @@ class UserService extends ApiEndpoint{
      * @param id id of the user
      * @returns Object as response
      */
-    deleteUser(id:number){
+    deleteUser(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/delete-user/' + id,
             method : 'DELETE'
@@ -65,7 +65,7 @@ class UserService extends ApiEndpoint{
      * @param userinfo body of user to be updated
      * @returns Object as response
      */
-    editUser(userinfo:Object){
+    editUser(userinfo:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + '/update-user-profile',
             method : 'PATCH',
@@ -79,7 +79,7 @@ class UserService extends ApiEndpoint{
      * @param credentials Object containing email and password
      * @returns Object as response: TOKEN
      */
-    login(credentials:Object){
+    login(credentials:Object) : Promise<any> {
         return this. request({
             url : this.endpoint + '/login',
             method : 'POST',
@@ -92,7 +92,7 @@ class UserService extends ApiEndpoint{
      *
      * @returns Object as response
      */
-    logout(){
+    logout() : Promise<any> {
         return this. request({
             url : this.endpoint + '/logout',
             method : 'GET',
@@ -105,7 +105,7 @@ class UserService extends ApiEndpoint{
      * @param permissions Array of strings
      * @returns boolean
      */
-    hasAnyRole(permissions:Array<string>){
+    hasAnyRole(permissions:Array<string>) : Promise<any> {
         return this. request({
             url : this.endpoint + '/has-any-roles',
             method : 'POST',
@@ -119,7 +119,7 @@ class UserService extends ApiEndpoint{
      * @param permissions Array of strings
      * @returns boolean
      */
-    hasRoles(permissions:Array<string>){
+    hasRoles(permissions:Array<string>) : Promise<any> {
         return this. request({
             url : this.endpoint + '/has-all-roles',
             method : 'POST',
@@ -133,7 +133,7 @@ class UserService extends ApiEndpoint{
      * @param permission string
      * @returns boolean
      */
-    hasPermission(permission:string){
+    hasPermission(permission:string) : Promise<any> {
         return this. request({
             url : this.endpoint + '/permission',
             method : 'POST',
@@ -147,7 +147,7 @@ class UserService extends ApiEndpoint{
      *
      * @returns Array<Object>
      */
-    getRoles(){
+    getRoles() : Promise<any> {
         return this.request({
             url : this.endpoint + "/roles",
             method : 'GET'

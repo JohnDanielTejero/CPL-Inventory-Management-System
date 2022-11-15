@@ -14,7 +14,7 @@ class SupplierService extends ApiEndpoint{
      * @param query can be null or string to query
      * @returns Object collection of suppliers
      */
-    getSuppliers(query:string|null){
+    getSuppliers(query:string|null) : Promise<any> {
         return this.request({
             url: this.endpoint + '/all-suppliers?query=' + query,
             method : 'GET',
@@ -27,7 +27,7 @@ class SupplierService extends ApiEndpoint{
      * @param id the primary key of Supplier
      * @returns Object of Supplier
      */
-    getSupplier(id:number){
+    getSupplier(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + "/supplier/" + id,
             method : 'GET',
@@ -40,7 +40,7 @@ class SupplierService extends ApiEndpoint{
      * @param body Supplier object
      * @returns Object as response
      */
-    addSupplier(body:Object){
+    addSupplier(body:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + "/add-supplier",
             method : 'POST',
@@ -55,7 +55,7 @@ class SupplierService extends ApiEndpoint{
      * @param id Supplier id for update
      * @returns Object as response
      */
-    updateSupplier(body:Object, id:number){
+    updateSupplier(body:Object, id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + "/update-supplier/" + id,
             method : 'PATCH',
@@ -69,7 +69,7 @@ class SupplierService extends ApiEndpoint{
      * @param id takes supplier id as argument
      * @returns Object as response
      */
-    deleteSupplier(id:number){
+    deleteSupplier(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/delete-supplier/' + id,
             method : 'DELETE',

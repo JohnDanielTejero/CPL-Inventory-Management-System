@@ -17,7 +17,7 @@ abstract class ApiEndpoint{
      * @param contentType Defaults to application/json, can be changed if left as not null
      * @returns Object response
      */
-    request = async (options:any) => {
+    request = async (options:any) : Promise<any> => {
 
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ abstract class ApiEndpoint{
      * @param options Object: { method : "method", url: url, data :payload }
      * @returns Object response
      */
-    fileUpload(options:any){
+    fileUpload(options:any) : Promise<any> {
         let header = {
             'Content-Type': 'multipart/form-data',
             'Accept' : 'application/json',

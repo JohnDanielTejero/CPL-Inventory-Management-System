@@ -14,7 +14,7 @@ class StoreService extends ApiEndpoint{
      * @param query can be null or string to query
      * @returns Object collection of stores
      */
-    getStores(query:string|null){
+    getStores(query:string|null) : Promise<any> {
         return this.request({
             url: this.endpoint + '/all-stores?query=' + query,
             method : 'GET',
@@ -27,7 +27,7 @@ class StoreService extends ApiEndpoint{
      * @param id the primary key of store
      * @returns Object of store
      */
-    getStore(id:number){
+    getStore(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + "/store/" + id,
             method : 'GET',
@@ -40,7 +40,7 @@ class StoreService extends ApiEndpoint{
      * @param body Store object
      * @returns Object as response
      */
-    addStore(body:Object){
+    addStore(body:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + "/add-store",
             method : 'POST',
@@ -55,7 +55,7 @@ class StoreService extends ApiEndpoint{
      * @param id store id for update
      * @returns Object as response
      */
-    updateStore(body:Object, id:number){
+    updateStore(body:Object, id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + "/update-store/" + id,
             method : 'PATCH',
@@ -69,7 +69,7 @@ class StoreService extends ApiEndpoint{
      * @param id takes store id as argument
      * @returns Object as response
      */
-    deleteStore(id:number){
+    deleteStore(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/delete-store/' + id,
             method : 'DELETE',

@@ -26,7 +26,7 @@ class StocksService extends ApiEndpoint{
      * @param store id of the store
      * @returns Object as response
      */
-    getAvailableStocks(store:number){
+    getAvailableStocks(store:number) : Promise<any> {
         return this.request({
             url: this.endpoint + '/all-available-stocks/' + store,
             method: 'GET',
@@ -40,7 +40,7 @@ class StocksService extends ApiEndpoint{
      * @param stock target stock id
      * @returns Object as response
      */
-    deleteStocks(store:Object, stock:number){
+    deleteStocks(store:Object, stock:number) : Promise<any> {
         return this.request({
             url: this.endpoint + '/delete-stock/' + stock,
             method : 'DELETE',
@@ -54,7 +54,7 @@ class StocksService extends ApiEndpoint{
      * @param body takes in argument such as store, product, and amount.
      * @returns Object as response
      */
-    addStocks(body:Object){
+    addStocks(body:Object) : Promise<any> {
         return this.request({
             url: this.endpoint + '/add-stocks',
             method : 'POST',
@@ -69,7 +69,7 @@ class StocksService extends ApiEndpoint{
      * @param id targets stocks id as argument
      * @returns Object as response
      */
-    transferStocks(body:Object, id:number){
+    transferStocks(body:Object, id:number) : Promise<any> {
         return this.request({
             url: this.endpoint + '/transfer-stocks/' + id,
             method : 'PUT',

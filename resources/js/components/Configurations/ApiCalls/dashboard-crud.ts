@@ -12,7 +12,7 @@ class DashboardService extends ApiEndpoint{
      *
      * @returns Object as response
      */
-    getAdminDashboardReport(){
+    getAdminDashboardReport() : Promise<any> {
         return this.request({
             url : this.endpoint + "/admin",
             method : 'GET'
@@ -24,7 +24,7 @@ class DashboardService extends ApiEndpoint{
      *
      * @returns Object as response
      */
-    getStoreOwnerDashboardReport(){
+    getStoreOwnerDashboardReport() : Promise<any> {
         return this.request({
             url : this.endpoint + "/store-owner",
             method : 'GET'

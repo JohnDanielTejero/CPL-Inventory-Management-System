@@ -12,7 +12,7 @@ class ProductService extends ApiEndpoint{
       * @param query string or null
       * @returns Object response
       */
-     getAllProducts(query?:string){
+     getAllProducts(query?:string) : Promise<any> {
         return this.request({
             url : this.endpoint + "/all-products?query=" + query,
             method : 'GET',
@@ -25,7 +25,7 @@ class ProductService extends ApiEndpoint{
       * @param id number targets the product id
       * @returns Object response
       */
-     getProduct(id:number){
+     getProduct(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/product/' + id,
             method : 'GET',
@@ -38,7 +38,7 @@ class ProductService extends ApiEndpoint{
       * @param id number targets the product id
       * @returns Object response
       */
-     deleteProduct(id:number){
+     deleteProduct(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/delete-product/' + id,
             method : 'DELETE',
@@ -51,7 +51,7 @@ class ProductService extends ApiEndpoint{
       * @param body payload to add product
       * @returns
       */
-     addProduct(body:any){
+     addProduct(body:any) : Promise<any> {
         return this.fileUpload({
             method : 'POST',
             url : this.endpoint + '/add-product',
@@ -66,7 +66,7 @@ class ProductService extends ApiEndpoint{
       * @param id number targets the product id
       * @returns Object response
       */
-     updateProduct(body:Object, id:number){
+     updateProduct(body:Object, id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/update-product/' + id,
             method : 'PATCH',
@@ -81,7 +81,7 @@ class ProductService extends ApiEndpoint{
       * @param id number targets the product id
       * @returns Object response
       */
-     addPayable(body:Object, id:number){
+     addPayable(body:Object, id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/add-payable/' + id,
             method : 'PUT',
@@ -96,7 +96,7 @@ class ProductService extends ApiEndpoint{
       * @param id number targets the product id
       * @returns Object response
       */
-     addPaid(body:Object, id:number){
+     addPaid(body:Object, id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/add-paid/' + id,
             method : 'PUT',

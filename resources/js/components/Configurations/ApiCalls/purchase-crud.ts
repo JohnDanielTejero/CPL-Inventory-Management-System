@@ -14,7 +14,7 @@ class PurchaseService extends ApiEndpoint{
                  }
      * @returns Object as response
      */
-    addNewSales(body:Object){
+    addNewSales(body:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + '/add-sales',
             method :'POST',
@@ -28,7 +28,7 @@ class PurchaseService extends ApiEndpoint{
      * @param id targets the store Id
      * @returns Object response
      */
-    getSalesHistory(id:number){
+    getSalesHistory(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + "/sales-history/" + id,
             method : 'GET',
@@ -42,7 +42,7 @@ class PurchaseService extends ApiEndpoint{
      * @param store {store : storeid}
      * @returns Object as response
      */
-    deleteSales(purchaseid:number, store:Object){
+    deleteSales(purchaseid:number, store:Object) : Promise<any> {
         return this.request({
             url : this.endpoint + "/delete-sales/" + purchaseid,
             method: "DELETE",
@@ -56,7 +56,7 @@ class PurchaseService extends ApiEndpoint{
      * @param id purchase
      * @returns Object as response
      */
-    getParticularSales(id:number){
+    getParticularSales(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + "/purchase/" + id,
             method : "GET",
