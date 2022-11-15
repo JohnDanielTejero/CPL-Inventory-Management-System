@@ -23,7 +23,7 @@ function Dashboard({permission}){
 
     return(
         <div style = {{height:"50rem", overflowY:"auto", overflowX:"hidden"}}>
-            <section className="row g-3 justify-content-center">
+            <section className="row g-3 p-3 justify-content-center">
                 {/* this is where we add the dashboard*/}
                 {
                     hasAnyRole(permission, ['ROLE_ADMIN']) && dashboardContent != null &&
