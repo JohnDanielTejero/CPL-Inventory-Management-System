@@ -21,6 +21,19 @@ class StocksService extends ApiEndpoint{
     }
 
     /**
+     * Retrieves all available stocks depending on the store active
+     *
+     * @param store id of the store
+     * @returns Object as response
+     */
+    getAvailableStocks(store:number){
+        return this.request({
+            url: this.endpoint + '/all-available-stocks/' + store,
+            method: 'GET',
+        })
+    }
+
+    /**
      * Delete stocks from the database
      *
      * @param store object containing store id

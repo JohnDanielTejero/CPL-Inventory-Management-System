@@ -1,6 +1,6 @@
 ## <h1 align="center">CPL Inventory Management System</h1>
 <p>
-    Inventory management system for Jumpstart in accordance to CPL module in Lithan Educlaas.
+    Inventory management system for Jumpstart in accordance to CPL module in Lithan Educlaas. As of yet, the currency assumed is in Philippine Pesos.
 </p>
 
 ## Overview
@@ -90,9 +90,49 @@ After cloning the repository you are expected to:
   </tr>
 </table>
 
-## Demonstration 
+## Video Demonstration 
 --video here--
---screenshots here--
+
+## Screen Captures of the Application
+
+### Dashboard (no display yet)
+
+### Category Page
+![categories page](/public/img/Demo/Category%20list%20page.PNG)
+![categories add page](/public/img/Demo/add%20category%20page.PNG)
+![categories edit page](/public/img/Demo/edit%20category%20page.PNG)
+
+### Products Page
+![products page](/public/img/Demo/products%20list%20page.PNG)
+![add product page](/public/img/Demo/add%20product%20page.PNG)
+![edit product page](/public/img/Demo/edit%20product%20page.PNG)
+![product information page](/public/img/Demo/product%20information%20page.PNG)
+
+### Employee Page
+![employee page](/public/img/Demo/employee%20list%20page.PNG)
+![add employee page](/public/img/Demo/add%20employee%20page.PNG)
+![employee profile page](/public/img/Demo/profile%20page.PNG)
+
+### Suppliers Page
+![suppliers list](/public/img/Demo/suppliers%20list%20page.PNG)
+![add supplier](/public/img/Demo/add%20supplier%20page.PNG)
+![edit supplier](/public/img/Demo/edit%20supplier%20page.PNG)
+
+### Stores Page
+![stores list](/public/img/Demo/stores%20list.PNG)
+![add store](/public/img/Demo/add%20store%20page.PNG)
+![edit store](/public/img/Demo/edit%20stores%20list%20page.PNG)
+
+## Stocks Page
+![stocks list admin](/public/img/Demo/stocks%20list%20page%20(ADMIN).PNG)
+![stocks list](/public/img/Demo/Stock%20list%20page.PNG)
+![add stocks](/public/img/Demo/add%20new%20stock%20popup%20(admin).PNG)
+![transfer stocks](/public/img/Demo/transfer%20stock%20popup%20(admin).PNG)
+
+## Sales Page
+![sales list](/public/img/Demo/sales%20history%20page.PNG)
+![add sales](/public/img/Demo/add%20sales%20page.PNG)
+![sales information](/public/img/Demo/sales%20information%20page.PNG)
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 

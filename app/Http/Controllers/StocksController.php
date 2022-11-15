@@ -25,7 +25,27 @@ class StocksController extends Controller
     {
         return response()->json([
             ['status' => 'success'],
-            Stock::where('Store_Id', $store->stores_id)->with('product')->join('categories', 'categories.category_id','product_id')->get(),
+            Stock::where('Store_Id', $store->stores_id)
+                ->with('product')
+                ->join('categories', 'categories.category_id','product_id')
+                ->get(),
+        ], 200);
+    }
+
+    /**
+     * Display available stocks for a particular store
+     *
+     * @param Store $store
+     * @return Response
+     */
+    public function available_stocks(Store $store){
+        return response()->json([
+            ['status' => 'success'],
+            Stock::where('Store_Id', $store->stores_id)
+                ->where('Stock_Status', 'Available')
+                ->with('product')
+                ->join('categories', 'categories.category_id','product_id')
+                ->get(),
         ], 200);
     }
 
@@ -67,6 +87,13 @@ class StocksController extends Controller
         }
     }
 
+    /**
+     * Transfer stocks to a particular store
+     *
+     * @param Request $request
+     * @param Stock $stock
+     * @return Response
+     */
     public function transferStocks(Request $request, Stock $stock)
     {
         $validate = Validator::make($request->all(), [

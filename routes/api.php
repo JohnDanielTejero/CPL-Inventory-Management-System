@@ -108,6 +108,7 @@ Route::controller(StocksController::class)
     ->prefix('/stocks')
     ->group(function(){
         Route::get('all-stocks/{store}', 'index');
+        Route::get('all-available-stocks/{store}', 'available_stocks')->middleware('auth.anyrole:ROLE_STORE_OWNER,ROLE_EMPLOYEE');
         Route::post('add-stocks', 'store')->middleware('auth.anyrole:ROLE_ADMIN');
         Route::put('transfer-stocks/{stock}', 'transferStocks')->middleware('auth.anyrole:ROLE_ADMIN');
         Route::delete('delete-stock/{stock}', 'destroy')->middleware('auth.anyrole:ROLE_ADMIN');

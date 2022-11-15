@@ -21,7 +21,7 @@ function SalesForm({user}){
     const navigate = useNavigate();
 
     useEffect(async () => {
-        const attempt = await stocksCrud.getStocks(user.store_id);
+        const attempt = await stocksCrud.getAvailableStocks(user.store_id);
         const resp = await attempt;
         setStocks(resp[1]);
 
