@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StocksController;
@@ -124,4 +125,14 @@ Route::controller(SalesController::class)
         Route::get('purchase/{purchase}', 'show');
         Route::post('add-sales', 'store');
         Route::delete('delete-sales/{purchase}', 'destroy');
+    });
+
+/**
+ * Route group for dashboard interactions
+ */
+Route::controller(DashboardController::class)
+    ->prefix('/dashboard')
+    ->group(function(){
+        Route::get('admin', 'admin_dashboard')->middleware('auth.allrole:ROLE_ADMIN');
+        Route::get('store-owner', 'store_owner_dashboard')->middleware('auth.allrole:ROLE_STORE_OWNER');
     });

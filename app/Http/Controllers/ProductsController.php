@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Controller class for products processes
+ */
 class ProductsController extends Controller
 {
     public function __construct()

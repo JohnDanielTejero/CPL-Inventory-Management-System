@@ -90,12 +90,11 @@ After cloning the repository you are expected to:
   </tr>
 </table>
 
-## Video Demonstration 
---video here--
-
 ## Screen Captures of the Application
 
-### Dashboard (no display yet)
+### Dashboard
+![dashboard for admin](/public/img/Demo/Dashboard%20admin%20page.png)
+![dashboard for store owner](/public/img/Demo/Dashboard%20store%20owner%20page.png)
 
 ### Category Page
 ![categories page](/public/img/Demo/Category%20list%20page.PNG)

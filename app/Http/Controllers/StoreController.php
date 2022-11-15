@@ -7,6 +7,9 @@ use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Controller class for store processes
+ */
 class StoreController extends Controller
 {
     public function __construct()

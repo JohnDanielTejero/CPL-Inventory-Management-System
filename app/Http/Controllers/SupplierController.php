@@ -7,6 +7,9 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Controller class for suppliers processes
+ */
 class SupplierController extends Controller
 {
     public function __construct()

@@ -9,6 +9,9 @@ use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Controller class for stocks processes
+ */
 class StocksController extends Controller
 {
     public function __constructor(){

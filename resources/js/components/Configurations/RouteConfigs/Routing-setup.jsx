@@ -52,7 +52,7 @@ function Routing({isAuth, login, updateUser, permission, user}){
                 element = {
                     <Authenticated isAuth ={isAuth} component = {
                         <Authorization
-                            component = {<Dashboard/>}
+                            component = {<Dashboard permission={permission}/>}
                             permission = {permission}
                             allowedroles = {['ROLE_ADMIN', 'ROLE_STORE_OWNER']}
                         />
