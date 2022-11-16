@@ -116,6 +116,7 @@ class StocksController extends Controller
 
         if($stock->update([
                 'Stock_Quantity' => $stock->Stock_Quantity + $request['amount'],
+                'Stock_Status' => "Available",
             ]) &&
             $product->update([
                 'Product_Paid' => $product['Product_Paid'] - $request['amount'],

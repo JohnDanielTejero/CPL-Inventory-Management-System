@@ -22,7 +22,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register','isLoggedIn']]);
+        $this->middleware('auth:api', ['except' => ['login','isLoggedIn']]);
     }
 
     /**
@@ -48,6 +48,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
         return response()->json([
                 'status' => 'success',
                 'user' => $user,
@@ -55,7 +56,7 @@ class AuthController extends Controller
                     'token' => $token,
                     'type' => 'bearer',
                 ]
-            ]);
+            ], 200);
 
     }
 

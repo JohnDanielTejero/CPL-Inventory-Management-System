@@ -40,7 +40,7 @@ class SupplierController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'Supp_Name' => ['required', 'string'],
-            'Store_Email' => ['required', 'string', 'email'],
+            'Supp_Email' => ['required', 'string', 'email'],
             'Supp_ContactNo' => ['required', 'string'],
         ]);
 
@@ -52,7 +52,7 @@ class SupplierController extends Controller
             ['status' => 'resource created successfully'],
             Supplier::create([
                 'Supp_Name' => $request['Supp_Name'],
-                'Supp_Address' => $request['Supp_Email'],
+                'Supp_Email' => $request['Supp_Email'],
                 'Supp_ContactNo' => $request['Supp_ContactNo'],
                 ])
             ], 201);
