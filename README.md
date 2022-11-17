@@ -40,6 +40,7 @@ Inventory management system for Jumpstart which has the following features:<br/>
 ## TODO: 
 After cloning the repository you are expected to:
 - Perform migration via `php artisan migrate`
+- Link the storage to public directory via `php artisan storage:link`
 - Generate sample data via `php artisan generate:sampledata`
 - Run the server via `php artisan serve`
 - ``Optional`` Run Vite to run ReactJs via `npm run dev`
