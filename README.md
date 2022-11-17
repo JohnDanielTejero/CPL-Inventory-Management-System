@@ -18,7 +18,7 @@ Inventory management system for Jumpstart which has the following features:<br/>
 - `Real-time monitoring and managing of sales`
 - `Monitoring and managing suppliers information`
 - `Sorting product via categories`
-- `Manage multiple branches stocks`
+- `Manage stocks at branch level`
 - `Manage retail branches`
 - `Employee management`
 - `Profile management`
