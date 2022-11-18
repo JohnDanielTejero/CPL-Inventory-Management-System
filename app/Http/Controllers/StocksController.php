@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use App\Models\Store;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\Store;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -45,6 +46,10 @@ class StocksController extends Controller
         return response()->json([
             ['status' => 'success'],
             Stock::where('Store_Id', $store->stores_id)
+                ->whereHas('product', function (Builder $query){
+                    $query->where('Product_Expiry', '>=', date('Y-m-d').' 00:00:00')
+                        ->orWhere('Product_Expiry', null);
+                })
                 ->where('Stock_Status', 'Available')
                 ->with('product')
                 ->join('categories', 'categories.category_id','product_id')
