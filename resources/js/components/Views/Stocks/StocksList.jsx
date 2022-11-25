@@ -168,7 +168,7 @@ function Stocks({user, permission}){
     }
 
     return(
-        <div style = {{height:"50rem", overflowY:"auto"}}>
+        <div style = {{height:"40rem", overflowY:"auto"}}>
             <div className="card bg-dark text-light">
                 {
                     hasAnyRole(permission, ['ROLE_ADMIN']) &&

@@ -22,7 +22,7 @@ function Dashboard({permission}){
     },[]);
 
     return(
-        <div style = {{height:"50rem", overflowY:"auto", overflowX:"hidden"}}>
+        <div style = {{height:"40rem", overflowY:"auto", overflowX:"hidden"}}>
             <section className="row g-3 p-3 justify-content-center">
                 {/* this is where we add the dashboard*/}
                 {
