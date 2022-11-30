@@ -57,7 +57,7 @@ class SupplierController extends Controller
                 ])
             ], 201);
 
-        }
+    }
 
         /**
          * Display the specified resource.
@@ -69,7 +69,7 @@ class SupplierController extends Controller
         {
             if($supplier == null) return response()->json([['status' => 'resource not found']], 404);
             return response()->json($supplier, 200);
-    }
+        }
 
     /**
      * Update the specified resource in storage.
