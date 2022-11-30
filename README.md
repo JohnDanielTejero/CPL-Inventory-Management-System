@@ -140,7 +140,9 @@ After cloning the repository you are expected to:
 
 
 ## Video Demonstration
-<iframe src="https://drive.google.com/file/d/1BKtMD9kW5n_Q5ejFu29ltwf-IUeFfe55/preview" width="640" height="480" allow="autoplay"></iframe> 
+### Click on the image below to be redirected to video
+
+[![video demo](/public/img/Demo/add%20sales%20page.PNG)](https://drive.google.com/file/d/1BKtMD9kW5n_Q5ejFu29ltwf-IUeFfe55/preview)
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
