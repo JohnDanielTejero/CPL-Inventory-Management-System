@@ -31,8 +31,11 @@ class StocksController extends Controller
             ['status' => 'success'],
             Stock::where('Store_Id', $store->stores_id)
             ->where('Stock_Status', 'Available')
-            ->with(['product' => function ($query){
-                $query->with('category');
+            ->whereHas('product', function (Builder $query){
+                $query->where('Product_Expiry', '>=', date('Y-m-d').' 00:00:00')
+                ->orWhere('Product_Expiry', null);
+            })->with(['product' => function ($query){
+                $query->with('category')->get();
             }])->get()
         ], 200);
     }
@@ -48,6 +51,10 @@ class StocksController extends Controller
             ['status' => 'success'],
             Stock::where('Store_Id', $store->stores_id)
                 ->where('Stock_Status', 'Available')
+                ->whereHas('product', function (Builder $query){
+                    $query->where('Product_Expiry', '>=', date('Y-m-d').' 00:00:00')
+                    ->orWhere('Product_Expiry', null);
+                })
                 ->with(['product' => function ($query){
                     $query->with('category');
                 }])->get(),

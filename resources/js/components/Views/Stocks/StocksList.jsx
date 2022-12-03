@@ -230,7 +230,7 @@ function Stocks({user, permission}){
                                                 <td style={{width:"20rem"}}>{ (e.product).Product_Name }</td>
                                                 <td style={{width:"6rem"}}>{ e.Stock_Quantity }</td>
                                                 <td style={{width:"5rem"}}>{ e.Stock_Status }</td>
-                                                <td style={{width:"5rem"}}>{ e.Category_Name }</td>
+                                                <td style={{width:"5rem"}}>{ e.product.category.Category_Name }</td>
                                                 <td style={{width:"5rem"}}>{ e.product.Product_Expiry != null ? moment(e.product.Product_Expiry).format("MMM Do YY") : 'no expiration' } </td>
                                                 <td style={{width:"5rem"}}>{ e.product.Product_Markup }</td>
                                                         {
