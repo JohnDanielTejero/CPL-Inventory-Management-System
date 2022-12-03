@@ -30,9 +30,10 @@ class StocksController extends Controller
         return response()->json([
             ['status' => 'success'],
             Stock::where('Store_Id', $store->stores_id)
-                ->with('product')
-                ->join('categories', 'categories.category_id','product_id')
-                ->get(),
+            ->where('Stock_Status', 'Available')
+            ->with(['product' => function ($query){
+                $query->with('category');
+            }])->get()
         ], 200);
     }
 
@@ -46,14 +47,10 @@ class StocksController extends Controller
         return response()->json([
             ['status' => 'success'],
             Stock::where('Store_Id', $store->stores_id)
-                ->whereHas('product', function (Builder $query){
-                    $query->where('Product_Expiry', '>=', date('Y-m-d').' 00:00:00')
-                        ->orWhere('Product_Expiry', null);
-                })
                 ->where('Stock_Status', 'Available')
-                ->with('product')
-                ->join('categories', 'categories.category_id','product_id')
-                ->get(),
+                ->with(['product' => function ($query){
+                    $query->with('category');
+                }])->get(),
         ], 200);
     }
 
