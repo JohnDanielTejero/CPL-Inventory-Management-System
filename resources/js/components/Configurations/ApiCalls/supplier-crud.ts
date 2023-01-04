@@ -67,7 +67,7 @@ class SupplierService extends ApiEndpoint{
      * deletes a supplier from the database
      *
      * @param id takes supplier id as argument
-     * @returns Object as response
+     * @returns Object json as response
      */
     deleteSupplier(id:number) : Promise<any> {
         return this.request({
