@@ -69,6 +69,7 @@ class SupplierService extends ApiEndpoint{
      * @param id takes supplier id as argument
      * @returns Object json as response
      */
+    //basta may update
     deleteSupplier(id:number) : Promise<any> {
         return this.request({
             url : this.endpoint + '/delete-supplier/' + id,
